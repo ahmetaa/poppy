@@ -14,7 +14,7 @@ class FixedBitVector {
         _resetMasks[i] = ~_setMasks[i];
       }
   }
-  
+
   get size => _size;
 
   /** Creates a fixed bit vector with capacity of [bitCount]. */

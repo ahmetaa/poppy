@@ -1,7 +1,19 @@
-#import ("dart:math");
-#import ('dart:scalarlist');
-#import("package:poppy/mphf.dart");
-#import("package:poppy/src/fixed_bit_vector.dart");
+import "dart:math";
+import 'dart:scalarlist';
+import "package:poppy/mphf.dart";
+import "package:poppy/src/fixed_bit_vector.dart";
+
+class _HashIndexes {
+  int keyAmount;
+  int bucketAmount;
+  Uint8List bucketHashSeedValues;
+  List<int> failedIndexes;
+
+  _HashIndexes(this.keyAmount, this.bucketAmount, this.bucketHashSeedValues, this.failedIndexes);
+
+  int getSeed(int fingerPrint) => (bucketHashSeedValues[fingerPrint % bucketAmount]) & 0xff;
+
+}
 
 class BucketCalculator {
 
@@ -43,7 +55,7 @@ class BucketCalculator {
     for (int i = 0; i < keyAmount; i++) {
       int bucketIndex = fingerPrint(keyProvider.getKey(i)) % bucketAmount;
       buckets[bucketIndex].add(i);
-    }    
+    }
 
     return buckets;
   }
@@ -54,8 +66,9 @@ class BucketCalculator {
     _FixedBitVector bitVector = new _FixedBitVector.bitCount(keyAmount);
 
     var hashSeedArray = new Uint8List(buckets.length);
-    for(int k = 0; k<hashSeedArray.length;++k)
+    for(int k = 0; k<hashSeedArray.length;++k) {
       hashSeedArray[k]=1;
+    }
 
     // we need to collect failed buckets (A failed bucket such that we cannot find empty slots for all bucket keys
     // after 255 trials. )
@@ -63,8 +76,9 @@ class BucketCalculator {
 
     // for each bucket, find a hash function that will map each key in it to an empty slot in bitVector.
     for (_Bucket bucket in buckets) {
-      if (bucket.itemIndexes.length == 0) // because buckets are sorted, we can finish here.
+      if (bucket.itemIndexes.length == 0) { // because buckets are sorted, we can finish here.
         break;
+      }
       int hashSeedIndex = 1;
       bool loop = true;
       while (loop) {
@@ -72,9 +86,9 @@ class BucketCalculator {
         for (int keyIndex in bucket.itemIndexes) {
           var key = keyProvider.getKey(keyIndex);
           int bitIndex = _hash(key, hashSeedIndex) % keyAmount;
-          if (bitVector.getBit(bitIndex))
+          if (bitVector.getBit(bitIndex)) {
             break;
-          else {
+          } else {
             slots.add(bitIndex);
             bitVector.setBit(bitIndex);
           }
@@ -108,8 +122,9 @@ class BucketCalculator {
     }
 
     // we assign lower average per key per bucket after each iteration to avoid generation failure.
-    if (averageKeysPerBucket > 1)
+    if (averageKeysPerBucket > 1) {
       averageKeysPerBucket--;
+    }
 
     // start calculation for failed buckets.
     int failedKeyCount = 0;
@@ -126,8 +141,9 @@ class BucketCalculator {
       failedBucketAmount *= 2;
     }
 
-    if (failedBucketAmount == 0)
+    if (failedBucketAmount == 0) {
       failedBucketAmount++;
+    }
 
     // this time we generate item keyAmount of Buckets
     var nextLevelBuckets = new List<_Bucket>(failedBucketAmount);

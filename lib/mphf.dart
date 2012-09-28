@@ -1,6 +1,6 @@
-#import ("dart:math");
-#import ('dart:scalarlist');
-#import("package:poppy/src/beans.dart");
+import "dart:math";
+import 'dart:scalarlist';
+import "package:poppy/src/mphf_generator.dart";
 
 
 /** modified - shortened Jenkins 32 */
@@ -23,20 +23,20 @@ int fingerPrint(List<int> key) => _hash(key, 0x9747b28c);
  */
 class Mphf {
 
-  List<_HashIndexes> hashLevelData;
+  List<HashIndexes> hashLevelData;
 
   Mphf.generate(KeyProvider keyProvider) {
-      _BucketCalculator bc = new _BucketCalculator(keyProvider);
+      BucketCalculator bc = new BucketCalculator(keyProvider);
       this.hashLevelData = bc.calculate();
   }
 
   Mphf.fromStrings(Collection<String> strings) {
-      _BucketCalculator bc = new _BucketCalculator(new KeyProvider.fromStrings(strings));
+      BucketCalculator bc = new BucketCalculator(new KeyProvider.fromStrings(strings));
       this.hashLevelData = bc.calculate();
   }
 
   Mphf.fromIntLists(List<List<int>> intLists) {
-      _BucketCalculator bc = new _BucketCalculator(new KeyProvider(intLists));
+      BucketCalculator bc = new BucketCalculator(new KeyProvider(intLists));
       this.hashLevelData = bc.calculate();
   }
 
@@ -83,18 +83,6 @@ class Mphf {
   double averageBitsPerKey() => (totalBytesUsed() * 8).toDouble() / hashLevelData[0].keyAmount;
 }
 
-class _HashIndexes {
-  int keyAmount;
-  int bucketAmount;
-  Uint8List bucketHashSeedValues;
-  List<int> failedIndexes;
-
-  _HashIndexes(this.keyAmount, this.bucketAmount, this.bucketHashSeedValues, this.failedIndexes);
-
-  int getSeed(int fingerPrint) => (bucketHashSeedValues[fingerPrint % bucketAmount]) & 0xff;
-
-}
-
 class KeyProvider {
    List<List<int>> list = new List();
    KeyProvider(this.list);
@@ -113,19 +101,19 @@ class KeyProvider {
 void main() {
 
   var testStrings = randomStrings();
-  
+
   for(int k=0; k<5; k++) {
     var stopWatch = new Stopwatch();
     stopWatch.start();
     var hash = new Mphf.fromStrings(testStrings);
     print("Hash generation time : ${stopWatch.elapsedInMs()} ms");
     print("Average bit per key: ${hash.averageBitsPerKey()}");
-  
+
     List<List<int>> l = new List();
     for(String s in testStrings) {
       l.add(s.charCodes());
     }
-    stopWatch..reset()..start();    
+    stopWatch..reset()..start();
     for(int i = 0, length = l.length; i<length; ++i) {
       int k = hash.hashValue(l[i]);
     }
