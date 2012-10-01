@@ -1,18 +1,17 @@
+library poppy;
+
 import "dart:math";
 import 'dart:scalarlist';
-import "package:poppy/mphf.dart";
-import "package:poppy/src/fixed_bit_vector.dart";
+import "../mphf.dart";
+import "fixed_bit_vector.dart";
 
-class _HashIndexes {
+class HashIndexes {
   int keyAmount;
   int bucketAmount;
   Uint8List bucketHashSeedValues;
   List<int> failedIndexes;
-
-  _HashIndexes(this.keyAmount, this.bucketAmount, this.bucketHashSeedValues, this.failedIndexes);
-
+  HashIndexes(this.keyAmount, this.bucketAmount, this.bucketHashSeedValues, this.failedIndexes);
   int getSeed(int fingerPrint) => (bucketHashSeedValues[fingerPrint % bucketAmount]) & 0xff;
-
 }
 
 class BucketCalculator {
@@ -26,7 +25,7 @@ class BucketCalculator {
     averageKeysPerBucket = 3.0;
   }
 
-  List<_HashIndexes> calculate() {
+  List<HashIndexes> calculate() {
     keyAmount = keyProvider.keyAmount();
 
     int bucketAmount=(keyAmount / averageKeysPerBucket).toInt();
@@ -36,7 +35,7 @@ class BucketCalculator {
     // sort buckets larger to smaller.
     buckets.sort((_Bucket a, _Bucket b) => a.compareTo(b));
 
-    var result = new List<_HashIndexes>();
+    var result = new List<HashIndexes>();
 
     calculateIndexes(buckets, keyAmount, result);
 
@@ -60,10 +59,10 @@ class BucketCalculator {
     return buckets;
   }
 
-  void calculateIndexes(List<_Bucket> buckets, int keyAmount, List<_HashIndexes> indexes) {
+  void calculateIndexes(List<_Bucket> buckets, int keyAmount, List<HashIndexes> indexes) {
 
     // generate a long bit vector with size of hash target size.
-    _FixedBitVector bitVector = new _FixedBitVector.bitCount(keyAmount);
+    FixedBitVector bitVector = new FixedBitVector.bitCount(keyAmount);
 
     var hashSeedArray = new Uint8List(buckets.length);
     for(int k = 0; k<hashSeedArray.length;++k) {
@@ -85,7 +84,7 @@ class BucketCalculator {
         var slots = new List<int>();
         for (int keyIndex in bucket.itemIndexes) {
           var key = keyProvider.getKey(keyIndex);
-          int bitIndex = _hash(key, hashSeedIndex) % keyAmount;
+          int bitIndex = hash(key, hashSeedIndex) % keyAmount;
           if (bitVector.getBit(bitIndex)) {
             break;
           } else {
@@ -117,7 +116,7 @@ class BucketCalculator {
 
     if (failedBuckets.length == 0) {
       // we are done.
-      indexes.add(new _HashIndexes(keyAmount, buckets.length, hashSeedArray, new List(0)));
+      indexes.add(new HashIndexes(keyAmount, buckets.length, hashSeedArray, new List(0)));
       return;
     }
 
@@ -170,7 +169,7 @@ class BucketCalculator {
       }
     }
 
-    indexes.add(new _HashIndexes(keyAmount, buckets.length, hashSeedArray, failedHashValues));
+    indexes.add(new HashIndexes(keyAmount, buckets.length, hashSeedArray, failedHashValues));
 
     // recurse for failed buckets.
     calculateIndexes(nextLevelBuckets, failedKeyCount, indexes);

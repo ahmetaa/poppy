@@ -1,3 +1,7 @@
+library poppy;
+
+import 'dart:scalarlist';
+
 class FixedBitVector {
   Int32List _words;
   int _size;
