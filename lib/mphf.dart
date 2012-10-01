@@ -52,8 +52,8 @@ class Mphf {
   _checkArguments(Collection c) {
     if(c==null)
       throw new ArgumentError("Input cannot be null");
-    if(c.length()<=0 || c.length()>MAX_KEY_AMOUNT)
-      throw new ArgumentError("Amount of keys must be in range of 1..$MAX_KEY_AMOUNT but it is: ${c.length()}");
+    if(c.length<=0 || c.length>MAX_KEY_AMOUNT)
+      throw new ArgumentError("Amount of keys must be in range of 1..$MAX_KEY_AMOUNT but it is: ${c.length}");
   }
 
   Mphf(this.hashLevelData);
