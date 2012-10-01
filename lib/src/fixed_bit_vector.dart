@@ -2,6 +2,9 @@ library poppy;
 
 import 'dart:scalarlist';
 
+/**
+ * An int list backed fixed size bit vector.
+ */
 class FixedBitVector {
   Int32List _words;
   int _size;
