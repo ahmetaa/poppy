@@ -24,7 +24,7 @@ void main() {
     print("Hash generation time : ${stopWatch.elapsedInMs()} ms");
     print("Average bit per key: ${hash.averageBitsPerKey()}");
 
-    List<List<int>> l = new List();
+    var l = new List<List<int>>();
     for(String s in testStrings) {
       l.add(s.charCodes());
     }
