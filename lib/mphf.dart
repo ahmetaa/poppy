@@ -25,21 +25,35 @@ int fingerPrint(List<int> key) => hash(key, 0x9747b28c);
  */
 class Mphf {
 
+  final int MAX_KEY_AMOUNT = 0x7fffffff;
+
   List<HashIndexes> hashLevelData;
 
   Mphf.generate(KeyProvider keyProvider) {
+      if(keyProvider==null)
+        throw new ArgumentError("key Provider cannot be null");
+      _checkArguments(keyProvider.list);
       BucketCalculator bc = new BucketCalculator(keyProvider);
       this.hashLevelData = bc.calculate();
   }
 
   Mphf.fromStrings(Collection<String> strings) {
-      BucketCalculator bc = new BucketCalculator(new KeyProvider.fromStrings(strings));
-      this.hashLevelData = bc.calculate();
+    _checkArguments(strings);
+    BucketCalculator bc = new BucketCalculator(new KeyProvider.fromStrings(strings));
+    this.hashLevelData = bc.calculate();
   }
 
   Mphf.fromIntLists(List<List<int>> intLists) {
-      BucketCalculator bc = new BucketCalculator(new KeyProvider(intLists));
-      this.hashLevelData = bc.calculate();
+    _checkArguments(intLists);
+    BucketCalculator bc = new BucketCalculator(new KeyProvider(intLists));
+    this.hashLevelData = bc.calculate();
+  }
+
+  _checkArguments(Collection c) {
+    if(c==null)
+      throw new ArgumentError("Input cannot be null");
+    if(c.length()<=0 || c.length()>MAX_KEY_AMOUNT)
+      throw new ArgumentError("Amount of keys must be in range of 1..$MAX_KEY_AMOUNT but it is: ${c.length()}");
   }
 
   Mphf(this.hashLevelData);
@@ -50,7 +64,7 @@ class Mphf {
 
   /** returns the minimal perfect hash value for the given input [key].
    * Returning number is between [0-keycount] keycount excluded.  */
-  int hashValue(List<int> key) => hashValueWithInitialHash(key, fingerPrint(key));
+  int getValue(List<int> key) => getValueWithInitialHash(key, fingerPrint(key));
 
   /**
    * returns the minimal perfect hash value for the given input [key].
@@ -59,7 +73,7 @@ class Mphf {
    * already calculated. So [fingerprint] value is used instead of re-calculation.
    * This provides a small performance enhancement.
    */
-  int hashValueWithInitialHash(List<int> key, int fingerPrint) {
+  int getValueWithInitialHash(List<int> key, int fingerPrint) {
     for (int i = 0; i < hashLevelData.length; i++) {
       int seed = hashLevelData[i].getSeed(fingerPrint);
       if (seed != 0) {

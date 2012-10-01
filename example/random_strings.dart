@@ -30,7 +30,7 @@ void main() {
     }
     stopWatch..reset()..start();
     for(int i = 0, length = l.length; i<length; ++i) {
-      int k = hash.hashValue(l[i]);
+      int k = hash.getValue(l[i]);
     }
     print("Hash query time : ${stopWatch.elapsedInMs()} ms \n");
   }

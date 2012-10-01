@@ -1,4 +1,4 @@
-# Some Hash related algorithms and functions for Dart 
+# Hash algorithms and functions for Dart 
 
 ## Minimal Perfect Hash
 
@@ -24,7 +24,7 @@ Dart implementation does not provide this functionality.
 
 This implementation is a variant of "Hash, displace, and compress" - CHD algorithm (http://cmph.sourceforge.net/papers/esa09.pdf). 
 The novelty of this variant is that it does not apply integer array compression. Instead it stores the hash seed values in a byte array and uses layered structure for failed bukets.
-It uses sligtly more space than it could (typically a Mphf can use only 2.5 bits), but generally this implementation is faster to generate and query. 
+It uses slightly more space than it could (typically a Mphf can use only 2.5 bits), but generally this implementation is faster to generate and query. 
 
 ### Usage example:
 
@@ -32,6 +32,6 @@ It uses sligtly more space than it could (typically a Mphf can use only 2.5 bits
 	  var fruits = ["apple", "orange", "blueberry", "cherry", "pomegranate", "plum", "pear"];
 	  var mphf = new Mphf.fromStrings(fruits);
 	  for(var fruit in fruits) {
-	    print("$fruit = ${mphf.hashValue(fruit.charCodes())}");
+	    print("$fruit = ${mphf.getValue(fruit.charCodes())}");
 	  }
 	}

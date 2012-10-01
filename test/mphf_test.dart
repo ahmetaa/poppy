@@ -9,7 +9,7 @@ bool randomStringTest() {
     Mphf hash = new Mphf.fromStrings(strings);
     var values = new Set<int>();
     for(String s in strings) {
-      int value = hash.hashValue(s.charCodes());
+      int value = hash.getValue(s.charCodes());
       if(values.contains(value)) {
         print("Duplicated value $value for key $s for set size $size");
         return false;
