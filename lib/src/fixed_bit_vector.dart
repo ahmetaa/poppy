@@ -25,9 +25,7 @@ class FixedBitVector {
 
   get size => _size;
 
-  /**
-   * Creates a fixed bit vector with capacity of [bitCount].
-   */
+  /** Creates a fixed bit vector with capacity of [bitCount]. */
   FixedBitVector.bitCount(int bitCount) {
     if (bitCount <= 0) {
         throw new ArgumentError("${bitCount} must be a positive integer");
