@@ -131,7 +131,7 @@ class BucketCalculator {
       failedKeyCount += failedBucket.itemIndexes.length;
     }
 
-    int failedBucketAmount = (failedKeyCount / averageKeysPerBucket).toInt();
+    int failedBucketAmount = (failedKeyCount ~/ averageKeysPerBucket).toInt() +1;
 
     // this is a worst case scenario. No empty slot find for any buckets and we are already using buckets where bucket Amount>=keyAmount
     // In this case we double the bucket size with the hope that it will have better bucket-key distribution.
