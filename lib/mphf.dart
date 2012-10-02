@@ -82,7 +82,7 @@ class Mphf {
     return result;
   }
 
-  double averageBitsPerKey() => (totalBytesUsed() * 8).toDouble() / hashLevelData[0].keyAmount;
+  double averageBitsPerKey() => totalBytesUsed() * 8 / hashLevelData[0].keyAmount;
 }
 
 class KeyProvider {

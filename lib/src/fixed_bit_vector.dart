@@ -14,7 +14,7 @@ class FixedBitVector {
 
   _initialize(int capacity) {
       _size = capacity;
-      int wordCount = capacity~/32 + 1;
+      int wordCount = capacity ~/ 32 + 1;
       _words = new Int32List(wordCount);
       for (int i = 0; i < 32; i++) {
         _setMasks[i] = 0x1 << i;
