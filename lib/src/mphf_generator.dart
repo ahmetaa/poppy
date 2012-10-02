@@ -28,7 +28,7 @@ class BucketCalculator {
   List<HashIndexes> calculate() {
     keyAmount = keyProvider.keyAmount();
 
-    int bucketAmount=(keyAmount / averageKeysPerBucket).toInt();
+    int bucketAmount=(keyAmount / averageKeysPerBucket).toInt()+1;
 
     var buckets = generateInitialBuckets(bucketAmount);
 
