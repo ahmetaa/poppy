@@ -15,7 +15,7 @@ class FixedBitVector {
   _initialize(int capacity) {
       if (capacity <= 0 )
       _size = capacity;
-      int wordCount = capacity ~/ 32 + 1;
+      int wordCount = (capacity + 31) >> 5;
       _words = new Int32List(wordCount);
       for (int i = 0; i < 32; i++) {
         _setMasks[i] = 0x1 << i;
@@ -26,12 +26,11 @@ class FixedBitVector {
   get size => _size;
 
   /**
-   * Creates a fixed bit vector with minimum capacity of [bitCount].
-   * Actual size is the smallest multiple of 32 that is >= [bitcount]
+   * Creates a fixed bit vector with capacity of [bitCount].
    */
   FixedBitVector.bitCount(int bitCount) {
     if (bitCount <= 0) {
-      throw new ArgumentError("${bitCount} must be a positive integer");
+        throw new ArgumentError("${bitCount} must be a positive integer");
     }
     _initialize(bitCount);
   }
