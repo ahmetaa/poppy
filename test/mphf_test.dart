@@ -3,10 +3,11 @@ import 'package:poppy/mphf.dart';
 import 'dart:math';
 
 bool randomStringTest() {
-  var nums = [1,2,3,4,5,10,100,1000,1001,10000];
+  var nums = [1,2,3,4,5,10,100,1000,1001,10000,50000,100000];
   for(num size in nums) {
     Set<String> strings = randomStrings(size, 7);
     Mphf hash = new Mphf.fromStrings(strings);
+    print ("For key set ${size} average memory per key = ${hash.averageBitsPerKey()} bits");
     var values = new Set<int>();
     for(String s in strings) {
       int value = hash.getValue(s.charCodes());
@@ -14,11 +15,10 @@ bool randomStringTest() {
         print("Duplicated value $value for key $s for set size $size");
         return false;
       }
-      values.add(value);
-      return true;
-    }
+      values.add(value);      
+    }    
   }
-
+  return true;
 }
 
 Set<String> randomStrings(num AMOUNT, num LENGTH) {
