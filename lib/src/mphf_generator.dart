@@ -10,8 +10,11 @@ class HashIndexes {
   int bucketAmount;
   Uint8List bucketHashSeedValues;
   List<int> failedIndexes;
-  HashIndexes(this.keyAmount, this.bucketAmount, this.bucketHashSeedValues, this.failedIndexes);
-  int getSeed(int fingerPrint) => (bucketHashSeedValues[fingerPrint % bucketAmount]) & 0xff;
+  HashIndexes(this.keyAmount, this.bucketAmount, this.bucketHashSeedValues, this.failedIndexes) {
+    if(this.bucketAmount==null)
+      throw new ArgumentError("Crap");
+  }
+  int getSeed(int fingerPrint) => bucketHashSeedValues[fingerPrint % bucketAmount];
 }
 
 class BucketCalculator {
@@ -22,13 +25,13 @@ class BucketCalculator {
   static final int HASH_SEED_LIMIT = 255;
 
   BucketCalculator(this.keyProvider){
-    averageKeysPerBucket = 3.0;
+    averageKeysPerBucket = 3.0; // average 3 keys per bucket gives good "bit per key" value.
   }
 
   List<HashIndexes> calculate() {
     keyAmount = keyProvider.keyAmount();
 
-    int bucketAmount=(keyAmount / averageKeysPerBucket).toInt();
+    int bucketAmount=(keyAmount / averageKeysPerBucket).toInt() + 1;
 
     var buckets = generateInitialBuckets(bucketAmount);
 
@@ -52,7 +55,7 @@ class BucketCalculator {
 
     // add keys to buckets.
     for (int i = 0; i < keyAmount; i++) {
-      int bucketIndex = fingerPrint(keyProvider.getKey(i)) % bucketAmount;
+      int bucketIndex = initialHash(keyProvider.getKey(i)) % bucketAmount;
       buckets[bucketIndex].add(i);
     }
 
@@ -131,7 +134,7 @@ class BucketCalculator {
       failedKeyCount += failedBucket.itemIndexes.length;
     }
 
-    int failedBucketAmount = (failedKeyCount ~/ averageKeysPerBucket).toInt() +1;
+    int failedBucketAmount = (failedKeyCount / averageKeysPerBucket).toInt() +1;
 
     // this is a worst case scenario. No empty slot find for any buckets and we are already using buckets where bucket Amount>=keyAmount
     // In this case we double the bucket size with the hope that it will have better bucket-key distribution.
@@ -153,7 +156,7 @@ class BucketCalculator {
     // generate secondary buckets with item indexes.
     for (_Bucket largeHashIndexBucket in failedBuckets) {
       for (int itemIndex in largeHashIndexBucket.itemIndexes) {
-        int secondaryBucketIndex = fingerPrint(keyProvider.getKey(itemIndex)) % failedBucketAmount;
+        int secondaryBucketIndex = initialHash(keyProvider.getKey(itemIndex)) % failedBucketAmount;
         nextLevelBuckets[secondaryBucketIndex].add(itemIndex);
       }
     }

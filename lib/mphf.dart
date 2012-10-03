@@ -16,7 +16,7 @@ int hash(List<int> key, int seed) {
   return h1 & 0x7fffffff;
 }
 
-int fingerPrint(List<int> key) => hash(key, 0x9747b28c);
+int initialHash(List<int> key) => hash(key, 0x9747b28c);
 
 /**
  * A Minimal Perfect Hash function which accepts keys that can be represented as List<int>.
@@ -62,10 +62,6 @@ class Mphf {
 
   int get levelCount => hashLevelData.length;
 
-  /** returns the minimal perfect hash value for the given input [key].
-   * Returning number is between [0-keycount] keycount excluded.  */
-  int getValue(List<int> key) => getValueWithInitialHash(key, fingerPrint(key));
-
   /**
    * returns the minimal perfect hash value for the given input [key].
    * hash values is between [0-keycount] keycount excluded.
@@ -73,9 +69,15 @@ class Mphf {
    * already calculated. So [fingerprint] value is used instead of re-calculation.
    * This provides a small performance enhancement.
    */
-  int getValueWithInitialHash(List<int> key, int fingerPrint) {
+  int getValue(List<int> key, [int initialHashValue]) {
+    int k = 0;
+    if(initialHashValue==null)
+      k = initialHash(key);
+    else 
+      k = initialHashValue;
+      
     for (int i = 0; i < hashLevelData.length; i++) {
-      int seed = hashLevelData[i].getSeed(fingerPrint);
+      int seed = hashLevelData[i].getSeed(k);
       if (seed != 0) {
         if (i == 0) {
           return hash(key, seed) % hashLevelData[0].keyAmount;
