@@ -13,7 +13,6 @@ class FixedBitVector {
   var _resetMasks = new Int32List(32);
 
   _initialize(int capacity) {
-      if (capacity <= 0 )
       _size = capacity;
       int wordCount = (capacity + 31) >> 5;
       _words = new Int32List(wordCount);
