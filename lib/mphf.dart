@@ -70,11 +70,8 @@ class Mphf {
    * This provides a small performance enhancement.
    */
   int getValue(List<int> key, [int initialHashValue]) {
-    int k = 0;
-    if(initialHashValue==null)
-      k = initialHash(key);
-    else 
-      k = initialHashValue;
+
+    int k = ?initialHashValue ? initialHashValue :  initialHash(key);
       
     for (int i = 0; i < hashLevelData.length; i++) {
       int seed = hashLevelData[i].getSeed(k);
