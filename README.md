@@ -1,6 +1,6 @@
 # Hash algorithms and functions for Dart 
 
-## Minimal Perfect Hash
+## Minimal Perfect Hash (Mphf)
 
 *Mphf* class in *lib/mphf.dart* is a Minimal Perfect Hash Function (MPHF) implementation.
 
@@ -35,3 +35,10 @@ It uses slightly more space than it could (typically a Mphf can use only 2.5 bit
 	    print("$fruit = ${mphf.getValue(fruit.charCodes())}");
 	  }
 	}
+
+## Sparse Scalar Vector (SparseScalarVector)
+*SparseVector* class in sparse_vector.dart can be used for representing large sparse vectors where most of its values are zero. 
+This structure only hold non-zero elements in it. Therefore it is compact.   
+Internally it is actually a hash table that uses linear probing. It is more efficient than using Map<int,num> structure.
+
+  
