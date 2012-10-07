@@ -95,7 +95,7 @@ main() {
     Stopwatch sw = new Stopwatch()..start();
     for (int j = 0; j < itCount; j++) {
 
-      var map = new Map<int, int>();
+      var map = new MapBasedSparseVector();
 
       for (int k = 0; k<keyVals.length; ++k) {
         map[keyVals[k].key]= keyVals[k].val;
@@ -106,27 +106,11 @@ main() {
       }
 
       for (int k = 0; k<keyVals.length; ++k) {
-        int key = keyVals[k].key;
-        int val = map[key];
-        if(val==null){
-          map[key]=1;
-        } else if(val==-1) {
-          map.remove(key);
-        } else {
-          map[key]=val + 1;
-        }
+        map.increment(keyVals[k].key);
       }
 
       for (int k = 0; k<keyVals.length; ++k) {
-        int key = keyVals[k].key;
-        int val = map[key];
-        if(val==null){
-          map[key]=-1;
-        } else if(val==1) {
-          map.remove(key);
-        } else {
-          map[key]=val - 1;
-        }
+        map.decrement(keyVals[k].key);
       }
     }
     print("Map Elapsed:${sw.elapsedInMs()}");
@@ -161,6 +145,42 @@ class KeyVal {
   num val;
 
   KeyVal(this.key, this.val);
+}
+
+class MapBasedSparseVector {
+  var map = new Map<int,num>();
+
+  num operator [] (int key) => map[key];
+
+  void operator []=(int key, num value) {
+    map[key]=value;
+  }
+
+  void remove(int key) {
+    map.remove(key);
+  }
+
+  int decrement(int key) {
+    int val = map[key];
+    if(val==null){
+      map[key]=-1;
+    } else if(val==1) {
+      map.remove(key);
+    } else {
+      map[key]=val - 1;
+    }
+  }
+
+  int increment(int key) {
+    int val = map[key];
+    if(val==null){
+      map[key]=1;
+    } else if(val==-1) {
+      map.remove(key);
+    } else {
+      map[key]=val + 1;
+    }
+  }
 }
 
 

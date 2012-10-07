@@ -33,7 +33,7 @@ class SparseVector implements Iterable<TableEntry> {
     modulo = size - 1;
   }
 
-  int hash(int key) => key & modulo;
+  int _hash(int key) => key & modulo;
 
   /*
    * locate operation does the following:
@@ -57,7 +57,7 @@ class SparseVector implements Iterable<TableEntry> {
    *   return -slot-1 or -pointer-1 to avoid the 0 index problem.
    */
   int _locate(int key) {
-      int slot = hash(key);
+      int slot = _hash(key);
       int pointer = -1;
       while (true) {
           int k = keys[slot];
@@ -82,7 +82,7 @@ class SparseVector implements Iterable<TableEntry> {
   num operator [] (int key) {
       if (key < 0)
           throw new ArgumentError("Key cannot be negative. But it is: $key");
-      int slot = hash(key);
+      int slot = _hash(key);
       while (true) {
           final int k = keys[slot];
           if (k < 0) {
