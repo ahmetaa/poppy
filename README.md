@@ -36,9 +36,9 @@ It uses slightly more space than it could (typically a Mphf can use only 2.5 bit
 	  }
 	}
 
-## Sparse Scalar Vector (SparseScalarVector)
+## Sparse Vector (SparseVector)
 *SparseVector* class in sparse_vector.dart can be used for representing large sparse vectors where most of its values are zero. 
 This structure only hold non-zero elements in it. Therefore it is compact.   
-Internally it is actually a hash table that uses linear probing. It is more efficient than using Map<int,num> structure.
+Internally it is actually a hash table that uses linear probing. It is more efficient than using Map<int,num> structure. Most vector arithmetic operations are not yet added to the code.
 
   
