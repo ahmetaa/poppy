@@ -3,6 +3,7 @@ import 'package:poppy/sparse_vector.dart';
 import 'dart:math';
 
 main() {
+
   test('Constructor.', () {
     var table = new SparseVector();
     expect(0, equals(table.length));
@@ -20,21 +21,22 @@ main() {
 
   test('Stress Test.', () {
     Random rand = new Random();
+    Stopwatch sw = new Stopwatch()..start();
     for (int i = 0; i < 20; i++) {
       SparseVector siv = new SparseVector();
       int kc = 0;
-      for (int j = 0; j < 200000; j++) {
+      for (int j = 0; j < 20000; j++) {
         int key = rand.nextInt(10000);
         bool exist = siv[key] != 0;
         int operation = rand.nextInt(8);
         switch (operation) {
           case 0: // insert
-          int value = rand.nextInt(10) + 1;
-          if (!exist) {
-            siv[key]=value;
-            kc++;
-          }
-          break;
+            int value = rand.nextInt(10) + 1;
+            if (!exist) {
+              siv[key]=value;
+              kc++;
+            }
+            break;
           case 1:
             if (exist) {
               siv.remove(key);
@@ -78,72 +80,87 @@ main() {
       }
       expect( kc , equals(siv.keyCount));
     }
-    });
+    print("Stress Test Elapsed:${sw.elapsedInMs()}");
+  });
 
-}
+  Random r = new Random();
+  var keyVals = new List<KeyVal>(10000);
+  final int itCount = 1000;
+  for (int i = 0; i < keyVals.length; i++) {
+    keyVals[i] = new KeyVal(r.nextInt(500000), r.nextInt(5000) + 1);
+  }
 
-  void perf() {
-    Random r = new Random();
-    var keyVals = new List<List<int>>(10000);
-    final int itCount = 1000;
-    for (int i = 0; i < keyVals.length; i++) {
-      keyVals[i][0] = r.nextInt(500000);
-      keyVals[i][1] = r.nextInt(5000) + 1;
-    }
+  test('Performance Test.', () {
+
     Stopwatch sw = new Stopwatch()..start();
     for (int j = 0; j < itCount; j++) {
 
-    var map = new Map<int, num>();
+      var map = new Map<int, int>();
 
-    for (List<int> keyVal in keyVals) {
-      map[keyVal[0]]= keyVal[1];
-    }
+      for (int k = 0; k<keyVals.length; ++k) {
+        map[keyVals[k].key]= keyVals[k].val;
+      }
 
+      for (int k = 0; k<keyVals.length; ++k) {
+        map[keyVals[k].key];
+      }
 
-    for (List<int> keyVal in keyVals) {
-      map[keyVal[0]];
-    }
+      for (int k = 0; k<keyVals.length; ++k) {
+        int key = keyVals[k].key;
+        int val = map[key];
+        if(val==null){
+          map[key]=1;
+        } else if(val==-1) {
+          map.remove(key);
+        } else {
+          map[key]=val + 1;
+        }
+      }
 
-    for (List<int> keyVal in keyVals) {
-      if (map.containsKey(keyVal[0])) {
-        map[keyVal[0]]=map[keyVal[0]] + 1;
+      for (int k = 0; k<keyVals.length; ++k) {
+        int key = keyVals[k].key;
+        int val = map[key];
+        if(val==null){
+          map[key]=-1;
+        } else if(val==1) {
+          map.remove(key);
+        } else {
+          map[key]=val - 1;
+        }
       }
     }
-
-    for (List<int> keyVal in keyVals) {
-      if (map.containsKey(keyVal[0])) {
-        int count = map[keyVal[0]];
-        if (count == 1)
-          map.remove(keyVal[0]);
-        else
-          map[keyVal[0]]=count - 1;
-      }
-    }
-
     print("Map Elapsed:${sw.elapsedInMs()}");
 
-
-    SparseVector countTable = new SparseVector();
+    SparseVector sv = new SparseVector();
     sw = new Stopwatch()..start();
 
     for (int j = 0; j < itCount; j++) {
 
-      for (List<int> keyVal in keyVals) {
-        countTable[keyVal[0]]=keyVal[1];
+      for (int k = 0; k<keyVals.length; ++k) {
+        sv[keyVals[k].key]=keyVals[k].val;
       }
-      for (List<int> keyVal in keyVals) {
-        countTable[keyVal[0]];
-      }
-
-      for (List<int> keyVal in keyVals) {
-        countTable.increment(keyVal[0]);
+      for (int k = 0; k<keyVals.length; ++k) {
+        sv[keyVals[k].key];
       }
 
-      for (List<int> keyVal in keyVals) {
-        countTable.decrement(keyVal[0]);
+      for (int k = 0; k<keyVals.length; ++k) {
+        sv.increment(keyVals[k].key);
+      }
+
+      for (int k = 0; k<keyVals.length; ++k) {
+        sv.decrement(keyVals[k].key);
       }
     }
     print("Sparse Vector elapsed:${sw.elapsedInMs()}");
-  }
+  });
 
 }
+
+class KeyVal {
+  int key;
+  num val;
+
+  KeyVal(this.key, this.val);
+}
+
+

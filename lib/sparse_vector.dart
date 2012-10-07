@@ -1,6 +1,7 @@
 library poppy;
 
 import 'dart:math';
+import 'dart:scalarlist';
 
 /// a simple sparse vector that can only hold non zero values in it.
 /// it uses positive integer keys and any num type value. Because vector is sparse, it does not
@@ -15,7 +16,7 @@ class SparseVector implements Iterable<TableEntry> {
   int modulo;
   List<int> keys;
   List<num> values;
-  int keyCount;
+  int keyCount=0;
   int threshold;
 
   SparseVector([int initialSize]) {
@@ -26,9 +27,9 @@ class SparseVector implements Iterable<TableEntry> {
       int power = (log(size) / log(2)).toInt();
       size = 1 << (power + 1);
     }
-    keys = new List<int>(size);
-    values = new List<num>(size);
-    threshold =  size * DEFAULT_LOAD_FACTOR;
+    keys = new List<int>()..insertRange(0, size, 0);
+    values = new List<num>()..insertRange(0, size, 0);
+    threshold =  (size * DEFAULT_LOAD_FACTOR).toInt();
     modulo = size - 1;
   }
 
