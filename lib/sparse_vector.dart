@@ -1,7 +1,6 @@
 library poppy;
 
 import 'dart:math';
-import 'dart:scalarlist';
 
 /// a simple sparse vector that can only hold non zero values in it.
 /// it uses positive integer keys and any num type value. Because vector is sparse, it does not

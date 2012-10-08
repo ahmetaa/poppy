@@ -83,7 +83,7 @@ main() {
     print("Stress Test Elapsed:${sw.elapsedInMs()}");
   });
 
-  Random r = new Random();
+  Random r = new Random(5);
   var keyVals = new List<KeyVal>(10000);
   final int itCount = 1000;
   for (int i = 0; i < keyVals.length; i++) {
@@ -141,8 +141,8 @@ main() {
 }
 
 class KeyVal {
-  int key;
-  num val;
+  final int key;
+  final int val;
 
   KeyVal(this.key, this.val);
 }
@@ -160,25 +160,31 @@ class MapBasedSparseVector {
     map.remove(key);
   }
 
-  int decrement(int key) {
+  num decrement(int key) {
     int val = map[key];
     if(val==null){
       map[key]=-1;
+      return -1;
     } else if(val==1) {
       map.remove(key);
+      return 0;
     } else {
       map[key]=val - 1;
+      return val-1;
     }
   }
 
-  int increment(int key) {
+  num increment(int key) {
     int val = map[key];
     if(val==null){
       map[key]=1;
+      return 1;
     } else if(val==-1) {
       map.remove(key);
+      return 0;
     } else {
       map[key]=val + 1;
+      return val+1;
     }
   }
 }

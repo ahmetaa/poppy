@@ -2,7 +2,7 @@ name: poppy
 version: 0.1.0
 description: >
   A Minimal perfect hash function implementation for Dart
-author: Ahmet A. Akın <ahmetaa@gmail.com>
+author: Ahmet A. Akın <ahmetaa@gmail.com>, Mehmet D. Akın <mdakin@gmail.com>
 
 dependencies: 
   unittest: { sdk: unittest }
