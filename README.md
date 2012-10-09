@@ -6,15 +6,6 @@
 
 A Mphf (http://en.wikipedia.org/wiki/Perfect_hash_function#Minimal_perfect_hash_function) is generated from a defined set of unique keys. It produces a distinct integer for each key in the range of [0..keycount-1].
 
-Such as for a set of 7 strings it generates integers 0..6:
-	apple = 3
-	orange = 0
-	blueberry = 1
-	cherry = 6
-	pomegranate = 5
-	plum = 4
-	pear = 2
-
 Generated hash function does not store key data in the structure therefore they are very compact. 
 This particular implementation uses around 3.2 bits per key. 
  

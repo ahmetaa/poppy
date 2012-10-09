@@ -22,23 +22,37 @@ Set<String> randomStrings(num amount, num length, [Set<String> notAllowed]) {
 main() {
   test('Random strings.', () {
     int size = 100000;
-    Set<String> strings = randomStrings(size, 5);
+    var strings = new List<String>()..addAll(randomStrings(size, 5));
     var bloom = new BloomFilter(size);
     
-    for(var str in strings) {
-      bloom.add(str.charCodes());
-    }
+    var sw = new Stopwatch()..start();
     
+    for(int i =0; i<strings.length;++i) {
+      bloom.add(strings[i].charCodes());
+    }    
+    print("Adding ${size} key took ${sw.elapsedInMs()}");
+    
+    sw = new Stopwatch()..start();
+    for(int i =0; i<strings.length;++i) {
+      bloom.check(strings[i].charCodes());      
+    }
+    print("Checking ${size} existing key took ${sw.elapsedInMs()}");
+    
+    // check
     for(var str in strings) {
       expect(bloom.check(str.charCodes()), equals(true));      
-    }
+    }    
+    Set<String> notAllow = new Set()..addAll(strings);
+    var strsNotExist = new List<String>()..addAll(randomStrings(size, 5, notAllow));  
     
-    Set<String> strsNotExist = randomStrings(size, 5, strings);  
     num falsePositive = 0;
-    for(var str in strsNotExist) {
-      if(bloom.check(str.charCodes()))
+    sw = new Stopwatch()..start();    
+    for(int i =0; i<strsNotExist.length;++i) {
+      if(bloom.check(strsNotExist[i].charCodes()))
         falsePositive++;
     }
+    print("Checking ${size} non existing key took ${sw.elapsedInMs()}");
+    
     print("${falsePositive} false positive in ${size} keys. Ratio = ${falsePositive/size}");
   });
 }

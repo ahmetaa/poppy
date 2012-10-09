@@ -23,7 +23,7 @@ class SparseVector implements Iterable<TableEntry> {
     if (size < 2)
       size = 2;
     if ((size & (size - 1)) != 0) { // check for power of two
-      int power = log(size) ~/ log(2);
+      int power = (log(size) / log(2)).toInt();
       size = 1 << (power + 1);
     }
     keys = new List<int>()..insertRange(0, size, 0);

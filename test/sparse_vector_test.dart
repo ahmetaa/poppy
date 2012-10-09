@@ -85,9 +85,9 @@ main() {
 
   Random r = new Random(5);
   var keyVals = new List<KeyVal>(10000);
-  final int itCount = 5000;
+  final int itCount = 1000;
   for (int i = 0; i < keyVals.length; i++) {
-    keyVals[i] = new KeyVal(r.nextInt(5000), r.nextInt(5000) + 1);
+    keyVals[i] = new KeyVal(r.nextInt(20000), r.nextInt(5000) + 1);
   }
 
   test('Performance Test.', () {
