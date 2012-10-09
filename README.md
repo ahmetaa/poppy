@@ -41,4 +41,13 @@ It uses slightly more space than it could (typically a Mphf can use only 2.5 bit
 This structure only hold non-zero elements in it. Therefore it is compact.   
 Internally it is actually a hash table that uses linear probing. It is more efficient than using Map<int,num> structure. Most vector arithmetic operations are not yet added to the code.
 
+## Bloom Filter (BloomFilter)
+*BloomFilter* class in bloom_filter.dart is a simple Bloom Filter implementation. 
+This structure guarantess if a key is "not" added to it. However it cannot guarantee if a key really added before.
+Implementation uses three simple hash functions (actually same functioun with different seeds) and a 32 bit int backed bit vector.
+It uses 12 bits per key and false poisitive ratio is around 1.1%. Intended key amount can be defined in the 
+constructor. For now about 170 million keys can be used. By default it provides around %1 false poitive ratio for 10,000 keys.
+ 
+
+
   
