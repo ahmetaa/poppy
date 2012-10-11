@@ -23,7 +23,7 @@ main() {
   test('Random strings.', () {
     int size = 200000;
     var strings = new List<String>()..addAll(randomStrings(size, 5));
-    var bloom = new BloomFilter.maxFalsePosProb(size, 0.02);
+    var bloom = new BloomFilter(size);
     
     var sw = new Stopwatch()..start();
     

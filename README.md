@@ -37,5 +37,9 @@ Internally it is actually a hash table that uses linear probing. It is more effi
 This structure guarantess if a key was "not" added to it. However it cannot guarantee if a key really added before.
 Implementation uses three simple hash functions (actually same functioun with different seeds) and a 32 bit int backed bit vector.
 A Bloom filter can be constructed with number of keys to add, bits per bucket or maximum expected false positive ratio. Parameter estimation code is 
-converted from opencrawl project. 
+converted from opencrawl project.
+
+## Integer Set (Int Set)  
+A simple implementation of an integer set. This is actually similar to SparseVector class. It is suppose to be
+faster than Set<int> structure.
 

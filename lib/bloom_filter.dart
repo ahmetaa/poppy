@@ -12,12 +12,9 @@ class BloomFilter {
   //  Eight prime numbers to use as hash seeds. could be other numbers.
   var _seeds = [0xEC4BA7, 0x222B3A25, 0x3A8F057B, 0x51CD6295, 0x14D41585, 0x2D980ED, 0x1118DEA5, 0x28E75F97]; 
  
-  static final int DEFAULT_BUCKETS_PER_KEY = 10;
-  
-  BloomFilter(int approximateKeySize, [int bucketsPerKey]) {    
-    int bpk = ?bucketsPerKey ? bucketsPerKey : DEFAULT_BUCKETS_PER_KEY;
-    int hashCount = BloomParameterEstimation.computeBestK(bpk);
-    _initialize(approximateKeySize, bpk, hashCount);  
+  BloomFilter(int approximateKeySize, [int bucketsPerKey=10]) {    
+    int hashCount = BloomParameterEstimation.computeBestK(bucketsPerKey);
+    _initialize(approximateKeySize, bucketsPerKey, hashCount);  
   }
   
   BloomFilter.maxFalsePosProb(int approximateKeySize, double maxFalsePosProb) {
