@@ -3,7 +3,7 @@ library poppy;
 import 'dart:scalarlist';
 import 'dart:math';
 
-class IntSet {
+class IntSet implements Iterable<int> {
   
   static final int INITIAL_SIZE = 8;
   static final num DEFAULT_LOAD_FACTOR = 0.6;
@@ -113,6 +113,17 @@ class IntSet {
       keys[loc] = key;
       flags[loc] = OCCUPIED;
       keyCount++;
+  }
+  
+  List<int> allKeys() {
+    var result = new List<int>(keyCount);
+    int j =0;
+    for (int i = 0; i < keys.length; i++) {    
+      if (flags[i] == OCCUPIED) {
+        result[j++]=keys[i];
+      }
+    }
+    return result;
   }
   
 }
