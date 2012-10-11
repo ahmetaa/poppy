@@ -21,9 +21,9 @@ Set<String> randomStrings(num amount, num length, [Set<String> notAllowed]) {
 
 main() {
   test('Random strings.', () {
-    int size = 100000;
+    int size = 200000;
     var strings = new List<String>()..addAll(randomStrings(size, 5));
-    var bloom = new BloomFilter(size);
+    var bloom = new BloomFilter.maxFalsePosProb(size, 0.02);
     
     var sw = new Stopwatch()..start();
     
