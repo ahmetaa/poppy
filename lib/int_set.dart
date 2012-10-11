@@ -3,18 +3,18 @@ library poppy;
 import 'dart:scalarlist';
 import 'dart:math';
 
-class IntSet implements Iterable<int> {
-  
+class IntSet {
+
   static final int INITIAL_SIZE = 8;
   static final num DEFAULT_LOAD_FACTOR = 0.6;
   int modulo;
   List<int> keys;
   Uint8List flags;
-  
-  static final int EMPTY=0; 
+
+  static final int EMPTY=0;
   static final int OCCUPIED=1;
-  static final int DELETED=2;  
-  
+  static final int DELETED=2;
+
   int keyCount=0;
   int threshold;
 
@@ -36,8 +36,8 @@ class IntSet implements Iterable<int> {
 
   int get capacity => threshold;
 
-  int get slotSize => keys.length;  
-  
+  int get slotSize => keys.length;
+
   int _hash(int key) => key & modulo;
 
   int _locate(int key) {
@@ -65,7 +65,7 @@ class IntSet implements Iterable<int> {
     int slot = _hash(key);
     while (true) {
       int flag = flags[slot];
-      if (flag == DELETED) { 
+      if (flag == DELETED) {
           slot = (slot + 1) & modulo;
           continue;
       }
@@ -106,7 +106,7 @@ class IntSet implements Iterable<int> {
           _expand();
       }
       int loc = _locate(key);
-      if (loc >= 0) {          
+      if (loc >= 0) {
           return;
       }
       loc = -loc - 1;
@@ -114,16 +114,16 @@ class IntSet implements Iterable<int> {
       flags[loc] = OCCUPIED;
       keyCount++;
   }
-  
+
   List<int> allKeys() {
     var result = new List<int>(keyCount);
     int j =0;
-    for (int i = 0; i < keys.length; i++) {    
+    for (int i = 0; i < keys.length; i++) {
       if (flags[i] == OCCUPIED) {
         result[j++]=keys[i];
       }
     }
     return result;
   }
-  
+
 }
