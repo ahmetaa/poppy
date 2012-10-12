@@ -52,8 +52,8 @@ class SimHash {
       shingle |= input[k+2];
       shingle = shingle<<16;
       shingle |= input[k+3];
+      shingles.add(shingle);      
     }
-    shingles.add(shingle);
 
     Int32List bitCounts = new Int32List(HASH_SIZE);
 
@@ -73,12 +73,4 @@ class SimHash {
     return result;
   }
 
-}
-
-
-void main() {
-  var sh = new SimHash();
-  int k = sh.getHash("Şirin tavşan çok üzgündü".charCodes());
-  int l = sh.getHash("Şirin tavşan pek üzgündü".charCodes());
-  print(hammingDistance(k,l));
 }
