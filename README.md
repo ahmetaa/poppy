@@ -55,7 +55,7 @@ bit positions of two hash values matches better for similar items (smaller Hammi
 	
 For each input a 64 bit hash is generated. This hash can be used in tasks like near duplicate detection and clustering of documents.
 This idea is represented in Charikar's "Similarity Estimation Techniques from Rounding Algorithms" paper. I assume Google uses this
-algorithm and also has a patent on related technology.
+algorithm and also has a patent on related technology. Some parts of the implementation is converted from opencrawl project.
  
 
 
