@@ -46,11 +46,11 @@ faster than Set<int> structure.
 ## SimHash
 This is a special hash function that generates similar hash values for similar items. This means
 bit positions of two hash values matches better for similar items (Hamming distance).  For example:  
-s1 = "Small rabbit was very sad"     
-s2 = "Small rabbit was very sad and crying"  
-s3 = "Because his brother was laughing at him"  
-hammingDistance (s1,s2) = 8  
-hammingDistance (s1,s3) = 28
+	s1 = "Small rabbit was very sad"     
+	s2 = "Small rabbit was very sad and crying"  
+	s3 = "Because his brother was laughing at him"  
+	hammingDistance (s1,s2) = 8  
+	hammingDistance (s1,s3) = 28  
 For each input a 64 bit hash is generated. This hash can be used in tasks like near duplicate detection and clustering of documents.
 This idea is represented in Charikar's "Similarity Estimation Techniques from Rounding Algorithms" paper. I assume Google uses this
 algorithm and also has a patent on related technology.
