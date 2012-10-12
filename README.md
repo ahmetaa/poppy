@@ -47,7 +47,7 @@ faster than Set<int> structure.
 This is a special hash function that generates similar hash values for similar items. This means
 bit positions of two hash values matches better for similar items (Hamming distance).  For example:  
 	s1 = "Small rabbit was very sad"     
-	s2 = "Small rabbit was very sad and crying"  
+	s2 = "Small cute rabbit was very sad"  
 	s3 = "Because his brother was laughing at him"  
 	hammingDistance (s1,s2) = 8  
 	hammingDistance (s1,s3) = 28  
