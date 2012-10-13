@@ -3,14 +3,17 @@ library poppy;
 import 'int_set.dart';
 import 'dart:scalarlist';
 
-int hash(int input) {
-  int h1 = 0x14D41585;
+int hash(int input, int seed) {
+  int h1 = seed;
   for (int i=0; i<8; ++i) {
     h1 += input>>(i*8) & 0xff;
     h1 += (h1 << 10) & 0xfffffffffffffff;
     h1 ^= (h1 >> 6);
   }
-  return h1 & 0xfffffffffffffff;
+  h1 += (h1 << 3);
+  h1 ^= (h1 >> 11);
+  h1 += (h1 << 15)& 0xfffffffffffffff;
+  return h1;
 }
 
 int hammingDistance(int i, int j) {
@@ -41,7 +44,8 @@ class SimHash {
     _initialize();
   }
 
-  int getHash(List<int> input) {
+  int getHash(List<int> input, [int hashSeed]) {
+    int seed = hashSeed==null ? 0x14D41585 : hashSeed;
     IntSet shingles = new IntSet(input.length);
     int shingle = 0;
     for(int k = 0; k<input.length-GRAM_SIZE; ++k) {
@@ -52,13 +56,13 @@ class SimHash {
       shingle |= input[k+2];
       shingle = shingle<<16;
       shingle |= input[k+3];
-      shingles.add(shingle);      
+      shingles.add(shingle);
     }
 
     Int32List bitCounts = new Int32List(HASH_SIZE);
 
     for(int shingle in shingles.allKeys()) {
-      int hash = hash(shingle);
+      int hash = hash(shingle, hashSeed);
       for(int i=0; i<HASH_SIZE; ++i ) {
         (hash & _setMasks[i]) ==0 ?  bitCounts[i]-- :  bitCounts[i]++;
       }
