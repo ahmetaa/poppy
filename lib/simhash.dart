@@ -42,28 +42,21 @@ class SimHash {
       shingle |= input[k+3];
       shingles.add(shingle);
     }
-    print("Shingle count:${shingles.length}");
 
     var bitCounts = new List<int>()..insertRange(0, HASH_SIZE, 0);
 
-    print(shingles.allKeys());
-
     for(int shingle in shingles.allKeys()) {
       int h = hash(shingle, seed);
-      print(binaryString(h,64));
       for(int i=0; i<HASH_SIZE; ++i ) {
         bitCounts[i] += (h & (1<<i)) ==0 ?  -1 :  1;
       }
     }
-
-    print(bitCounts.toString());
 
     int result = 0;
     for(int i = 0; i<HASH_SIZE; ++i) {
       if(bitCounts[i]>0)
         result |= (1<<i);
     }
-
     return result;
   }
 
@@ -76,3 +69,5 @@ String binaryString (int i, int bitCount) {
   }
   return new String.fromCharCodes(codes);
 }
+
+

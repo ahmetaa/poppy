@@ -2,20 +2,22 @@ import 'package:unittest/unittest.dart';
 import 'package:poppy/simhash.dart';
 
 void main() {
+  
   var sh = new SimHash();
 
-  var l = ["Şirin tavşan çok üzgündü",
-           "Şirin davşan çok üzgündü"
-           ];
+  var l = ["Şirin tavşan çok üzgündü", 
+           "Şirin davşan çok üzgündü", 
+           "Çünkü kardeşi karşısına geçmiş kahkahalarla gülüyordu.",
+           "Ne kadar küçük dişlerin var.",
+           "Ne kadar küçük kulakların var.",
+           "Böyle tavşan olur mu?"];
   for(String s in l) {
     print ('$s');
-    int h1 = sh.getHash(s.charCodes(), 0x2D980ED);
-    print('${binaryString(h1, 64)}');
+    int h1 = sh.getHash(s.charCodes());
     for(String ss in l) {
       if(s==ss)
         continue;
       int h2 = sh.getHash(ss.charCodes());
-      print('${binaryString(h2, 64)}');
       print ("${hammingDistance(h1,h2)} : $ss");
     }
   }
