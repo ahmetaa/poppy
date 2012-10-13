@@ -6,14 +6,11 @@ import 'dart:scalarlist';
 int hash(int input, int seed) {
   int h1 = seed;
   for (int i=0; i<8; ++i) {
-    h1 += input>>(i*8) & 0xff;
-    h1 += (h1 << 10) & 0xfffffffffffffff;
+    h1 += (input>>(i*8)) & 0xff;
+    h1 += (h1 << 13) & 0xffffffffffffffff;
     h1 ^= (h1 >> 6);
   }
-  h1 += (h1 << 3);
-  h1 ^= (h1 >> 11);
-  h1 += (h1 << 15)& 0xfffffffffffffff;
-  return h1;
+  return h1 & 0xffffffffffffffff;
 }
 
 int hammingDistance(int i, int j) {
@@ -31,19 +28,6 @@ class SimHash {
   static final int HASH_SIZE = 64;
   static final int GRAM_SIZE = 4;
 
-  static var _setMasks = new Int64List(64);
-  static var _resetMasks = new Int64List(64);
-
-  _initialize() {
-      for (int i = 0; i < 64; i++) {
-        _setMasks[i] = 1 << i;
-      }
-  }
-
-  SimHash() {
-    _initialize();
-  }
-
   int getHash(List<int> input, [int hashSeed]) {
     int seed = hashSeed==null ? 0x14D41585 : hashSeed;
     IntSet shingles = new IntSet(input.length);
@@ -58,23 +42,37 @@ class SimHash {
       shingle |= input[k+3];
       shingles.add(shingle);
     }
+    print("Shingle count:${shingles.length}");
 
-    Int32List bitCounts = new Int32List(HASH_SIZE);
+    var bitCounts = new List<int>()..insertRange(0, HASH_SIZE, 0);
+
+    print(shingles.allKeys());
 
     for(int shingle in shingles.allKeys()) {
-      int hash = hash(shingle, hashSeed);
+      int h = hash(shingle, seed);
+      print(binaryString(h,64));
       for(int i=0; i<HASH_SIZE; ++i ) {
-        (hash & _setMasks[i]) ==0 ?  bitCounts[i]-- :  bitCounts[i]++;
+        bitCounts[i] += (h & (1<<i)) ==0 ?  -1 :  1;
       }
     }
+
+    print(bitCounts.toString());
 
     int result = 0;
     for(int i = 0; i<HASH_SIZE; ++i) {
       if(bitCounts[i]>0)
-        result |= 1<<i;
+        result |= (1<<i);
     }
 
     return result;
   }
 
+}
+
+String binaryString (int i, int bitCount) {
+  var codes = new List<int>(bitCount);
+  for(int j = bitCount-1; j>=0; --j) {
+    codes[j] = (i & (1<<j))==0 ? '0'.charCodeAt(0) : '1'.charCodeAt(0);
+  }
+  return new String.fromCharCodes(codes);
 }
