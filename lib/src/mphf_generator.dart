@@ -10,10 +10,7 @@ class HashIndexes {
   int bucketAmount;
   Uint8List bucketHashSeedValues;
   List<int> failedIndexes;
-  HashIndexes(this.keyAmount, this.bucketAmount, this.bucketHashSeedValues, this.failedIndexes) {
-    if(this.bucketAmount==null)
-      throw new ArgumentError("Crap");
-  }
+  HashIndexes(this.keyAmount, this.bucketAmount, this.bucketHashSeedValues, this.failedIndexes);
   int getSeed(int fingerPrint) => bucketHashSeedValues[fingerPrint % bucketAmount];
 }
 
