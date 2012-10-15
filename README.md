@@ -37,7 +37,7 @@ Internally it is actually a hash table that uses linear probing. It is more effi
 This structure guarantess if a key was "not" added to it. However it cannot guarantee if a key really added before.
 Implementation uses three simple hash functions (actually same functioun with different seeds) and a 32 bit int backed bit vector.
 A Bloom filter can be constructed with number of keys to add, bits per bucket or maximum expected false positive ratio. Parameter estimation code is 
-converted from opencrawl project.
+converted from commoncrawl project.
 
 ## Integer Set (Int Set)  
 A simple implementation of an integer set. This is actually similar to SparseVector class. It is suppose to be
@@ -55,7 +55,7 @@ bit positions of two hash values matches better for similar items (smaller Hammi
 	
 For each input a 64 bit hash is generated. This hash can be used in tasks like near duplicate detection and clustering of documents.
 This idea is represented in Charikar's "Similarity Estimation Techniques from Rounding Algorithms" paper. I assume Google uses this
-algorithm and also has a patent on related technology. Some parts of the implementation is converted from opencrawl project.
+algorithm and also has a patent on related technology. Some parts of the implementation is converted from commoncrawl project.
  
 
 

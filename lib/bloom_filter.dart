@@ -12,7 +12,7 @@ class BloomFilter {
   //  Eight prime numbers to use as hash seeds. could be other numbers.
   var _seeds = [0xEC4BA7, 0x222B3A25, 0x3A8F057B, 0x51CD6295, 0x14D41585, 0x2D980ED, 0x1118DEA5, 0x28E75F97]; 
  
-  BloomFilter(int approximateKeySize, [int bucketsPerKey=10]) {    
+  BloomFilter(int approximateKeySize, {int bucketsPerKey:10}) {    
     int hashCount = BloomParameterEstimation.computeBestK(bucketsPerKey);
     _initialize(approximateKeySize, bucketsPerKey, hashCount);  
   }
@@ -80,7 +80,7 @@ class BloomParameters {
 }
 
 /**
- * This code is converted from commoncrawl project's BloomCalculations class.
+ * This class below is converted from commoncrawl project's BloomCalculations class.
  * Below is the documentation from there. 
  *  
  * The following calculations are taken from:
