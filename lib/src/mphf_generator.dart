@@ -3,7 +3,7 @@ library poppy;
 import "dart:math";
 import 'dart:scalarlist';
 import "../mphf.dart";
-import "fixed_bit_vector.dart";
+import "bit_vector.dart";
 
 class HashIndexes {
   int keyAmount;

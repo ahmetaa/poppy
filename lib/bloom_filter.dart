@@ -1,6 +1,6 @@
 library poppy;
 
-import 'src/fixed_bit_vector.dart';
+import 'src/bit_vector.dart';
 import 'dart:math';
 
 class BloomFilter {
@@ -71,12 +71,12 @@ class _BloomHash {
   }  
 }
 
-class BloomParameters {
+class _BloomParameters {
 
   int K;                // number of hash functions.
   int bucketsPerElement;   
   
-  BloomParameters(this.K, this.bucketsPerElement);
+  _BloomParameters(this.K, this.bucketsPerElement);
 }
 
 /**
@@ -108,7 +108,7 @@ class BloomParameterEstimation {
    * cell (i,j) the false positive rate determined by using i buckets per
    * element and j hash functions.
    */
-  static final List<double,double>  probs = [
+  static final List<List<double>> probs  = [
     [ 1.0 ], // dummy row representing 0 buckets per element
     [ 1.0, 1.0 ], // dummy row representing 1 buckets per element
     [ 1.0, 0.393, 0.400 ],
@@ -154,10 +154,10 @@ class BloomParameterEstimation {
   static BloomParameters fromMaxFalsePosProb(double maxFalsePosProb) {
     // Handle the trivial cases
     if (maxFalsePosProb >= probs[minBuckets][minK]) {
-      return new BloomParameters(2, optKPerBuckets[2]);
+      return new _BloomParameters(2, optKPerBuckets[2]);
     }
     if (maxFalsePosProb < probs[maxBuckets][maxK]) {
-      return new BloomParameters(maxK, maxBuckets);
+      return new _BloomParameters(maxK, maxBuckets);
     }
 
     // First find the minimal required number of buckets:
@@ -172,7 +172,7 @@ class BloomParameterEstimation {
     while (probs[bucketsPerElement][K - 1] <= maxFalsePosProb) {
       K--;
     }    
-    return new BloomParameters(K, bucketsPerElement); 
+    return new _BloomParameters(K, bucketsPerElement); 
   }  
   
 }
