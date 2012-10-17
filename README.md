@@ -50,7 +50,7 @@ algorithm and also has a patent on related technology. Some parts of the impleme
  
 ## Golomb-Rice coding
 Golomb codes are used in lossless compression. Main idea is to represent numbers with quotient and remainder.
-Basically assume we want to encode the number 41. We choose a k  
+This is not yet functional
 
 ## Integer Set (Int Set)  
 A simple implementation of an integer set. This is actually similar to SparseVector class. It is suppose to be
