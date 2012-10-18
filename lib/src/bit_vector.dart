@@ -33,7 +33,7 @@ class FixedBitVector {
   }
   
   FixedBitVector.fromData(this._words) {
-    _size = data.length*32;
+    _size = _words.length*32;
     _initialize();
   }  
 
@@ -104,7 +104,8 @@ class Int32BackedBitVector {
   void add0 () {
     if(_size == _capacity)
       _expand();
-    _words[n >> 5] |= _setMasks[n & 31];
+    _words[_size >> 5] |= _setMasks[_size & 31];
+    _size++;    
   }  
 
   void clear(int n) {

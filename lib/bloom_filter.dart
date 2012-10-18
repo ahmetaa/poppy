@@ -1,7 +1,8 @@
 library poppy;
 
-import 'src/bit_vector.dart';
 import 'dart:math';
+import 'src/bit_vector.dart';
+
 
 class BloomFilter {
   
@@ -151,7 +152,7 @@ class BloomParameterEstimation {
    * considered more expensive than computing power, preference is given to
    * minimizing buckets per element rather than number of hash funtions.
    */
-  static BloomParameters fromMaxFalsePosProb(double maxFalsePosProb) {
+  static _BloomParameters fromMaxFalsePosProb(double maxFalsePosProb) {
     // Handle the trivial cases
     if (maxFalsePosProb >= probs[minBuckets][minK]) {
       return new _BloomParameters(2, optKPerBuckets[2]);
