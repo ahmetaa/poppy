@@ -5,38 +5,38 @@ import 'src/bit_vector.dart';
 
 
 class BloomFilter {
-  
+
   FixedBitVector _bitVector;
-  
-  List<_BloomHash> _hashFunctions; 
-  
+
+  List<_BloomHash> _hashFunctions;
+
   //  Eight prime numbers to use as hash seeds. could be other numbers.
-  var _seeds = [0xEC4BA7, 0x222B3A25, 0x3A8F057B, 0x51CD6295, 0x14D41585, 0x2D980ED, 0x1118DEA5, 0x28E75F97]; 
- 
-  BloomFilter(int approximateKeySize, {int bucketsPerKey:10}) {    
+  var _seeds = [0xEC4BA7, 0x222B3A25, 0x3A8F057B, 0x51CD6295, 0x14D41585, 0x2D980ED, 0x1118DEA5, 0x28E75F97];
+
+  BloomFilter(int approximateKeySize, {int bucketsPerKey:10}) {
     int hashCount = BloomParameterEstimation.computeBestK(bucketsPerKey);
-    _initialize(approximateKeySize, bucketsPerKey, hashCount);  
+    _initialize(approximateKeySize, bucketsPerKey, hashCount);
   }
-  
+
   BloomFilter.maxFalsePosProb(int approximateKeySize, double maxFalsePosProb) {
     var params = BloomParameterEstimation.fromMaxFalsePosProb(maxFalsePosProb);
     _initialize(approximateKeySize, params.bucketsPerElement, params.K);
   }
-  
+
   _initialize(int approximateKeySize, int bucketsPerKey, int hashCount) {
 
     int bucketAmount = bucketsPerKey*approximateKeySize;
     if(bucketAmount>0x7fffffff)
-      throw new ArgumentError("Cannot have $approximateKeySize elements.");       
-    
-    _hashFunctions = new List<_BloomHash>(hashCount);  
-    _bitVector = new FixedBitVector.bitCount(bucketAmount);    
+      throw new ArgumentError("Cannot have $approximateKeySize elements.");
+
+    _hashFunctions = new List<_BloomHash>(hashCount);
+    _bitVector = new FixedBitVector.bitCount(bucketAmount);
 
     for(int i = 0; i<hashCount; ++i) {
       _hashFunctions[i]= new _BloomHash(_seeds[i], bucketAmount);
-    }        
+    }
   }
-  
+
   /// adds key to the filter.
   void add(List<int> key) {
     for(var hashFunc in _hashFunctions) {
@@ -49,17 +49,17 @@ class BloomFilter {
     for(var hashFunc in _hashFunctions) {
       if(!_bitVector.getBit(hashFunc.hash(key)))
         return false;
-    }    
+    }
     return true;
   }
 }
 
 class _BloomHash {
-  final int seed; 
+  final int seed;
   final int modulo;
 
   _BloomHash(this.seed, this.modulo);
-  
+
   /** modified - shortened Jenkins 32 */
   int hash(List<int> key) {
     int h1 = seed;
@@ -67,27 +67,27 @@ class _BloomHash {
       h1 += key[i];
       h1 += (h1 << 10) & 0xfffffff;
       h1 ^= (h1 >> 6);
-    } 
+    }
     return h1 % modulo;
-  }  
+  }
 }
 
 class _BloomParameters {
 
   int K;                // number of hash functions.
-  int bucketsPerElement;   
-  
+  int bucketsPerElement;
+
   _BloomParameters(this.K, this.bucketsPerElement);
 }
 
 /**
  * This class below is converted from commoncrawl project's BloomCalculations class.
- * Below is the documentation from there. 
- *  
+ * Below is the documentation from there.
+ *
  * The following calculations are taken from:
  * http://www.cs.wisc.edu/~cao/papers/summary-cache/node8.html
  * "Bloom Filters - the math"
- * 
+ *
  * This class's static methods are meant to facilitate the use of the Bloom
  * Filter class by helping to choose correct values of 'bits per element' and
  * 'number of hash functions, k'. Author : Avinash Lakshman (
@@ -96,12 +96,12 @@ class _BloomParameters {
 
 class BloomParameterEstimation {
 
-  
+
   static final int maxBuckets = 15;
   static final int minBuckets = 2;
   static final int minK = 1;
   static final int maxK = 8;
- 
+
   /**
    * In the following table, the row 'i' shows false positive rates if i buckets
    * per element are used. Column 'j' shows false positive rates if j hash
@@ -127,7 +127,7 @@ class BloomParameterEstimation {
     [ 1.0, 0.0689, 0.0177, 0.00718, 0.00381, 0.00244, 0.00179, 0.00146, 0.00129 ],
     [ 1.0, 0.0645, 0.0156, 0.00596, 0.003, 0.00183, 0.00128, 0.001, 0.000852 ] // 15
     ];   // the first column is a dummy column representing K=0.
-  
+
   /**
    * Given the number of buckets that can be used per element, return the
    * optimal number of hash functions in order to minimize the false positive
@@ -142,7 +142,7 @@ class BloomParameterEstimation {
     if (bucketsPerElement >= optKPerBuckets.length)
       return optKPerBuckets[optKPerBuckets.length - 1];
     return optKPerBuckets[bucketsPerElement];
-  }  
+  }
 
   /**
    * Given a maximum tolerable false positive probability, compute a Bloom
@@ -172,10 +172,10 @@ class BloomParameterEstimation {
     // without losing too much precision.
     while (probs[bucketsPerElement][K - 1] <= maxFalsePosProb) {
       K--;
-    }    
-    return new _BloomParameters(K, bucketsPerElement); 
-  }  
-  
+    }
+    return new _BloomParameters(K, bucketsPerElement);
+  }
+
 }
 
 

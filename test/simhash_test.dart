@@ -2,11 +2,11 @@ import 'package:unittest/unittest.dart';
 import 'package:poppy/simhash.dart';
 
 void main() {
-  
+
   var sh = new SimHash();
 
-  var l = ["Şirin tavşan çok üzgündü Çünkü kardeşi karşısına geçmiş kahkahalarla gülüyordu.Ne kadar küçük dişlerin var.", 
-           "Şirin davşan çok üzgündü Çünkü kardeşi karşısına geçmiş kahkahalarla gülüyordu.Ne kadar küçük dişlerin var.", 
+  var l = ["Şirin tavşan çok üzgündü Çünkü kardeşi karşısına geçmiş kahkahalarla gülüyordu.Ne kadar küçük dişlerin var.",
+           "Şirin davşan çok üzgündü Çünkü kardeşi karşısına geçmiş kahkahalarla gülüyordu.Ne kadar küçük dişlerin var.",
            "Çünkü kardeşi karşısına geçmiş kahkahalarla gülüyordu.",
            "Ne kadar küçük dişlerin var.",
            "Ne kadar küçük kulakların var.",
