@@ -14,7 +14,7 @@ Mphf generation is a very slow operation, therefore it is generally suggested st
 Dart implementation does not provide this functionality.
 
 This implementation is a variant of "Hash, displace, and compress" - CHD algorithm (http://cmph.sourceforge.net/papers/esa09.pdf). 
-The novelty of this variant is that it does not apply integer array compression. Instead it stores the hash seed values in a byte array and uses layered structure for failed bukets.
+The novelty of this variant is that it does not apply integer array compression. Instead it stores the hash seed values in a byte array and uses layered structure for failed buckets.
 It uses slightly more space than it could (typically a Mphf can use only 2.5 bits), but generally this implementation is faster to generate and query. 
 
 ### Usage example:
