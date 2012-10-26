@@ -7,7 +7,6 @@ class Bits {
    * http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
    * I also tried lookup technique, it seems this is beating the 8 bit lookup
    * table. 16 bit lookup would be faster, but certainly an overkill.
-   * Lookup table approach could be faster in future VM versions.
    */
   static int popCount32(int x) {
     x = x - ((x >> 1) & 0x55555555);
@@ -22,7 +21,7 @@ class Bits {
   /**
    * Returns the rank of a bit for [x]; Number of 1 bits from most significant
    * bit down to the bit at position [n]. For example rank of 0xf00000ff for
-   * n = 5 is 4
+   * n = 10 is 4
    */
   static int bitRank32(int x, int n) =>  popCount32(x >> (32 - n));
 
