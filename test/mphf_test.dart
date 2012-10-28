@@ -15,8 +15,8 @@ bool randomStringTest() {
         print("Duplicated value $value for key $s for set size $size");
         return false;
       }
-      values.add(value);      
-    }    
+      values.add(value);
+    }
   }
   return true;
 }

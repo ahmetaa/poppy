@@ -28,6 +28,7 @@ class SimHash {
   static final int HASH_SIZE = 64;
   static final int GRAM_SIZE = 4;
 
+
   int getHash(List<int> input, [int hashSeed]) {
     int seed = hashSeed==null ? 0x14D41585 : hashSeed;
     IntSet shingles = new IntSet(input.length);

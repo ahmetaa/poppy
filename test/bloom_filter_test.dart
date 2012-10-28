@@ -24,35 +24,35 @@ main() {
     int size = 200000;
     var strings = new List<String>()..addAll(randomStrings(size, 5));
     var bloom = new BloomFilter(size);
-    
+
     var sw = new Stopwatch()..start();
-    
+
     for(int i =0; i<strings.length;++i) {
       bloom.add(strings[i].charCodes());
-    }    
+    }
     print("Adding ${size} key took ${sw.elapsedInMs()}");
-    
+
     sw = new Stopwatch()..start();
     for(int i =0; i<strings.length;++i) {
-      bloom.check(strings[i].charCodes());      
+      bloom.check(strings[i].charCodes());
     }
     print("Checking ${size} existing key took ${sw.elapsedInMs()}");
-    
+
     // check
     for(var str in strings) {
-      expect(bloom.check(str.charCodes()), equals(true));      
-    }    
+      expect(bloom.check(str.charCodes()), equals(true));
+    }
     Set<String> notAllow = new Set()..addAll(strings);
-    var strsNotExist = new List<String>()..addAll(randomStrings(size, 5, notAllow));  
-    
+    var strsNotExist = new List<String>()..addAll(randomStrings(size, 5, notAllow));
+
     num falsePositive = 0;
-    sw = new Stopwatch()..start();    
+    sw = new Stopwatch()..start();
     for(int i =0; i<strsNotExist.length;++i) {
       if(bloom.check(strsNotExist[i].charCodes()))
         falsePositive++;
     }
     print("Checking ${size} non existing key took ${sw.elapsedInMs()}");
-    
+
     print("${falsePositive} false positive in ${size} keys. Ratio = ${falsePositive/size}");
   });
 }

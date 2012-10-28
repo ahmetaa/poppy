@@ -71,7 +71,7 @@ class Mphf {
    */
   int getValue(List<int> key, [int initialHashValue]) {
     int k = initialHashValue==null ? initialHash(key) : initialHashValue;
-      
+
     for (int i = 0; i < hashLevelData.length; i++) {
       int seed = hashLevelData[i].getSeed(k);
       if (seed != 0) {
