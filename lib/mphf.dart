@@ -103,7 +103,7 @@ class KeyProvider {
 
    KeyProvider.fromStrings(Collection<String> vals) {
      for(String s in vals) {
-       list.add(s.charCodes());
+       list.add(s.charCodes);
      }
    }
 

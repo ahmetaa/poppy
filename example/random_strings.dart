@@ -15,24 +15,24 @@ void main() {
   print("Generating $AMOUNT amount of $LENGTH length unique strings");
   var stopWatch = new Stopwatch()..start();
   var testStrings = _randomStrings();
-  print("String set generation time : ${stopWatch.elapsedInMs()} ms \n");
+  print("String set generation time : ${stopWatch.elapsedMilliseconds} ms \n");
 
   for(int k=0; k<5; k++) {
     print("iteration: $k");
     stopWatch..reset()..start();
     var hash = new Mphf.fromStrings(testStrings);
-    print("Hash generation time : ${stopWatch.elapsedInMs()} ms");
+    print("Hash generation time : ${stopWatch.elapsedMilliseconds} ms");
     print("Average bit per key: ${hash.averageBitsPerKey()}");
 
     var l = new List<List<int>>();
     for(String s in testStrings) {
-      l.add(s.charCodes());
+      l.add(s.charCodes);
     }
     stopWatch..reset()..start();
     for(int i = 0, length = l.length; i<length; ++i) {
       int k = hash.getValue(l[i]);
     }
-    print("Hash query time : ${stopWatch.elapsedInMs()} ms \n");
+    print("Hash query time : ${stopWatch.elapsedMilliseconds} ms \n");
   }
 }
 

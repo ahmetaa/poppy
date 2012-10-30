@@ -189,10 +189,7 @@ class _TableIterator implements Iterator<TableEntry> {
 
   _TableIterator(this.vector);
 
-  bool hasNext() {
-    return k < vector.keyCount;
-  }
-
+  bool get hasNext => k < vector.keyCount; 
 
   TableEntry next() {
     while (vector.values[i] == 0) {

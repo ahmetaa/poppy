@@ -80,7 +80,7 @@ main() {
       }
       expect( kc , equals(siv.keyCount));
     }
-    print("Stress Test Elapsed:${sw.elapsedInMs()}");
+    print("Stress Test Elapsed:${sw.elapsedMilliseconds}");
   });
 
   Random r = new Random(5);
@@ -113,7 +113,7 @@ main() {
         map.decrement(keyVals[k].key);
       }
     }
-    print("Map Elapsed:${sw.elapsedInMs()}");
+    print("Map Elapsed:${sw.elapsedMilliseconds}");
 
     SparseVector sv = new SparseVector();
     sw = new Stopwatch()..start();
@@ -135,7 +135,7 @@ main() {
         sv.decrement(keyVals[k].key);
       }
     }
-    print("Sparse Vector elapsed:${sw.elapsedInMs()}");
+    print("Sparse Vector elapsed:${sw.elapsedMilliseconds}");
   });
 
 }

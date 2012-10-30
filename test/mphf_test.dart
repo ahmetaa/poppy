@@ -10,7 +10,7 @@ bool randomStringTest() {
     print ("For key set ${size} average memory per key = ${hash.averageBitsPerKey()} bits");
     var values = new Set<int>();
     for(String s in strings) {
-      int value = hash.getValue(s.charCodes());
+      int value = hash.getValue(s.charCodes);
       if(values.contains(value)) {
         print("Duplicated value $value for key $s for set size $size");
         return false;

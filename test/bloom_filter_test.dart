@@ -1,3 +1,5 @@
+library poppy;
+
 import 'package:unittest/unittest.dart';
 import 'package:poppy/bloom_filter.dart';
 import 'dart:math';
@@ -28,19 +30,19 @@ main() {
     var sw = new Stopwatch()..start();
 
     for(int i =0; i<strings.length;++i) {
-      bloom.add(strings[i].charCodes());
+      bloom.add(strings[i].charCodes);
     }
-    print("Adding ${size} key took ${sw.elapsedInMs()}");
+    print("Adding ${size} key took ${sw.elapsedMilliseconds}");
 
     sw = new Stopwatch()..start();
     for(int i =0; i<strings.length;++i) {
-      bloom.check(strings[i].charCodes());
+      bloom.check(strings[i].charCodes);
     }
-    print("Checking ${size} existing key took ${sw.elapsedInMs()}");
+    print("Checking ${size} existing key took ${sw.elapsedMilliseconds}");
 
     // check
     for(var str in strings) {
-      expect(bloom.check(str.charCodes()), equals(true));
+      expect(bloom.check(str.charCodes), equals(true));
     }
     Set<String> notAllow = new Set()..addAll(strings);
     var strsNotExist = new List<String>()..addAll(randomStrings(size, 5, notAllow));
@@ -48,10 +50,10 @@ main() {
     num falsePositive = 0;
     sw = new Stopwatch()..start();
     for(int i =0; i<strsNotExist.length;++i) {
-      if(bloom.check(strsNotExist[i].charCodes()))
+      if(bloom.check(strsNotExist[i].charCodes))
         falsePositive++;
     }
-    print("Checking ${size} non existing key took ${sw.elapsedInMs()}");
+    print("Checking ${size} non existing key took ${sw.elapsedMilliseconds}");
 
     print("${falsePositive} false positive in ${size} keys. Ratio = ${falsePositive/size}");
   });
