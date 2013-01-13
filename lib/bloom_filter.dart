@@ -9,6 +9,8 @@ class BloomFilter {
   FixedBitVector _bitVector;
 
   List<_BloomHash> _hashFunctions;
+  
+  int get hashAmount => _hashFunctions.length;
 
   //  Eight prime numbers to use as hash seeds. could be other numbers.
   var _seeds = [0xEC4BA7, 0x222B3A25, 0x3A8F057B, 0x51CD6295, 0x14D41585, 0x2D980ED, 0x1118DEA5, 0x28E75F97];

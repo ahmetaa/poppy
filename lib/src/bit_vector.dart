@@ -64,12 +64,12 @@ class Int32BackedBitVector {
       }
   }
 
-  Int32BackedBitVector({int initialSize}) {
+  Int32BackedBitVector([int initialSize]) {
     _size = 0;
     _expand();
   }
 
-  _expand({int toBitSize}) {
+  _expand([int toBitSize]) {
     int newSize = ?toBitSize ? (toBitSize+31 >> 5 -_words.length )+7 : 7;
     _words.insertRange(_words.length, 7, 0);
     _capacity = _words.length * 32;
