@@ -9,7 +9,7 @@ A Mphf (http://en.wikipedia.org/wiki/Perfect_hash_function#Minimal_perfect_hash_
 Generated hash function does not store key data in the structure therefore they are very compact. 
 This particular implementation uses around 3.2 bits per key. 
  
-Mphfs may be useful for very large look-up structures such as language model compression. 
+Mphfs may be useful for very large look-up structures such as the ones used in language model compression. 
 Mphf generation is a very slow operation, therefore it is generally suggested storing the hash data once it is generated and using it from the storage afterwards. 
 Dart implementation does not provide this functionality.
 
@@ -18,7 +18,8 @@ The novelty of this variant is that it does not apply integer array compression.
 It uses slightly more space than it could (Some Mphf implementations can use only 2.5 bits), but generally this implementation is faster to generate and query.
 
 ### Usage example:
-
+	import 'package:poppy/mphf.dart';
+	...
 	var fruits = ["apple", "orange", "blueberry", "cherry", "pomegranate", "plum", "pear"];
 	var mphf = new Mphf.fromStrings(fruits);
 	for(var fruit in fruits) {
@@ -33,7 +34,8 @@ A Bloom filter can be constructed with number of keys to add, bits per bucket or
 converted from commoncrawl project.
 
 ### Usage example:
-
+    import 'package:poppy/bloom_filter.dart';
+    ...
 	var fruits = ["apple", "orange", "blueberry", "cherry", "pomegranate", "plum", "pear"];
 	var bloom = new BloomFilter(fruits.length);
 	
