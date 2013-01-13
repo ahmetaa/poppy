@@ -15,14 +15,14 @@ class BloomFilter {
   //  Eight prime numbers to use as hash seeds. could be other numbers.
   var _seeds = [0xEC4BA7, 0x222B3A25, 0x3A8F057B, 0x51CD6295, 0x14D41585, 0x2D980ED, 0x1118DEA5, 0x28E75F97];
 
-  BloomFilter(int approximateKeySize, {int bucketsPerKey:10}) {
+  BloomFilter(int approximateKeyAmount, {int bucketsPerKey:10}) {
     int hashCount = BloomParameterEstimation.computeBestK(bucketsPerKey);
-    _initialize(approximateKeySize, bucketsPerKey, hashCount);
+    _initialize(approximateKeyAmount, bucketsPerKey, hashCount);
   }
 
-  BloomFilter.maxFalsePosProb(int approximateKeySize, double maxFalsePosProb) {
+  BloomFilter.maxFalsePosProb(int approximateKeyAmount, double maxFalsePosProb) {
     var params = BloomParameterEstimation.fromMaxFalsePosProb(maxFalsePosProb);
-    _initialize(approximateKeySize, params.bucketsPerElement, params.K);
+    _initialize(approximateKeyAmount, params.bucketsPerElement, params.K);
   }
 
   _initialize(int approximateKeySize, int bucketsPerKey, int hashCount) {
@@ -54,6 +54,12 @@ class BloomFilter {
     }
     return true;
   }
+  
+  /// returns false if key definitely does not exist. true when key *may* exist
+  bool checkString(String str) {
+    return check(str.charCodes);
+  }
+  
 }
 
 class _BloomHash {
