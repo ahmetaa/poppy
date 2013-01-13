@@ -1,22 +1,21 @@
 #  Algorithms for Dart 
 
 ## Trie
-Trie implementation for Dart. Tries are good for:  
-Finding objects with keys that has a given prefix string (or a prefix array)  
-Find objects that's key is a prefix of a given string.  
-This implementation is copied from mdakin's TrieDart library. 
+Trie implementation for Dart. Tries are especially good for prefix searches. This implementation is copied from mdakin's TrieDart library. 
 
 ### Usage example:
 
 	import 'package:poppy/trie.dart';
 	...
-	var words = ["ab", "aba", "abanoz", "abartmak", "acı", "baba", "baca"];
+	var words = ["april", "apron", "apricot", "hello", "goodbye"];
 	Trie<String> trie = new SimpleTrie();
 	for(var str in words) {
 	  trie[str]= str; // we put the key as the value. could be something else 
 	} 
-	print(trie.getValuesWithPrefix("aba")); 
-	 
+	print(trie.getValuesWithPrefix("apr"));
+		
+	Output:	
+	[apricot, april, apron]	
 
 ## Minimal Perfect Hash (Mphf)
 
@@ -44,6 +43,15 @@ It uses slightly more space than it could (Some Mphf implementations can use onl
 	  print("$fruit = ${mphf.getValue(fruit.charCodes)}");
 	}
 
+	Output:
+	apple = 4
+	orange = 5
+	blueberry = 2
+	cherry = 3
+	pomegranate = 0
+	plum = 1
+	pear = 6	
+
 ## Bloom Filter (BloomFilter)
 *BloomFilter* class in bloom_filter.dart is a simple Bloom Filter (http://en.wikipedia.org/wiki/Bloom_filter) implementation. 
 This structure guarantess if a key was "not" added to it. However it cannot guarantee if a key really added before.
@@ -68,6 +76,14 @@ converted from commoncrawl project.
 	  else
 	    print("$fruit does not exist in bloom filter.");
 	}
+
+	Output:	
+	apple may exist in bloom filter.
+	orange may exist in bloom filter.
+	watermelon does not exist in bloom filter.
+	papaya does not exist in bloom filter.
+	mango does not exist in bloom filter.
+	guava does not exist in bloom filter.
 
 ## SimHash
 This is a special hash function that generates similar hash values for similar items. This means
