@@ -44,7 +44,7 @@ main() {
 
     // check
     for(var str in strings) {
-      expect(bloom.check(str.charCodes), equals(true));
+      expect(bloom.check(str.charCodes), isTrue);
     }
     Set<String> notAllow = new Set()..addAll(strings);
     var strsNotExist = new List<String>()..addAll(randomStrings(size, 5, notAllow));

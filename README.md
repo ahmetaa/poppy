@@ -1,5 +1,23 @@
 #  Algorithms for Dart 
 
+## Trie
+Trie implementation for Dart. Tries are good for:  
+Finding objects with keys that has a given prefix string (or a prefix array)  
+Find objects that's key is a prefix of a given string.  
+This implementation is copied from mdakin's TrieDart library. 
+
+### Usage example:
+
+	import 'package:poppy/trie.dart';
+	...
+	var words = ["ab", "aba", "abanoz", "abartmak", "acı", "baba", "baca"];
+	Trie<String> trie = new SimpleTrie();
+	for(var str in words) {
+	  trie[str]= str; // we put the key as the value. could be something else 
+	} 
+	print(trie.getValuesWithPrefix("aba")); 
+	 
+
 ## Minimal Perfect Hash (Mphf)
 
 *Mphf* class in *lib/mphf.dart* is a Minimal Perfect Hash Function (MPHF) implementation.
