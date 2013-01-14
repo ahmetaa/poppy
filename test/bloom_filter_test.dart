@@ -22,10 +22,12 @@ Set<String> randomStrings(num amount, num length, [Set<String> notAllowed]) {
 }
 
 main() {
-  test('Random strings.', () {
-    int size = 200000;
-    var strings = new List<String>()..addAll(randomStrings(size, 5));
+  test('Random strings.', () {    
+    int size = 100000;
+    print("Generating ${size} random 7 length string.");
+    var strings = new List<String>()..addAll(randomStrings(size, 7));
     var bloom = new BloomFilter(size);
+    print("Amount of hash functions:${bloom.hashAmount}");
 
     var sw = new Stopwatch()..start();
 
@@ -42,7 +44,7 @@ main() {
 
     // check
     for(var str in strings) {
-      expect(bloom.check(str.charCodes), equals(true));
+      expect(bloom.check(str.charCodes), isTrue);
     }
     Set<String> notAllow = new Set()..addAll(strings);
     var strsNotExist = new List<String>()..addAll(randomStrings(size, 5, notAllow));

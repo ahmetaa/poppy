@@ -2,8 +2,8 @@ library poppy;
 
 import "dart:math";
 import 'dart:scalarlist';
-import "../mphf.dart";
 import "bit_vector.dart";
+import 'package:poppy/mphf.dart';
 
 class HashIndexes {
   int keyAmount;
@@ -33,7 +33,7 @@ class BucketCalculator {
     var buckets = generateInitialBuckets(bucketAmount);
 
     // sort buckets larger to smaller.
-    buckets.sort((_Bucket a, _Bucket b) => a.compareTo(b));
+    buckets.sort();
 
     var result = new List<HashIndexes>();
 
@@ -159,7 +159,7 @@ class BucketCalculator {
     }
 
     // sort buckets larger to smaller.
-    nextLevelBuckets.sort((_Bucket a, _Bucket b) => a.compareTo(b));
+    nextLevelBuckets.sort();
 
     int currentLevel = indexes.length;
     var failedHashValues = new List<int>();
