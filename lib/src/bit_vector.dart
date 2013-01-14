@@ -79,7 +79,7 @@ class Int32BackedBitVector {
 
   void setBit (int n) {
     if(n >= _size) {
-      _expand(n);
+      _expand();
       _size = n;
     }
     _words[n >> 5] |= _setMasks[n & 31];
@@ -110,7 +110,7 @@ class Int32BackedBitVector {
 
   void clear(int n) {
     if(n >= _size) {
-      _expand(n);
+      _expand();
       _size = n;
     }
     _words[n >> 5] &= _resetMasks[n & 31];

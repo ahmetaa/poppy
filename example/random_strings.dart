@@ -7,7 +7,7 @@ import 'package:poppy/mphf.dart';
  * - Query all strings to check speed. Use unchecked mode for speed.
  */
 
-final num AMOUNT = 100000;
+final num AMOUNT = 200000;
 final num LENGTH = 7;
 
 void main() {
@@ -49,5 +49,6 @@ Set<String> _randomStrings() {
   }
   return testVals;
 }
+
 
 
