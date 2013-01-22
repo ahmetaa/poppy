@@ -37,6 +37,6 @@ Set<String> randomStrings(num AMOUNT, num LENGTH) {
 
 main() {
   test('Random strings.', () {
-    expect(randomStringTest(), equals(true));
+    expect(randomStringTest(), true);
   });
 }

@@ -5,19 +5,35 @@ import 'dart:math';
 main() {
 
   test('Constructor.', () {
-    var table = new SparseVector();
-    expect(0, equals(table.length));
-    expect(SparseVector.INITIAL_SIZE, equals(table.slotSize));
-    table = new SparseVector(10);
-    expect(0, equals(table.length));
-    expect(16, equals(table.slotSize));
-    table = new SparseVector(16);
-    expect(0, equals(table.length));
-    expect(16, equals(table.slotSize));
-    table = new SparseVector(17);
-    expect(0, equals(table.length));
-    expect(32, equals(table.slotSize));
+    var sv = new SparseVector();
+    expect(0, sv.length);
+    expect(SparseVector.INITIAL_SIZE, sv.slotSize);
+    sv = new SparseVector(10);
+    expect(0, sv.length);
+    expect(16, sv.slotSize);
+    sv = new SparseVector(16);
+    expect(0, sv.length);
+    expect(16, sv.slotSize);
+    sv = new SparseVector(17);
+    expect(0, sv.length);
+    expect(32, sv.slotSize);
   });
+  
+  test('Iterator Test.', () {
+    var sv = new SparseVector();
+    expect(0, sv.length);
+    var keys = [1,2,5,6];
+    var vals = [1,3,7,-10];   
+    for(int k = 0; k<keys.length; ++k) {
+      sv[keys[k]]= vals[k];
+    }
+    int j = 0;    
+    for(TableEntry entry in sv) {
+      expect(keys[j], entry.key);
+      expect(vals[j], entry.value);        
+      j++;
+    }    
+  });  
 
   test('Stress Test.', () {
     Random rand = new Random();
@@ -78,7 +94,7 @@ main() {
             break;
         }
       }
-      expect( kc , equals(siv.keyCount));
+      expect(kc, siv.keyCount);
     }
     print("Stress Test Elapsed:${sw.elapsedMilliseconds}");
   });
