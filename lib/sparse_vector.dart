@@ -8,7 +8,7 @@ import 'dart:math';
 /// implementation uses simple hash table with linear probing.
 /// For marking deleten keys, -1 key value used.
 
-class SparseVector implements Iterable<TableEntry> {
+class SparseVector extends Iterable<TableEntry> {
 
   static final int INITIAL_SIZE = 8;
   static final num DEFAULT_LOAD_FACTOR = 0.6;
@@ -176,29 +176,34 @@ class SparseVector implements Iterable<TableEntry> {
 
   int get slotSize => keys.length;
 
-  Iterator<TableEntry> iterator() {
+  Iterator<TableEntry> get iterator {
       return new _TableIterator(this);
   }
 }
 
-class _TableIterator implements Iterator<TableEntry> {
+class _TableIterator extends Iterator<TableEntry> {
 
-  int i;
-  int k;
+  int i=0;
+  int k=0;
   SparseVector vector;
+  TableEntry current;
 
   _TableIterator(this.vector);
 
-  bool get hasNext => k < vector.keyCount; 
-
-  TableEntry next() {
+  bool moveNext() {
+    if(k == vector.keyCount)
+      return false; 
     while (vector.values[i] == 0) {
       i++;
     }
-    TableEntry te = new TableEntry(vector.keys[i], vector.values[i]);
+    current = new TableEntry(vector.keys[i], vector.values[i]);
     i++;
-    k++;
-    return te;
+    k++;    
+    return true;
+  }
+
+  TableEntry next() {
+    return current;
   }
 }
 
