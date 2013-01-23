@@ -1,4 +1,4 @@
-library poppy;
+library mphf_test;
 
 import 'dart:math';
 import 'dart:scalarlist';

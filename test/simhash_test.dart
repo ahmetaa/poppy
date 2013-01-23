@@ -1,3 +1,5 @@
+library simhash_test;
+
 import 'package:unittest/unittest.dart';
 import 'package:poppy/simhash.dart';
 

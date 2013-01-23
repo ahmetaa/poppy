@@ -1,3 +1,5 @@
+library int_set_test;
+
 import 'package:unittest/unittest.dart';
 import 'package:poppy/int_set.dart';
 import 'dart:math';

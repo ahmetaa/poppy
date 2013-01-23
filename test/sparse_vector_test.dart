@@ -1,3 +1,5 @@
+library sparse_vector_test;
+
 import 'package:unittest/unittest.dart';
 import 'package:poppy/sparse_vector.dart';
 import 'dart:math';

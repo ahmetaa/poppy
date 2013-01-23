@@ -1,4 +1,4 @@
-library poppy;
+library bloom_test;
 
 import 'package:unittest/unittest.dart';
 import 'package:poppy/bloom_filter.dart';

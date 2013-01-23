@@ -1,3 +1,5 @@
+library mphf_test;
+
 import 'package:unittest/unittest.dart';
 import 'package:poppy/mphf.dart';
 import 'dart:math';
