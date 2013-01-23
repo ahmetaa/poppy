@@ -69,7 +69,7 @@ class Int32BackedBitVector {
     _expand();
   }
 
-  _expand([int toBitSize]) {
+  _expand({int toBitSize}) {
     int newSize = ?toBitSize ? (toBitSize+31 >> 5 -_words.length )+7 : 7;
     _words.insertRange(_words.length, 7, 0);
     _capacity = _words.length * 32;
@@ -86,24 +86,27 @@ class Int32BackedBitVector {
   }
 
   void add1 () {
-    if(_size == _capacity)
+    if(_size == _capacity) {
       _expand();
+    }
     _words[_size >> 5] |= _setMasks[_size & 31];
     _size++;
   }
 
   /// adds k amount of 1 and a zero. Used in Golomb-Rice coding
   void addUnuary (int k) {
-    if(_size+k+1 == _capacity)
+    if(_size+k+1 == _capacity) {
       _expand();
+    }
     for(int j = 0; j<k; j++) _words[(_size+j) >> 5] |= _setMasks[(_size+j) & 31];
     // no need to add zero as we increment the size with k+1.
     _size+=(k+1);
   }
 
   void add0 () {
-    if(_size == _capacity)
+    if(_size == _capacity) {
       _expand();
+    }
     _words[_size >> 5] |= _setMasks[_size & 31];
     _size++;
   }

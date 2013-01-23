@@ -18,22 +18,22 @@ main() {
     expect(0, sv.length);
     expect(32, sv.slotSize);
   });
-  
+
   test('Iterator Test.', () {
     var sv = new SparseVector();
     expect(0, sv.length);
     var keys = [1,2,5,6];
-    var vals = [1,3,7,-10];   
+    var vals = [1,3,7,-10];
     for(int k = 0; k<keys.length; ++k) {
       sv[keys[k]]= vals[k];
     }
-    int j = 0;    
+    int j = 0;
     for(TableEntry entry in sv) {
       expect(keys[j], entry.key);
-      expect(vals[j], entry.value);        
+      expect(vals[j], entry.value);
       j++;
-    }    
-  });  
+    }
+  });
 
   test('Stress Test.', () {
     Random rand = new Random();
@@ -61,36 +61,44 @@ main() {
             break;
           case 2:
             siv.increment(key);
-            if (siv[key] == 1)
+            if (siv[key] == 1) {
               kc++;
-            if (siv[key] == 0)
+            }
+            if (siv[key] == 0) {
               kc--;
+            }
             break;
           case 3:
             siv[key];
             break;
           case 4:
-            if (siv[key] == 0)
+            if (siv[key] == 0) {
               kc++;
-            if (siv[key] == 1)
+            }
+            if (siv[key] == 1) {
               kc--;
+            }
             siv.decrement(key);
             break;
           case 6:
             int value = rand.nextInt(10) + 1;
             siv.incrementByAmount(key, value);
-            if (!exist && siv[key] != 0)
+            if (!exist && siv[key] != 0) {
               kc++;
-            if (siv[key] == 0)
+            }
+            if (siv[key] == 0) {
               kc--;
+            }
             break;
           case 7:
             int value = rand.nextInt(10) + 1;
             siv.incrementByAmount(key, -value);
-            if (!exist && siv[key] != 0)
+            if (!exist && siv[key] != 0) {
               kc++;
-            if (siv[key] == 0)
+            }
+            if (siv[key] == 0) {
               kc--;
+            }
             break;
         }
       }
@@ -100,7 +108,7 @@ main() {
   });
 
   Random r = new Random(5);
-  var keyVals = new List<KeyVal>(10000);
+  var keyVals = new List<KeyVal>.fixedLength(10000);
   final int itCount = 1000;
   for (int i = 0; i < keyVals.length; i++) {
     keyVals[i] = new KeyVal(r.nextInt(20000), r.nextInt(5000) + 1);

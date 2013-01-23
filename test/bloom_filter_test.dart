@@ -14,15 +14,16 @@ Set<String> randomStrings(num amount, num length, [Set<String> notAllowed]) {
       buffer.addCharCode(randomChar);
     }
     String s = buffer.toString();
-    if(?notAllowed && notAllowed.contains(s))
+    if(?notAllowed && notAllowed.contains(s)) {
       continue;
+    }
     testVals.add(s);
   }
   return testVals;
 }
 
 main() {
-  test('Random strings.', () {    
+  test('Random strings.', () {
     int size = 100000;
     print("Generating ${size} random 7 length string.");
     var strings = new List<String>()..addAll(randomStrings(size, 7));
@@ -52,8 +53,9 @@ main() {
     num falsePositive = 0;
     sw = new Stopwatch()..start();
     for(int i =0; i<strsNotExist.length;++i) {
-      if(bloom.check(strsNotExist[i].charCodes))
+      if(bloom.check(strsNotExist[i].charCodes)) {
         falsePositive++;
+      }
     }
     print("Checking ${size} non existing key took ${sw.elapsedMilliseconds}");
 

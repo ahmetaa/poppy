@@ -4,7 +4,7 @@ import 'package:unittest/unittest.dart';
 main() {
   testMain();
 }
-  
+
 testMain() {
   testEmpty(new SimpleTrie());
   testAddGetSimple(new SimpleTrie());
@@ -19,7 +19,7 @@ testMain() {
 }
 
 void testEmpty(Trie trie) {
-  test('Empty', () {    
+  test('Empty', () {
     expect(trie.isEmpty, isTrue);
     expect(trie.size, 0);
     expect(trie.getKeysWithPrefix(""),isNotNull);
@@ -28,8 +28,8 @@ void testEmpty(Trie trie) {
 }
 
 void testAddGetSimple(Trie trie) {
-  
-  test('AddGetSimple', () {        
+
+  test('AddGetSimple', () {
     // Empty trie
     expect(trie.isEmpty, isTrue);
     expect(trie["Hello"], isNull);
@@ -55,12 +55,12 @@ void testAddGetSimple(Trie trie) {
     expect(trie.isEmpty, isTrue);
     expect(trie["Hello"], isNull);
     expect(trie[""], isNull);
-  });    
+  });
 }
 
 void testAddGetComplex(Trie trie) {
-  
-  test('AddGetComplex', () {      
+
+  test('AddGetComplex', () {
     expect(trie.isEmpty, isTrue);
     num limit = 1000;
     for (num i=0; i < limit; i++) {
@@ -78,13 +78,13 @@ void testAddGetComplex(Trie trie) {
     }
     expect(trie.size,limit);
     for (num i=0; i < limit; i++) {
-      expect(trie[i.toString()],i);        
+      expect(trie[i.toString()],i);
     }
-  });    
+  });
 }
 
 void testGetKeysByPrefix(Trie trie) {
-  test('GetKeysByPrefix', () {     
+  test('GetKeysByPrefix', () {
     expect(trie.isEmpty, isTrue);
     trie["Hello"] = "Hello-Value";
     trie["Hell"] = "Hell-Value";
@@ -95,7 +95,7 @@ void testGetKeysByPrefix(Trie trie) {
 }
 
 void testGetKeysByNullOrEmptyPrefix(Trie trie) {
-  test('GetKeysByNullOrEmptyPrefix', () {    
+  test('GetKeysByNullOrEmptyPrefix', () {
     expect(trie.isEmpty, isTrue);
     trie["Hello"] = "Hello-Value";
     trie["Happy"] = "Happy-Value";
@@ -109,7 +109,7 @@ void testGetKeysByNullOrEmptyPrefix(Trie trie) {
 }
 
 void testGetKeysByPrefixComplex(Trie trie) {
-  test('GetKeysByPrefixComplex', () {     
+  test('GetKeysByPrefixComplex', () {
     expect(trie.isEmpty, isTrue);
     // Add 0-999 to trie
     for (num i=0; i < 1000; i++) {
@@ -127,7 +127,7 @@ void testGetKeysByPrefixComplex(Trie trie) {
 }
 
 void testGetValuesByPrefix(Trie trie) {
-  test('GetValuesByPrefix', () {      
+  test('GetValuesByPrefix', () {
     expect(trie.isEmpty, isTrue);
     trie["Hello"] = "Hello-Value";
     trie["Help"] = "Help-Value";
@@ -139,7 +139,7 @@ void testGetValuesByPrefix(Trie trie) {
 }
 
 void testGetKeyValuesByPrefix(Trie trie) {
-  test('GetKeyValuesByPrefix', () {      
+  test('GetKeyValuesByPrefix', () {
     expect(trie.isEmpty, isTrue);
     trie["Hello"] = "Hello-Value";
     trie["Hel"] = "Hel-Value";
@@ -150,13 +150,14 @@ void testGetKeyValuesByPrefix(Trie trie) {
     LinkedHashMap<String, String> expected = {"Happy" : "Happy-Value",
                                               "Hel" : "Hel-Value",
                                               "Hello" : "Hello-Value", };
-    expect(actual.keys, unorderedEquals(expected.keys));      
-    expect(actual.values, unorderedEquals(expected.values));      
+    // TODO: should work with orderedEquals() but fails. [aaa]
+    expect(actual.keys, unorderedEquals(expected.keys));
+    expect(actual.values, unorderedEquals(expected.values));
   });
 }
 
 void testForEach(Trie trie) {
-  test('GetKeyValuesByPrefix', () {       
+  test('GetKeyValuesByPrefix', () {
     expect(trie.isEmpty, isTrue);
     trie["Hello"] = "Hello-Value";
     trie["Happy"] = "Happy-Value";
@@ -165,13 +166,13 @@ void testForEach(Trie trie) {
     Map <String, String> actual = new Map<String, String>();
     trie.forEach((k ,v) => actual[k] = v);
     expect(actual.keys, unorderedEquals(expected.keys));
-    expect(actual.values, unorderedEquals(expected.values));      
+    expect(actual.values, unorderedEquals(expected.values));
   });
 }
-  
+
 
 void testForEachWithPrefix(Trie trie) {
-  test('ForEachWithPrefix', () {       
+  test('ForEachWithPrefix', () {
     expect(trie.isEmpty, isTrue);
     trie["Hello"] = "Hello-Value";
     trie["Happy"] = "Happy-Value";
@@ -179,7 +180,7 @@ void testForEachWithPrefix(Trie trie) {
     Map <String, String> actual = new Map<String, String>();
     trie.forEachWithPrefix("Hap", (k ,v) => actual[k] = v);
     expect(actual.keys, unorderedEquals(expected.keys));
-    expect(actual.values, unorderedEquals(expected.values));  
+    expect(actual.values, unorderedEquals(expected.values));
   });
 }
 

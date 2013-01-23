@@ -45,7 +45,7 @@ class BucketCalculator {
   List<_Bucket> generateInitialBuckets(int bucketAmount) {
 
     // Generating buckets
-    var buckets = new List<_Bucket>(bucketAmount);
+    var buckets = new List<_Bucket>.fixedLength(bucketAmount);
     for (int i = 0; i < buckets.length; i++) {
       buckets[i] = new _Bucket(i);
     }
@@ -116,7 +116,7 @@ class BucketCalculator {
 
     if (failedBuckets.length == 0) {
       // we are done.
-      indexes.add(new HashIndexes(keyAmount, buckets.length, hashSeedArray, new List(0)));
+      indexes.add(new HashIndexes(keyAmount, buckets.length, hashSeedArray, new List.fixedLength(0)));
       return;
     }
 
@@ -145,7 +145,7 @@ class BucketCalculator {
     }
 
     // this time we generate item keyAmount of Buckets
-    var nextLevelBuckets = new List<_Bucket>(failedBucketAmount);
+    var nextLevelBuckets = new List<_Bucket>.fixedLength(failedBucketAmount);
     for (int i = 0; i < failedBucketAmount; i++) {
       nextLevelBuckets[i] = new _Bucket(i);
     }

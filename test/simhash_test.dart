@@ -15,8 +15,9 @@ void main() {
     print ('$s');
     int h1 = sh.getHash(s.charCodes);
     for(String ss in l) {
-      if(s==ss)
+      if(s==ss) {
         continue;
+      }
       int h2 = sh.getHash(ss.charCodes);
       print ("${hammingDistance(h1,h2)} : $ss");
     }
