@@ -30,8 +30,9 @@ class Mphf {
   List<HashIndexes> hashLevelData;
 
   Mphf.generate(KeyProvider keyProvider) {
-      if(keyProvider==null)
+      if(keyProvider==null) {
         throw new ArgumentError("key Provider cannot be null");
+      }
       _checkArguments(keyProvider.list);
       BucketCalculator bc = new BucketCalculator(keyProvider);
       this.hashLevelData = bc.calculate();
@@ -50,10 +51,12 @@ class Mphf {
   }
 
   _checkArguments(Collection c) {
-    if(c==null)
+    if(c==null) {
       throw new ArgumentError("Input cannot be null");
-    if(c.length<=0 || c.length>MAX_KEY_AMOUNT)
+    }
+    if(c.length<=0 || c.length>MAX_KEY_AMOUNT) {
       throw new ArgumentError("Amount of keys must be in range of 1..$MAX_KEY_AMOUNT but it is: ${c.length}");
+    }
   }
 
   Mphf(this.hashLevelData);

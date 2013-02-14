@@ -20,8 +20,9 @@ class SparseVector extends Iterable<TableEntry> {
 
   SparseVector([int initialSize]) {
     int size = initialSize==null ? INITIAL_SIZE : initialSize;
-    if (size < 2)
+    if (size < 2) {
       size = 2;
+    }
     if ((size & (size - 1)) != 0) { // check for power of two
       int power = (log(size) / log(2)).toInt();
       size = 1 << (power + 1);
@@ -70,8 +71,9 @@ class SparseVector extends Iterable<TableEntry> {
           if (values[slot] == 0) {
               return pointer < 0 ? (-slot - 1) : (-pointer - 1);
           }
-          if (k == key)
+          if (k == key) {
               return slot;
+          }
           slot = (slot + 1) & modulo;
       }
   }
@@ -79,8 +81,9 @@ class SparseVector extends Iterable<TableEntry> {
   int increment(int key) => incrementByAmount(key, 1);
 
   num operator [] (int key) {
-      if (key < 0)
+      if (key < 0) {
           throw new ArgumentError("Key cannot be negative. But it is: $key");
+      }
       int slot = _hash(key);
       while (true) {
           final int k = keys[slot];
@@ -91,8 +94,9 @@ class SparseVector extends Iterable<TableEntry> {
           if (values[slot] == 0) {
               return 0;
           }
-          if (k == key)
+          if (k == key) {
               return values[slot];
+          }
           slot = (slot + 1) & modulo;
       }
   }
@@ -102,8 +106,9 @@ class SparseVector extends Iterable<TableEntry> {
   }
 
   int incrementByAmount(int key, num amount) {
-      if (key < 0)
+      if (key < 0) {
           throw new ArgumentError("Key cannot be negative. But it is: $key");
+      }
       if (keyCount == threshold) {
           _expand();
       }
@@ -127,8 +132,9 @@ class SparseVector extends Iterable<TableEntry> {
   /// removes the key. if key does not exist, does nothing.
   void remove(int key) {
       int k = _locate(key);
-      if (k < 0)
+      if (k < 0) {
           return;
+      }
       values[k] = 0;
       keys[k] = -1; // mark deletion
       keyCount--;
@@ -150,8 +156,9 @@ class SparseVector extends Iterable<TableEntry> {
   }
 
   void operator []=(int key, num value) {
-      if (key < 0)
+      if (key < 0) {
           throw new ArgumentError("Key cannot be negative. But it is: $key");
+      }
       if (value == 0) {
           remove(key);
           return;
@@ -191,14 +198,15 @@ class _TableIterator extends Iterator<TableEntry> {
   _TableIterator(this.vector);
 
   bool moveNext() {
-    if(k == vector.keyCount)
-      return false; 
+    if(k == vector.keyCount) {
+      return false;
+    }
     while (vector.values[i] == 0) {
       i++;
     }
     current = new TableEntry(vector.keys[i], vector.values[i]);
     i++;
-    k++;    
+    k++;
     return true;
   }
 

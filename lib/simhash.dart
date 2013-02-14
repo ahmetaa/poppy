@@ -55,8 +55,9 @@ class SimHash {
 
     int result = 0;
     for(int i = 0; i<HASH_SIZE; ++i) {
-      if(bitCounts[i]>0)
+      if(bitCounts[i]>0) {
         result |= (1<<i);
+      }
     }
     return result;
   }

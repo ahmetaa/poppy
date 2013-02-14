@@ -20,8 +20,9 @@ class IntSet {
 
   IntSet([int initialSize]) {
     int size = initialSize==null ? INITIAL_SIZE : initialSize;
-    if (size < 2)
+    if (size < 2) {
       size = 2;
+    }
     if ((size & (size - 1)) != 0) { // check for power of two
       int power = (log(size) / log(2)).toInt();
       size = 1 << (power + 1);
@@ -55,8 +56,9 @@ class IntSet {
       if (flag == EMPTY) {
           return pointer < 0 ? (-slot - 1) : (-pointer - 1);
       }
-      if (keys[slot] == key)
+      if (keys[slot] == key) {
           return slot;
+      }
       slot = (slot + 1) & modulo;
     }
   }
@@ -72,8 +74,9 @@ class IntSet {
       if (flag == EMPTY) {
           return false;
       }
-      if (keys[slot] == key)
+      if (keys[slot] == key) {
           return true;
+      }
       slot = (slot + 1) & modulo;
     }
   }
@@ -81,8 +84,9 @@ class IntSet {
   /// removes the key. if key does not exist, does nothing.
   void remove(int key) {
       int k = _locate(key);
-      if (k < 0)
+      if (k < 0) {
           return;
+      }
       flags[k] = DELETED; // mark deletion
       keyCount--;
   }

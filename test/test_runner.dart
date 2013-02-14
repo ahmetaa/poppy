@@ -12,6 +12,6 @@ main() {
   sparseVec.main();
   simHash.main();
   mphf.main();
-  trie.main(); 
+  trie.main();
 }
 

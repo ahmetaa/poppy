@@ -9,7 +9,7 @@ class BloomFilter {
   FixedBitVector _bitVector;
 
   List<_BloomHash> _hashFunctions;
-  
+
   int get hashAmount => _hashFunctions.length;
 
   //  Eight prime numbers to use as hash seeds. could be other numbers.
@@ -28,8 +28,9 @@ class BloomFilter {
   _initialize(int approximateKeySize, int bucketsPerKey, int hashCount) {
 
     int bucketAmount = bucketsPerKey*approximateKeySize;
-    if(bucketAmount>0x7fffffff)
+    if(bucketAmount>0x7fffffff) {
       throw new ArgumentError("Cannot have $approximateKeySize elements.");
+    }
 
     _hashFunctions = new List<_BloomHash>(hashCount);
     _bitVector = new FixedBitVector.bitCount(bucketAmount);
@@ -49,17 +50,18 @@ class BloomFilter {
   /// returns false if key definitely does not exist. true when key *may* exist
   bool check(List<int> key) {
     for(var hashFunc in _hashFunctions) {
-      if(!_bitVector.getBit(hashFunc.hash(key)))
+      if(!_bitVector.getBit(hashFunc.hash(key))) {
         return false;
+      }
     }
     return true;
   }
-  
+
   /// returns false if key definitely does not exist. true when key *may* exist
   bool checkString(String str) {
     return check(str.charCodes);
   }
-  
+
 }
 
 class _BloomHash {
@@ -147,8 +149,9 @@ class BloomParameterEstimation {
     1, 2, 3, 3, 4, 5, 5, 6, 7, 8, 8, 8, 8, 8 ];
 
   static int computeBestK(int bucketsPerElement) {
-    if (bucketsPerElement >= optKPerBuckets.length)
+    if (bucketsPerElement >= optKPerBuckets.length) {
       return optKPerBuckets[optKPerBuckets.length - 1];
+    }
     return optKPerBuckets[bucketsPerElement];
   }
 

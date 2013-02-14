@@ -1,5 +1,5 @@
 library trie_test;
-
+import 'dart:collection';
 import 'package:poppy/trie.dart';
 import 'package:unittest/unittest.dart';
 
