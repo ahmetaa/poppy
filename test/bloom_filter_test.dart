@@ -10,7 +10,7 @@ Set<String> randomStrings(num amount, num length, [Set<String> notAllowed]) {
   while(testVals.length < amount) {
     var buffer = new StringBuffer();
     for(int k = 0; k<length; k++) {
-      int randomChar = rnd.nextInt(26)+'a'.charCodeAt(0);
+      int randomChar = rnd.nextInt(26)+'a'.codeUnitAt(0);
       buffer.addCharCode(randomChar);
     }
     String s = buffer.toString();

@@ -89,7 +89,7 @@ class SimpleTrie<T> implements Trie<T>{
     int i = 0;
     while (i < key.length) {
       previousNode = node;
-      node = node.getChildNode(key.charCodeAt(i));
+      node = node.getChildNode(key.codeUnitAt(i));
       if (node == null) break;
       i++;
     }
@@ -98,7 +98,7 @@ class SimpleTrie<T> implements Trie<T>{
       node = previousNode;
       // Add one node for each char.
       while (i < key.length) {
-        node = node.addNode(key.charCodeAt(i++));
+        node = node.addNode(key.codeUnitAt(i++));
       }
     }
     if (!node.hasValue()) {
@@ -119,7 +119,7 @@ class SimpleTrie<T> implements Trie<T>{
     _SimpleTrieNode<T> node = _root;
     int i = 0;
     while(i < pre.length && node!= null) {
-      node = node.getChildNode(pre.charCodeAt(i));
+      node = node.getChildNode(pre.codeUnitAt(i));
       i++;
     }
     return node;

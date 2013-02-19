@@ -42,7 +42,7 @@ Set<String> _randomStrings() {
   while(testVals.length < AMOUNT) {
     var buffer = new StringBuffer();
     for(int k = 0; k<LENGTH; k++) {
-      int randomChar = rnd.nextInt(26)+'a'.charCodeAt(0);
+      int randomChar = rnd.nextInt(26)+'a'.codeUnitAt(0);
       buffer.addCharCode(randomChar);
     }
     testVals.add(buffer.toString());
