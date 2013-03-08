@@ -64,10 +64,13 @@ class SimHash {
 
 }
 
+final int zero = '0'.codeUnitAt(0);
+final int one = '1'.codeUnitAt(0);
+
 String binaryString (int i, int bitCount) {
   var codes = new List<int>(bitCount);
   for(int j = bitCount-1; j>=0; --j) {
-    codes[j] = (i & (1<<j))==0 ? '0'.charCodeAt(0) : '1'.charCodeAt(0);
+    codes[j] = (i & (1<<j))==0 ? zero : one;
   }
   return new String.fromCharCodes(codes);
 }

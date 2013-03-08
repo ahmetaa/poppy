@@ -85,7 +85,7 @@ class Mphf {
         }
       }
     }
-    throw new ExpectException("Cannot be here.");
+    throw new RuntimeError("Cannot be here.");
   }
 
   num totalBytesUsed() {
