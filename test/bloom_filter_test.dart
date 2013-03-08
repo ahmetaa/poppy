@@ -65,19 +65,19 @@ main() {
     sw..reset()..start();
 
     for(int i =0; i<strings.length;++i) {
-      bloom.add(strings[i].charCodes);
+      bloom.add(strings[i].codeUnits);
     }
     print("Adding ${size} key took ${sw.elapsedMilliseconds}");
 
     sw = new Stopwatch()..start();
     for(int i =0; i<strings.length;++i) {
-      bloom.check(strings[i].charCodes);
+      bloom.check(strings[i].codeUnits);
     }
     print("Checking ${size} existing key took ${sw.elapsedMilliseconds}");
 
     // check
     for(var str in strings) {
-      expect(bloom.check(str.charCodes), isTrue);
+      expect(bloom.check(str.codeUnits), isTrue);
     }
     Set<String> notAllow = new Set()..addAll(strings);
     var strsNotExist = new List<String>()..addAll(randomStrings(size, 5));
@@ -85,7 +85,7 @@ main() {
     num falsePositive = 0;
     sw = new Stopwatch()..start();
     for(int i =0; i<strsNotExist.length;++i) {
-      if(bloom.check(strsNotExist[i].charCodes)) {
+      if(bloom.check(strsNotExist[i].codeUnits)) {
         falsePositive++;
       }
     }

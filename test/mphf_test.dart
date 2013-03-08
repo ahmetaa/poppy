@@ -12,7 +12,7 @@ bool randomStringTest() {
     print ("For key set ${size} average memory per key = ${hash.averageBitsPerKey()} bits");
     var values = new Set<int>();
     for(String s in strings) {
-      int value = hash.getValue(s.charCodes);
+      int value = hash.getValue(s.codeUnits);
       if(values.contains(value)) {
         print("Duplicated value $value for key $s for set size $size");
         return false;
@@ -30,7 +30,7 @@ Set<String> randomStrings(num AMOUNT, num LENGTH) {
     var buffer = new StringBuffer();
     for(int k = 0; k<LENGTH; k++) {
       int randomChar = rnd.nextInt(26)+'a'.codeUnitAt(0);
-      buffer.addCharCode(randomChar);
+      buffer.writeCharCode(randomChar);
     }
     testVals.add(buffer.toString());
   }

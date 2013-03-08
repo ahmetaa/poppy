@@ -15,12 +15,12 @@ void main() {
            "Böyle tavşan olur mu?"];
   for(String s in l) {
     print ('$s');
-    int h1 = sh.getHash(s.charCodes);
+    int h1 = sh.getHash(s.codeUnits);
     for(String ss in l) {
       if(s==ss) {
         continue;
       }
-      int h2 = sh.getHash(ss.charCodes);
+      int h2 = sh.getHash(ss.codeUnits);
       print ("${hammingDistance(h1,h2)} : $ss");
     }
   }

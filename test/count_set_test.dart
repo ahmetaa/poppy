@@ -34,4 +34,18 @@ main() {
     }
   });
   
+  test('Add-remove Test', () {
+    var sv =  new CountSet<String>();
+    sv.add("foo");
+    sv.add("foo");    
+    sv.add("bar");
+    expect(2, sv.length);    
+    expect(2, sv["foo"]);
+    expect(1, sv["bar"]);
+    sv.remove("foo");
+    expect(1, sv.length);    
+    expect(0, sv["foo"]);
+    expect(1, sv["bar"]);
+  });  
+  
 }

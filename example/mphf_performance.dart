@@ -26,7 +26,7 @@ void main() {
 
     var l = new List<List<int>>();
     for(String s in testStrings) {
-      l.add(s.charCodes);
+      l.add(s.codeUnits);
     }
     stopWatch..reset()..start();
     for(int i = 0, length = l.length; i<length; ++i) {
@@ -43,7 +43,7 @@ Set<String> _randomStrings() {
     var buffer = new StringBuffer();
     for(int k = 0; k<LENGTH; k++) {
       int randomChar = rnd.nextInt(26)+'a'.codeUnitAt(0);
-      buffer.addCharCode(randomChar);
+      buffer.writeCharCode(randomChar);
     }
     testVals.add(buffer.toString());
   }

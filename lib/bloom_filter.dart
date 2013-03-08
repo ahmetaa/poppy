@@ -59,7 +59,7 @@ class BloomFilter {
 
   /// returns false if key definitely does not exist. true when key *may* exist
   bool checkString(String str) {
-    return check(str.charCodes);
+    return check(str.codeUnits);
   }
 
 }

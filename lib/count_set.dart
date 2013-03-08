@@ -110,7 +110,6 @@ class CountSet<T> extends Iterable<T> {
       if (k < 0) {
           return;
       }
-      values[k] = 0;
       keys[k] = _SENTINEL; // mark deletion
       keyCount--;
   }
@@ -129,6 +128,12 @@ class CountSet<T> extends Iterable<T> {
       this.modulo = h.modulo;
       this.threshold = h.threshold;
   }
+  
+  int add(T key) {
+    return increment(key);
+  }
+    
+    
 
   void operator []=(T key, num value) {
       if (key == null) {
