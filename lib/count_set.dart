@@ -134,21 +134,21 @@ class CountSet<T> extends Iterable<T> {
   }
     
   void operator []=(T key, num value) {
-      if (key == null) {
-        throw new ArgumentError("Key cannot be null");
-      }
-      if (keyCount == threshold) {
-          _expand();
-      }
-      int loc = _locate(key);
-      if (loc >= 0) {
-          values[loc] = value;
-          return;
-      }
-      loc = -loc - 1;
-      keys[loc] = key;
+    if (key == null) {
+      throw new ArgumentError("Key cannot be null");
+    }
+    if (keyCount == threshold) {
+      _expand();
+    }
+    int loc = _locate(key);
+    if (loc >= 0) {
       values[loc] = value;
-      keyCount++;
+      return;
+    }
+    loc = -loc - 1;
+    keys[loc] = key;
+    values[loc] = value;
+    keyCount++;
   }
 
   int get length => keyCount;

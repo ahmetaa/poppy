@@ -5,6 +5,7 @@ import "sparse_vector_test.dart" as sparseVec;
 import "simhash_test.dart" as simHash;
 import "mphf_test.dart" as mphf;
 import "trie_test.dart" as trie;
+import "count_set_test.dart" as countSet;
 
 main() {
   bloom.main();
@@ -13,5 +14,6 @@ main() {
   simHash.main();
   mphf.main();
   trie.main();
+  countSet.main();
 }
 
