@@ -27,7 +27,7 @@ class CountSet<T> extends Iterable<T> {
       int power = (log(size) / log(2)).toInt();
       size = 1 << (power + 1);
     }
-    keys = new List<T>.filled(size,null);
+    keys = new List.filled(size,null);
     values = new Int32List(size) ;
     threshold =  (size * DEFAULT_LOAD_FACTOR).toInt();
     modulo = size - 1;
@@ -39,7 +39,7 @@ class CountSet<T> extends Iterable<T> {
       int slot = _hash(key.hashCode);
       int pointer = -1;
       while (true) {
-          T t = keys[slot];
+          Object t = keys[slot];
           if (t == _SENTINEL) {
               if (pointer < 0) {
                   pointer = slot;
@@ -65,7 +65,7 @@ class CountSet<T> extends Iterable<T> {
     }
     int slot = _hash(key.hashCode);
     while (true) {
-        final T k = keys[slot];
+        final Object k = keys[slot];
         if (k == _SENTINEL) {
             slot = (slot + 1) & modulo;
             continue;
