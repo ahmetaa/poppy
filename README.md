@@ -89,6 +89,8 @@ converted from commoncrawl project.
 This is a special hash function that generates similar hash values for similar items. This means
 bit positions of two hash values matches better for similar items (smaller Hamming distance).  For example:  
 	
+	import 'package:poppy/simhash.dart';
+	...	
 	var simHasher = new SimHash();
 	int h1 = simHasher.getHashFromString("Small rabbit was very sad");
 	int h2 = simHasher.getHashFromString("Small cute rabbit was very sad");
@@ -108,6 +110,8 @@ algorithm and also has a patent on related technology. Some parts of the impleme
 *CountSet* class in count_set.dart is used for counting objects. Similar structures are also known as MultiSet or Bag.
 This structure is possibly more compact than using a map structure. It also provides count related methods.
 
+	import 'package:poppy/count_set.dart';
+	...
 	var fruits = ["apple","apple","orange","apple","pear","orange"];
 	var set = new CountSet<String>()..addAll(fruits);
 	for(String fruit in new Set()..addAll(fruits)) {
@@ -132,4 +136,4 @@ A simple implementation of an integer set. This is actually similar to SparseVec
 sligthly faster and memory efficient than Set<int> structure.
 
 ## Change List
-0.0.6 CountSet is introduced. Dart M3+ syntax is applied. 
+0.1.6 CountSet is introduced. Dart M3 changes. 
