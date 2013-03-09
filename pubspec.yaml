@@ -5,7 +5,5 @@ authors:
 - Mehmet D. Akın <mdakin@gmail.com>
 description: Some algorithms for Dart. Such as Trie, MPHF and Bloom Filter.
 homepage: https://github.com/ahmetaa/poppy
-environment:
-  sdk: '>=0.4.1'
 dependencies:
   unittest: '>=0.4.0'
