@@ -3,7 +3,7 @@ library poppy;
 import 'dart:math';
 import 'dart:scalarlist';
 
-/// A data structure for counting objects. 
+/// A data structure for counting objects. Counts can be negative.
 
 class CountSet<T> extends Iterable<T> {
 
@@ -132,6 +132,12 @@ class CountSet<T> extends Iterable<T> {
   int add(T key) {
     return increment(key);
   }
+  
+  int addAll(Iterable<T> keys) {
+    for(T t in keys) {
+      increment(t);  
+    }    
+  }  
     
   void operator []=(T key, num value) {
     if (key == null) {

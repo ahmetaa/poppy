@@ -17,7 +17,7 @@ Trie implementation for Dart. Tries are especially good for prefix searches. Thi
 	Output:	
 	[apricot, april, apron]	
 
-## Minimal Perfect Hash (Mphf)
+## Minimal Perfect Hash Function (Mphf)
 
 *Mphf* class in *lib/mphf.dart* is a Minimal Perfect Hash Function (MPHF) implementation.
 
@@ -89,15 +89,38 @@ converted from commoncrawl project.
 This is a special hash function that generates similar hash values for similar items. This means
 bit positions of two hash values matches better for similar items (smaller Hamming distance).  For example:  
 	
-	h1 = simhash("Small rabbit was very sad")
-	h2 = simhash("Small cute rabbit was very sad")
-	h3 = simhash("Because his brother was laughing at him")
-	hammingDistance (h1,h2) = 8
-	hammingDistance (h1,h3) = 28
+	var simHasher = new SimHash();
+	int h1 = simHasher.getHashFromString("Small rabbit was very sad");
+	int h2 = simHasher.getHashFromString("Small cute rabbit was very sad");
+	int h3 = simHasher.getHashFromString("Because his brother was laughing at him");
+	print ("h1-h2 Hamming distance: ${hammingDistance(h1,h2)}");
+	print ("h1-h3 Hamming distance: ${hammingDistance(h1,h3)}");
+	
+	output:
+	h1-h2 Hamming distance: 9
+	h1-h3 Hamming distance: 31
 	
 For each input a 64 bit hash is generated. This hash can be used in tasks like near duplicate detection and clustering of documents.
 This idea is represented in Charikar's "Similarity Estimation Techniques from Rounding Algorithms" paper. I assume Google uses this
 algorithm and also has a patent on related technology. Some parts of the implementation is converted from commoncrawl project.
+
+## CountSet
+*CountSet* class in count_set.dart is used for counting objects. Similar structures are also known as MultiSet or Bag.
+This structure is possibly more compact than using a map structure. It also provides count related methods.
+
+	var fruits = ["apple","apple","orange","apple","pear","orange"];
+	var set = new CountSet<String>()..addAll(fruits);
+	for(String fruit in new Set()..addAll(fruits)) {
+	  print("Count of $fruit is ${set[fruit]}");
+	}
+	print("Non existing item papaya's count:${set['papaya']}");
+	
+	Output:
+	Count of apple is 3
+	Count of orange is 2
+	Count of pear is 1
+	Non existing item papaya's count:0	  
+
  
 ## Sparse Vector (SparseVector)
 *SparseVector* class in sparse_vector.dart can be used for representing large sparse vectors where most of its values are zero. 
