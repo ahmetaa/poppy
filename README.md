@@ -120,13 +120,16 @@ This structure is possibly more compact than using a map structure. It also prov
 	Count of orange is 2
 	Count of pear is 1
 	Non existing item papaya's count:0	  
-
  
 ## Sparse Vector (SparseVector)
 *SparseVector* class in sparse_vector.dart can be used for representing large sparse vectors where most of its values are zero. 
-This structure only hold non-zero elements in it. Therefore it is compact.   
+This structure only hold non-zero elements in it. Therefore it is compact.
+  
 Internally it is actually a hash table that uses linear probing. It is more efficient than using Map<int,num> structure. Most vector arithmetic operations are not yet added to the code.
 
 ## Integer Set (Int Set)  
 A simple implementation of an integer set. This is actually similar to SparseVector class. It is suppose to be
-faster than Set<int> structure.
+sligthly faster and memory efficient than Set<int> structure.
+
+## Change List
+0.0.6 CountSet is introduced. Dart M3+ syntax is applied. 
