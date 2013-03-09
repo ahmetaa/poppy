@@ -6,6 +6,6 @@ main() {
   for(String fruit in new Set()..addAll(fruits)) {
     print("Count of $fruit is ${set[fruit]}");
   }
-  print("Non existing item papaya's count:${set['papaya']}");  
+  print("Non existing item papaya's count:${set['papaya']}");
 }
 

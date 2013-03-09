@@ -16,8 +16,8 @@ Set<String> randomStrings(num amount, num length, [Set<String> notAllowed]) {
     }
     String s = buffer.toString();
     if(?notAllowed && notAllowed.contains(s)) {
-      continue;    
-    }    
+      continue;
+    }
     testVals.add(s);
   }
   return testVals;
@@ -29,7 +29,7 @@ main() {
     Stopwatch sw = new Stopwatch()..start();
     print("Generating ${size} random 7 length string.");
     var strings = new List<String>()..addAll(randomStrings(size, 7));
-    print(sw.elapsedMicroseconds);    
+    print(sw.elapsedMicroseconds);
     var bloom = new BloomFilter(size);
     print("Amount of hash functions:${bloom.hashAmount}");
 

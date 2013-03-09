@@ -31,8 +31,8 @@ class SimHash {
 
   int getHashFromString(String input) {
     return getHash(input.codeUnits);
-  }  
-  
+  }
+
   int getHash(List<int> input, [int hashSeed]) {
     int seed = hashSeed==null ? 0x14D41585 : hashSeed;
     IntSet shingles = new IntSet(input.length);

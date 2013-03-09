@@ -35,62 +35,62 @@ main() {
       j++;
     }
   });
-  
+
   test('Add-remove Test', () {
     var sv =  new CountSet<String>();
     sv.add("foo");
-    sv.add("foo");    
+    sv.add("foo");
     sv.add("bar");
-    expect(2, sv.length);    
+    expect(2, sv.length);
     expect(2, sv["foo"]);
     expect(1, sv["bar"]);
     sv.remove("foo");
-    expect(1, sv.length);    
+    expect(1, sv.length);
     expect(0, sv["foo"]);
     expect(1, sv["bar"]);
     sv["foo"]=20;
     sv.incrementByAmount("bar", 11);
-    expect(2, sv.length);    
+    expect(2, sv.length);
     expect(20, sv["foo"]);
-    expect(12, sv["bar"]);    
-  });  
-  
+    expect(12, sv["bar"]);
+  });
+
   test('Expansion Test', () {
     var sv =  new CountSet<String>();
     Set<String> strings = randomStrings(10000,7);
     for(String s in strings) {
-      sv.add(s); 
+      sv.add(s);
     }
     expect(10000, sv.length);
     for(String s in strings) {
-      expect(1,sv[s]); 
+      expect(1,sv[s]);
     }
     for(String s in strings) {
-      sv.remove(s); 
+      sv.remove(s);
     }
-    expect(0,sv.length);    
-  }); 
-  
+    expect(0,sv.length);
+  });
+
   test('Stress Test', () {
     var sv =  new CountSet<String>();
     Set<String> strings = randomStrings(10000,7);
     for(String s in strings) {
-      sv.add(s); 
+      sv.add(s);
     }
     expect(10000, sv.length);
     int i =0;
     for(String s in strings) {
-      if(i.isOdd)
+      if(i.isOdd) {
          sv.remove(s);
+      }
       ++i;
-    }   
+    }
     Set<String> newStrings = randomStrings(10000,7,strings);
     for(String s in newStrings) {
-      sv.add(s); 
+      sv.add(s);
     }
     expect(15000, sv.length);
-   
-  }); 
-    
- 
+
+  });
+
 }

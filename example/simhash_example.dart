@@ -20,7 +20,7 @@ void main() {
       int h2 = sh.getHashFromString(ss);
       print ("${hammingDistance(h1,h2)} : $ss");
     }
-  } 
+  }
 }
 
 

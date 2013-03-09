@@ -99,7 +99,7 @@ class CountSet<T> extends Iterable<T> {
         keyCount++;
         return values[l];
     } else {
-        values[l] += amount;       
+        values[l] += amount;
         return values[l];
     }
   }
@@ -128,17 +128,17 @@ class CountSet<T> extends Iterable<T> {
       this.modulo = h.modulo;
       this.threshold = h.threshold;
   }
-  
+
   int add(T key) {
     return increment(key);
   }
-  
+
   int addAll(Iterable<T> keys) {
     for(T t in keys) {
-      increment(t);  
-    }    
-  }  
-    
+      increment(t);
+    }
+  }
+
   void operator []=(T key, num value) {
     if (key == null) {
       throw new ArgumentError("Key cannot be null");

@@ -13,8 +13,3 @@ void main() {
     expect(hammingDistance(h1,h3), greaterThan(15));
   });
 }
-
-
-
-
-
