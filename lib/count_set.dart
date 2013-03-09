@@ -133,8 +133,6 @@ class CountSet<T> extends Iterable<T> {
     return increment(key);
   }
     
-    
-
   void operator []=(T key, num value) {
       if (key == null) {
         throw new ArgumentError("Key cannot be null");

@@ -37,12 +37,13 @@ void main() {
 }
 
 Set<String> _randomStrings() {
+  int a = 'a'.codeUnitAt(0);
   var rnd = new Random();
   var testVals = new Set<String>();
   while(testVals.length < AMOUNT) {
     var buffer = new StringBuffer();
-    for(int k = 0; k<LENGTH; k++) {
-      int randomChar = rnd.nextInt(26)+'a'.codeUnitAt(0);
+    for(int k = 0; k<LENGTH; k++) {      
+      int randomChar = rnd.nextInt(26)+a;
       buffer.writeCharCode(randomChar);
     }
     testVals.add(buffer.toString());
