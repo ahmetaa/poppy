@@ -30,10 +30,6 @@ Mphfs may be useful for very large look-up structures such as the ones used in l
 Mphf generation is a very slow operation, therefore it is generally suggested storing the hash data once it is generated and using it from the storage afterwards. 
 Dart implementation does not provide this functionality.
 
-This implementation is a variant of "Hash, displace, and compress" - CHD algorithm (http://cmph.sourceforge.net/papers/esa09.pdf). 
-The novelty of this variant is that it does not apply integer array compression. Instead it stores the hash seed values in a byte array and uses layered structure for failed buckets.
-It uses slightly more space than it could (Some Mphf implementations can use only 2.5 bits), but generally this implementation is faster to generate and query.
-
 ### Usage example:
 	import 'package:poppy/mphf.dart';
 	...
@@ -103,8 +99,7 @@ bit positions of two hash values matches better for similar items (smaller Hammi
 	h1-h3 Hamming distance: 31
 	
 For each input a 64 bit hash is generated. This hash can be used in tasks like near duplicate detection and clustering of documents.
-This idea is represented in Charikar's "Similarity Estimation Techniques from Rounding Algorithms" paper. I assume Google uses this
-algorithm and also has a patent on related technology. Some parts of the implementation is converted from commoncrawl project.
+This idea is represented in Charikar's "Similarity Estimation Techniques from Rounding Algorithms" paper. 
 
 ## CountSet
 *CountSet* class in count_set.dart is used for counting objects. Similar structures are also known as MultiSet or Bag.
