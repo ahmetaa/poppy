@@ -85,7 +85,7 @@ class Mphf {
         }
       }
     }
-    throw new ExpectException("Cannot be here.");
+    throw new RuntimeError("Cannot be here.");
   }
 
   num totalBytesUsed() {
@@ -106,7 +106,7 @@ class KeyProvider {
 
    KeyProvider.fromStrings(Collection<String> vals) {
      for(String s in vals) {
-       list.add(s.charCodes);
+       list.add(s.codeUnits);
      }
    }
 

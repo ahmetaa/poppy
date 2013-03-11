@@ -116,7 +116,7 @@ class BucketCalculator {
 
     if (failedBuckets.length == 0) {
       // we are done.
-      indexes.add(new HashIndexes(keyAmount, buckets.length, hashSeedArray, new List.fixedLength(0)));
+      indexes.add(new HashIndexes(keyAmount, buckets.length, hashSeedArray, new List(0)));
       return;
     }
 
