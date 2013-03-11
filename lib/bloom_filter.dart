@@ -146,7 +146,7 @@ class BloomParameterEstimation {
   static final List<int> optKPerBuckets = const [
     1, // dummy K for 0 buckets per element
     1, // dummy K for 1 buckets per element
-    1, 2, 3, 3, 4, 5, 5, 6, 7, 8, 8, 8, 8, 8 ];
+    1, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5 ];
 
   static int computeBestK(int bucketsPerElement) {
     if (bucketsPerElement >= optKPerBuckets.length) {

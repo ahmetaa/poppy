@@ -4,19 +4,16 @@ import 'package:unittest/unittest.dart';
 import 'package:poppy/bloom_filter.dart';
 import 'dart:math';
 
-Set<String> randomStrings(num amount, num length, [Set<String> notAllowed]) {
+Set<String> randomStrings(num amount, num length) {
   var rnd = new Random();
   var testVals = new Set<String>();
-  while(testVals.length < amount) {
+  while(testVals.length < amount) {    
     var buffer = new StringBuffer();
     for(int k = 0; k<length; k++) {
       int randomChar = rnd.nextInt(26)+'a'.codeUnitAt(0);
-      buffer.addCharCode(randomChar);
+      buffer.writeCharCode(randomChar);
     }
     String s = buffer.toString();
-    if(?notAllowed && notAllowed.contains(s)) {
-      continue;
-    }
     testVals.add(s);
   }
   return testVals;
@@ -24,7 +21,7 @@ Set<String> randomStrings(num amount, num length, [Set<String> notAllowed]) {
 
 main() {
   test('Random strings.', () {
-    int size = 100000;
+    int size = 30000;
     print("Generating ${size} random 7 length string.");
     var strings = new List<String>()..addAll(randomStrings(size, 7));
     var bloom = new BloomFilter(size);
@@ -48,7 +45,7 @@ main() {
       expect(bloom.check(str.charCodes), isTrue);
     }
     Set<String> notAllow = new Set()..addAll(strings);
-    var strsNotExist = new List<String>()..addAll(randomStrings(size, 5, notAllow));
+    var strsNotExist = new List<String>()..addAll(randomStrings(size, 5));
 
     num falsePositive = 0;
     sw = new Stopwatch()..start();
