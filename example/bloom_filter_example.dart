@@ -6,12 +6,12 @@ main() {
   print("Amount of hash functions:${bloom.hashAmount}");
 
   for(var fruit in fruits) {
-    bloom.add(fruit.charCodes);
+    bloom.add(fruit.codeUnits);
   }
 
   var newFruits = ["apple", "orange", "watermelon", "papaya", "mango", "guava"];
   for(var fruit in newFruits) {
-    if(bloom.check(fruit.charCodes)) {
+    if(bloom.check(fruit.codeUnits)) {
       print("$fruit may exist in bloom filter.");
     } else {
       print("$fruit does not exist in bloom filter.");

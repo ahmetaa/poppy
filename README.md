@@ -33,20 +33,17 @@ Dart implementation does not provide this functionality.
 ### Usage example:
 	import 'package:poppy/mphf.dart';
 	...
-	var fruits = ["apple", "orange", "blueberry", "cherry", "pomegranate", "plum", "pear"];
+	var fruits = ["apple", "orange", "blueberry", "pomegranate"];
 	var mphf = new Mphf.fromStrings(fruits);
 	for(var fruit in fruits) {
 	  print("$fruit = ${mphf.getValue(fruit.charCodes)}");
 	}
 
 	Output:
-	apple = 4
-	orange = 5
-	blueberry = 2
-	cherry = 3
-	pomegranate = 0
-	plum = 1
-	pear = 6	
+	apple = 3
+	orange = 2
+	blueberry = 1
+	pomegranate = 0	
 
 ## Bloom Filter (BloomFilter)
 *BloomFilter* class in bloom_filter.dart is a simple Bloom Filter (http://en.wikipedia.org/wiki/Bloom_filter) implementation. 
@@ -58,14 +55,14 @@ converted from commoncrawl project.
 ### Usage example:
     import 'package:poppy/bloom_filter.dart';
     ...
-	var fruits = ["apple", "orange", "blueberry", "cherry", "pomegranate", "plum", "pear"];
+	var fruits = ["apple", "orange", "blueberry", "pomegranate"];
 	var bloom = new BloomFilter(fruits.length);
 	
 	for(var fruit in fruits) {
 	  bloom.add(fruit);
 	}
 		  
-	var newFruits = ["apple", "orange", "watermelon", "papaya", "mango", "guava"];  
+	var newFruits = ["apple", "orange", "guava"];  
 	for(var fruit in newFruits) {
 	  if(bloom.check(fruit.charCodes))
 	    print("$fruit may exist in bloom filter.");
@@ -76,9 +73,6 @@ converted from commoncrawl project.
 	Output:	
 	apple may exist in bloom filter.
 	orange may exist in bloom filter.
-	watermelon does not exist in bloom filter.
-	papaya does not exist in bloom filter.
-	mango does not exist in bloom filter.
 	guava does not exist in bloom filter.
 
 ## SimHash
@@ -131,4 +125,5 @@ A simple implementation of an integer set. This is actually similar to SparseVec
 sligthly faster and memory efficient than Set&lt;int&gt; structure.
 
 ## Change List
+*0.1.7* Fix an error slipped to 0.1.6 in mphf lib definition. Some cleanup 
 *0.1.6* CountSet is introduced. Dart M3 changes. 
