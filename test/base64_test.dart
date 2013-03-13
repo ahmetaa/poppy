@@ -22,10 +22,9 @@ String encodeTest(List<int> l, int iterations) {
 
 List<int> decodeTest(String input, int iterations) {
   List<int> dec;
-  List<int> inL = input.codeUnits;
   var b = new Base64();
   for( int i = 0; i < iterations; ++i ) {
-    dec = b.decodeToList(inL);
+    dec = b.decode(input);
   }
   return dec;
 }
@@ -34,8 +33,8 @@ void testEncodeDecode(String expected, String input) {
   Base64 b = new Base64(urlSafe:false);
   String encoded = b.encode(input == null ? null : input.codeUnits);
   expect(expected, encoded);
-  String decoded = new String.fromCharCodes(b.decode(encoded));
-  expect(input == null ? "" : input, decoded);
+  List<int> decoded = b.decode(encoded);
+  expect(input == null ? '' : input, new String.fromCharCodes(decoded));
 }
 
 void runAll() {
