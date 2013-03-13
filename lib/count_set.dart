@@ -57,8 +57,10 @@ class CountSet<T> extends Iterable<T> {
       }
   }
 
+  /// Increments the count of the [key] by 1. If [key] does not exist, it adds it with count value 1. 
   int increment(T key) => incrementByAmount(key, 1);
 
+  /// Retrieves the count value of the [key]. If [key] does not exist, returns 0.
   int operator [] (T key) {
     if (key == null) {
         throw new ArgumentError("Key cannot be null");
@@ -80,10 +82,12 @@ class CountSet<T> extends Iterable<T> {
     }
   }
 
+  /// Decrements the [key]'s count by 1. If [key] does not exist, it adds it with count value -1
   int decrement(T key) {
       return incrementByAmount(key, -1);
   }
 
+  /// Increments the count of the [key] by [amount]. If [key] does not exist, it adds it with count value [amount].  
   int incrementByAmount(T key, num amount) {
     if (key == null) {
       throw new ArgumentError("Key cannot be null");
@@ -113,7 +117,7 @@ class CountSet<T> extends Iterable<T> {
       keys[k] = _SENTINEL; // mark deletion
       keyCount--;
   }
-
+ 
   void _expand() {
       var h = new CountSet<T>(values.length * 2);
       for (int i = 0; i < keys.length; i++) {
@@ -129,17 +133,22 @@ class CountSet<T> extends Iterable<T> {
       this.threshold = h.threshold;
   }
 
+  /// Adds the [key]. If key already exists, it increments its count value by 1. If it does not exist, [key] 
+  /// is added with count value 1. 
   int add(T key) {
     return increment(key);
   }
 
+  /// Adds all the keys. If a key already exists, it increments its count value by 1. If it does not exist, that key 
+  /// is added with count value 1.   
   int addAll(Iterable<T> keys) {
     for(T t in keys) {
       increment(t);
     }
   }
 
-  void operator []=(T key, num value) {
+  /// Sets a [key] with a count value. Value must be in the range of a signed 32 bit integer.
+  void operator []=(T key, int count) {
     if (key == null) {
       throw new ArgumentError("Key cannot be null");
     }
@@ -148,21 +157,24 @@ class CountSet<T> extends Iterable<T> {
     }
     int loc = _locate(key);
     if (loc >= 0) {
-      values[loc] = value;
+      values[loc] = count;
       return;
     }
     loc = -loc - 1;
     keys[loc] = key;
-    values[loc] = value;
+    values[loc] = count;
     keyCount++;
   }
 
+  /// Returns the amount of keys
   int get length => keyCount;
 
+  /// Returns the capacity of the current key array before the expansion
   int get capacity => threshold;
 
   int get slotSize => keys.length;
 
+  /// Returns an iterator for keys.
   Iterator<T> get iterator {
       return new _TIterator(this);
   }

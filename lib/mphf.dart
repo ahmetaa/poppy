@@ -20,7 +20,11 @@ int initialHash(List<int> key) => hash(key, 0x9747b28c);
 
 /**
  * A Minimal Perfect Hash function which accepts keys that can be represented as List<int>.
- * uses modified implementation of CHD algorithm. It is optimized for fast query of hash values.
+ * Initial steps of this implementation is similar to 
+ * Fox, Heath, Chen, and Daoud's Practical minimal perfect hash functions for large databases (1992)
+ * and Belazzougui, Botelho and Dietzfelbinger. Hash, Displace and Compress (2009) papers.
+ * However, it is different in displace step and it does not use integer array compression.
+ * This structure is optimized for fast MPHF generation and query.
  * it uses about 3.2 bits memory per key for large amount of keys.
  */
 class Mphf {
