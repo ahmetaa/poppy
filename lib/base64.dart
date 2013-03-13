@@ -17,9 +17,9 @@ final int LF = '\n'.codeUnitAt(0);
 bool _addLineSeparator;
 bool _urlSafe;
 
-  Base64({bool urlSafe : false, bool addLineSeparator : true}) 
+  Base64({bool urlSafe : false, bool addLineSeparator : true})
       : _urlSafe = urlSafe, _addLineSeparator = addLineSeparator {
-    // Build DECODE table.
+    // Build DECODE table (TODO: Make this a const table)
     for (int i = 0; i < alphabet.length; i++) {
       decodeTable[alphabet[i]] = i;
       decodeTable[alphabetUrlSafe[i]] = i;
@@ -30,12 +30,12 @@ bool _urlSafe;
   String encode(List<int> input) {
     return new String.fromCharCodes(encodeToList(input));
   }
-  
+
   List<int> encodeToList(List<int> input) {
     int len = input != null ? input.length : 0;
     if (len == 0) {
       return new List<int>.fixedLength(0);
-    }    
+    }
     final List<int> lookup = _urlSafe ? alphabetUrlSafe : alphabet;
     // Size of 24 bit chunks
     final int cLen = len ~/ 3 * 3;
@@ -53,14 +53,14 @@ bool _urlSafe;
       out[j++] = lookup[(x >> 12) & 0x3F];
       out[j++] = lookup[(x >> 6)  & 0x3F];
       out[j++] = lookup[x & 0x3f];
-      // Add optional line separator
+      // Add optional line separator for each 76 char aoutput.
       if (_addLineSeparator && ++cc == 19 && j < oLen - 2) {
           out[j++] = CR;
           out[j++] = LF;
           cc = 0;
       }
     }
-    // If input length if not divisible by 3, encode remaining and add padding. 
+    // If input length if not divisible by 3, encode remaining and add padding.
     if (padLen > 0) {
       int x = input[cLen] << 10  | (padLen == 2 ? input[len - 1] << 2 : 0);
       out[j++] = lookup[(x >> 12) & 0x3F];
@@ -70,7 +70,12 @@ bool _urlSafe;
     }
     return out;
   }
-  
+
+  /**
+   * Decoder ignores \r \n and all illegal chars.
+   * Returns empty list if [input] is null.
+   * Returns null if cleaned input size is not multiple of 4.
+  */
   List<int> decodeToList(List<int> input) {
     int len = input != null ? input.length : 0;
     if (len == 0) {
@@ -95,11 +100,11 @@ bool _urlSafe;
     for (int i = 0, d = 0; d < oLen;) {
       int x = 0;
       int j = 18;
-      // Accumulate 4 valid 6 bit base64 chars into an int.
+      // Accumulate 4 valid 6 bit base64 characters into an int.
       while (j >= 0) {
         int c = decodeTable[input[i++]];
         if (c >= 0) {
-          x |= c << j; 
+          x |= c << j;
           j -= 6;
         }
       }
@@ -110,10 +115,10 @@ bool _urlSafe;
           out[d++] = x & 0xFF;
       }
     }
-    return out;   
+    return out;
   }
-  
-  String decode(String input) {
-    return new String.fromCharCodes(decodeToList(input.codeUnits));
+
+  List<int> decode(String input) {
+    return decodeToList(input.codeUnits);
   }
 }

@@ -10,7 +10,7 @@ fillRandom(List<int> l) {
     l[j] = random.nextInt(255);
   }
 }
- 
+
 String encodeTest(List<int> l, int iterations) {
   String enc;
   var b = new Base64();
@@ -34,9 +34,8 @@ void testEncodeDecode(String expected, String input) {
   Base64 b = new Base64(urlSafe:false);
   String encoded = b.encode(input == null ? null : input.codeUnits);
   expect(expected, encoded);
-  String decoded = b.decode(encoded);
-  print("Decoded: $decoded");
-  expect(input == null ? "" : input, decoded);  
+  String decoded = new String.fromCharCodes(b.decode(encoded));
+  expect(input == null ? "" : input, decoded);
 }
 
 void runAll() {
@@ -76,9 +75,9 @@ void runAll() {
         "5hbCBwbGVhc3VyZS4=";
     testEncodeDecode(expected, line);
   });
-  
+
   test('Encode Performance', (){
-    var l = new List<int>(1000);
+    var l = new List<int>(1024);
     var iters = 20000;
     fillRandom(l);
     String enc;
@@ -88,12 +87,12 @@ void runAll() {
       enc = b.encode(l);
     }
     int ms = w.elapsedMilliseconds;
-    int perSec = (iters * l.length) * 1000 ~/ ms;  
-    print("Encode for $iters is $ms msec. $perSec b/s");
+    int perSec = (iters * l.length) * 1000 ~/ ms;
+    print("Encode 1024 bytes for $iters times: $ms msec. $perSec b/s");
   });
 
   test('Decode Performance', (){
-    var l = new List<int>(1000);
+    var l = new List<int>(1024);
     var iters = 20000;
     fillRandom(l);
     String enc;
@@ -104,10 +103,10 @@ void runAll() {
       b.decode(enc);
     }
     int ms = w.elapsedMilliseconds;
-    int perSec = (iters * l.length) * 1000 ~/ ms;  
-    print("Decode for $iters is $ms msec. $perSec b/s");
+    int perSec = (iters * enc.length) * 1000 ~/ ms;
+    print("Decode ${enc.length} chars for $iters times: $ms msec. $perSec b/s");
   });
-  
+
 }
 
 void main() {
