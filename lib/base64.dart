@@ -76,22 +76,22 @@ bool _urlSafe;
    * Returns empty list if [input] is null.
    * Returns null if cleaned input size is not multiple of 4.
   */
-  List<int> decodeToList(List<int> input) {
+  List<int> decode(String input) {
     int len = input != null ? input.length : 0;
     if (len == 0) {
       return new List<int>.fixedLength(0);
     }
     int extrasLen = 0;
     for (int i = 0; i < len; i++)
-      if (decodeTable[input[i]] < 0) {
+      if (decodeTable[input.codeUnitAt(i)] < 0) {
         extrasLen++;
       }
     if ((len - extrasLen) % 4 != 0) {
       return null;
     }
     int pad = 0;
-    for (int i = len; i > 1 && decodeTable[input[--i]] <= 0;) {
-      if (input[i] == PAD) {
+    for (int i = len; i > 1 && decodeTable[input.codeUnitAt(--i)] <= 0;) {
+      if (input.codeUnitAt(i) == PAD) {
         pad++;
       }
     }
@@ -102,7 +102,7 @@ bool _urlSafe;
       int j = 18;
       // Accumulate 4 valid 6 bit base64 characters into an int.
       while (j >= 0) {
-        int c = decodeTable[input[i++]];
+        int c = decodeTable[input.codeUnitAt(i++)];
         if (c >= 0) {
           x |= c << j;
           j -= 6;
@@ -118,7 +118,8 @@ bool _urlSafe;
     return out;
   }
 
-  List<int> decode(String input) {
-    return decodeToList(input.codeUnits);
+  List<int> decodeToList(List<int> input) {
+    return decode(new String.fromCharCodes(input));
   }
+
 }
