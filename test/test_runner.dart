@@ -6,6 +6,7 @@ import "simhash_test.dart" as simHash;
 import "mphf_test.dart" as mphf;
 import "trie_test.dart" as trie;
 import "count_set_test.dart" as countSet;
+import "base64_test.dart" as base64;
 
 main() {
   bloom.main();
@@ -15,4 +16,5 @@ main() {
   mphf.main();
   trie.main();
   countSet.main();
+  base64.main();
 }

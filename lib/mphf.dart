@@ -10,7 +10,7 @@ int hash(List<int> key, int seed) {
   int h1 = seed;
   for (int i=0, length=key.length; i<length;++i) {
     h1 += key[i];
-    h1 += (h1 << 10) & 0xfffffff;
+    h1 += (h1 << 10) & 0x7fffffff;
     h1 ^= (h1 >> 6);
   }
   return h1 & 0x7fffffff;

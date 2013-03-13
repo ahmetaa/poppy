@@ -7,10 +7,10 @@ int hash(int input, int seed) {
   int h1 = seed;
   for (int i=0; i<8; ++i) {
     h1 += (input>>(i*8)) & 0xff;
-    h1 += (h1 << 13) & 0xffffffffffffffff;
+    h1 += (h1 << 13) & 0x3fffffffffffffff;
     h1 ^= (h1 >> 6);
   }
-  return h1 & 0xffffffffffffffff;
+  return h1 & 0x3fffffffffffffff;
 }
 
 int hammingDistance(int i, int j) {
