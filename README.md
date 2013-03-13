@@ -19,7 +19,7 @@ Trie implementation for Dart. Tries are especially good for prefix searches. Thi
 
 ## Minimal Perfect Hash Function (Mphf)
 
-*Mphf* class in *lib/mphf.dart* is a Minimal Perfect Hash Function (MPHF) implementation.
+*Mphf* class is a Minimal Perfect Hash Function (MPHF) implementation.
 
 A Mphf (http://en.wikipedia.org/wiki/Perfect_hash_function#Minimal_perfect_hash_function) is generated from a defined set of unique keys. It produces a distinct integer for each key in the range of [0..keycount-1].
 
@@ -46,9 +46,8 @@ Dart implementation does not provide this functionality.
 	pomegranate = 0	
 
 ## Bloom Filter (BloomFilter)
-*BloomFilter* class in bloom_filter.dart is a simple Bloom Filter (http://en.wikipedia.org/wiki/Bloom_filter) implementation. 
+*BloomFilter* is a simple Bloom Filter (http://en.wikipedia.org/wiki/Bloom_filter) implementation. 
 This structure guarantess if a key was "not" added to it. However it cannot guarantee if a key really added before.
-Implementation uses three simple hash functions (actually same functioun with different seeds) and a 32 bit int backed bit vector.
 A Bloom filter can be constructed with number of keys to add, bits per bucket or maximum expected false positive ratio. Parameter estimation code is 
 converted from commoncrawl project.
 
@@ -74,6 +73,22 @@ converted from commoncrawl project.
 	apple may exist in bloom filter.
 	orange may exist in bloom filter.
 	guava does not exist in bloom filter.
+
+## Base64 Codec
+A fast RFC 2045 compliant Base64 decoder with URL safe option.
+Performance is ~40MB/s for both encoding and decoding. Code is based on Mig Base64 (BSD licensed) with modifications.
+Implementation is provided by mdakin.
+ 
+ 	import 'package:poppy/base64.dart';
+	...	
+	String encoded = b.encode("Hello".codeUnits);	
+	print("Encoded= $encoded");
+	String decoded = b.decode(encoded);
+	print("Decoded= $decoded"); 
+
+	output:
+	Encoded= SGVsbG8=
+	Decoded= Hello
 
 ## SimHash
 This is a special hash function that generates similar hash values for similar items. This means
@@ -125,5 +140,6 @@ A simple implementation of an integer set. This is actually similar to SparseVec
 sligthly faster and memory efficient than Set&lt;int&gt; structure.
 
 ## Change List
-*0.1.7* Fix an error slipped to 0.1.6 in mphf lib definition. Some cleanup 
+*0.1.8* Introduce Base64 codec. Add String methods to BloomFilter.  
+*0.1.7* Fix an error slipped to 0.1.6 in mphf lib definition. Some cleanup  
 *0.1.6* CountSet is introduced. Dart M3 changes. 

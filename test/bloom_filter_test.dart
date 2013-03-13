@@ -35,14 +35,13 @@ main() {
 
     sw..reset()..start();
 
-    for(int i =0; i<strings.length;++i) {
-      bloom.add(strings[i].codeUnits);
-    }
+    bloom.addStrings(strings);
+
     print("Adding ${size} key took ${sw.elapsedMilliseconds}");
 
     sw = new Stopwatch()..start();
     for(int i =0; i<strings.length;++i) {
-      bloom.check(strings[i].codeUnits);
+      bloom.checkString(strings[i]);
     }
     print("Checking ${size} existing key took ${sw.elapsedMilliseconds}");
 
@@ -56,7 +55,7 @@ main() {
     num falsePositive = 0;
     sw = new Stopwatch()..start();
     for(int i =0; i<strsNotExist.length;++i) {
-      if(bloom.check(strsNotExist[i].codeUnits)) {
+      if(bloom.checkString(strsNotExist[i])) {
         falsePositive++;
       }
     }

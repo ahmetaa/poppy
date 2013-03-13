@@ -46,22 +46,37 @@ class BloomFilter {
       _bitVector.setBit(hashFunc.hash(key));
     }
   }
+  
+  /// adds a String key to the filter.
+  void addString(String key) {
+    for(var hashFunc in _hashFunctions) {
+      _bitVector.setBit(hashFunc.hashStr(key));
+    }
+  }  
 
+  /// adds a String keys to the filter.
+  void addStrings(Iterable<String> keys) {
+    for(var hashFunc in _hashFunctions) {
+      for(String key in keys) _bitVector.setBit(hashFunc.hashStr(key));
+    }
+  }    
+  
   /// returns false if key definitely does not exist. true when key *may* exist
   bool check(List<int> key) {
     for(var hashFunc in _hashFunctions) {
-      if(!_bitVector.getBit(hashFunc.hash(key))) {
-        return false;
-      }
+      if(!_bitVector.getBit(hashFunc.hash(key))) return false;      
     }
     return true;
   }
 
   /// returns false if key definitely does not exist. true when key *may* exist
-  bool checkString(String str) {
-    return check(str.codeUnits);
-  }
-
+  bool checkString(String key) {
+    for(var hashFunc in _hashFunctions) {
+      if(!_bitVector.getBit(hashFunc.hashStr(key))) return false;      
+    }
+    return true;
+  }  
+  
 }
 
 class _BloomHash {
@@ -70,16 +85,25 @@ class _BloomHash {
 
   _BloomHash(this.seed, this.modulo);
 
-  /** modified - shortened Jenkins 32 */
   int hash(List<int> key) {
     int h1 = seed;
     for (int i=0, length=key.length; i<length;++i) {
       h1 += key[i];
-      h1 += (h1 << 10) & 0xfffffff;
+      h1 += (h1 << 10) & 0x7fffffff;
       h1 ^= (h1 >> 6);
     }
     return h1 % modulo;
   }
+  
+  int hashStr(String key) {
+    int h1 = seed;
+    for (int i=0, length=key.length; i<length;++i) {
+      h1 += key.codeUnitAt(i);
+      h1 += (h1 << 10) & 0x7fffffff; 
+      h1 ^= (h1 >> 6);
+    }
+    return h1 % modulo;
+  }  
 }
 
 class _BloomParameters {
