@@ -121,7 +121,7 @@ void runAll() {
     print("Decode into ${l.length} bytes for $iters times: $ms msec. $perSec b/s");
   });
   
-  test('Decode unsafe performance (No \n\r, no illegals).', (){
+  test(r'Decode unsafe performance (No \n\r, no illegals).', (){
     var l = new List<int>(1024);
     var iters = 20000;
     fillRandom(l);

@@ -140,6 +140,7 @@ A simple implementation of an integer set. This is actually similar to SparseVec
 sligthly faster and memory efficient than Set&lt;int&gt; structure.
 
 ## Change List
+*0.1.10* Add decodeUnsafe method Base64. Also it is faster now.  
 *0.1.9* Base64 api change  
 *0.1.8* Introduce Base64 codec. Add String methods to BloomFilter.  
 *0.1.7* Fix an error slipped to 0.1.6 in mphf lib definition. Some cleanup  
