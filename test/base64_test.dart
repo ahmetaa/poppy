@@ -7,7 +7,7 @@ import 'dart:math';
 fillRandom(List<int> l) {
   var random = new Random(0xBABE);
   for(int j=0; j < l.length; j++) {
-    l[j] = random.nextInt(255);
+    l[j] = random.nextInt(256);
   }
 }
 
@@ -76,7 +76,7 @@ void runAll() {
   });
 
   test('Encode Performance', (){
-    var l = new List<int>(1024);
+    var l = new List<int>(4096);
     var iters = 20000;
     fillRandom(l);
     String enc;
@@ -91,7 +91,7 @@ void runAll() {
   });
 
   test('Decode Performance', (){
-    var l = new List<int>(1024);
+    var l = new List<int>(4096);
     var iters = 20000;
     fillRandom(l);
     String enc;

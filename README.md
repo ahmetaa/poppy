@@ -45,7 +45,7 @@ Dart implementation does not provide this functionality.
 	blueberry = 1
 	pomegranate = 0	
 
-## Bloom Filter (BloomFilter)
+## Bloom Filter
 *BloomFilter* is a simple Bloom Filter (http://en.wikipedia.org/wiki/Bloom_filter) implementation. 
 This structure guarantess if a key was "not" added to it. However it cannot guarantee if a key really added before.
 A Bloom filter can be constructed with number of keys to add, bits per bucket or maximum expected false positive ratio. Parameter estimation code is 
@@ -129,17 +129,18 @@ This structure is possibly more compact than using a map structure. It also prov
 	Count of pear is 1
 	Non existing item papaya's count:0	  
  
-## Sparse Vector (SparseVector)
+## Sparse Vector 
 *SparseVector* class in sparse_vector.dart can be used for representing large sparse vectors where most of its values are zero. 
 This structure only hold non-zero elements in it. Therefore it is compact.
   
 Internally it is actually a hash table that uses linear probing. It is more efficient than using Map&lt;int,num&gt; structure. Most vector arithmetic operations are not yet added to the code.
 
-## Integer Set (Int Set)  
+## Integer Set  
 A simple implementation of an integer set. This is actually similar to SparseVector class. It is suppose to be
 sligthly faster and memory efficient than Set&lt;int&gt; structure.
 
 ## Change List
+*0.1.9* Base64 api change  
 *0.1.8* Introduce Base64 codec. Add String methods to BloomFilter.  
 *0.1.7* Fix an error slipped to 0.1.6 in mphf lib definition. Some cleanup  
 *0.1.6* CountSet is introduced. Dart M3 changes. 
