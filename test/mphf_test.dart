@@ -41,4 +41,7 @@ main() {
   test('Random strings.', () {
     expect(randomStringTest(), true);
   });
+  
+  int i;
+  i.abs();
 }
