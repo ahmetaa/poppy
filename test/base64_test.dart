@@ -117,9 +117,25 @@ void runAll() {
       b.decode(enc);
     }
     int ms = w.elapsedMilliseconds;
-    int perSec = (iters * enc.length) * 1000 ~/ ms;
-    print("Decode ${enc.length} chars for $iters times: $ms msec. $perSec b/s");
+    int perSec = (iters * l.length) * 1000 ~/ ms;
+    print("Decode into ${l.length} bytes for $iters times: $ms msec. $perSec b/s");
   });
+  
+  test('Decode unsafe performance (No \n\r, no illegals).', (){
+    var l = new List<int>(1024);
+    var iters = 20000;
+    fillRandom(l);
+    String enc;
+    var b = new Base64(urlSafe:false, addLineSeparator:false);
+    enc = b.encode(l);
+    var w = new Stopwatch()..start();
+    for( int i = 0; i < iters; ++i ) {
+      b.decodeUnsafe(enc);
+    }
+    int ms = w.elapsedMilliseconds;
+    int perSec = (iters * l.length) * 1000 ~/ ms;
+    print("Decode into ${l.length} bytes for $iters times: $ms msec. $perSec b/s");
+  });  
 
 }
 

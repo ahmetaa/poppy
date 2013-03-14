@@ -6,7 +6,7 @@ import 'dart:io';
 // Performance is close to Java version. 
 // Encode to String: ~40MB/s
 // Encode to List<int>: ~80MB/s
-// Decode from String: ~80MB/s
+// Decode from String: ~60MB/s
 // Code is based on Mig Base64 with modifications and minor improvements.
 // Mig Base64 project: http://migbase64.sourceforge.net/
 class Base64 {
@@ -118,7 +118,7 @@ bool _urlSafe;
       }
       out[d++] = (x >> 16);
       if (d < oLen) {
-        out[d++]= (x >> 8) & 0xFF;
+        out[d++] = (x >> 8) & 0xFF;
         if (d < oLen)
           out[d++] = x & 0xFF;
       }
@@ -126,6 +126,37 @@ bool _urlSafe;
     return out;
   }
 
+  /**
+   * If input has no \r \n and no illegal chars this is a faster decoder (2-3x faster).
+   * Warning: Does not check if input has anything outside Base64 alphabet.
+   * Returns empty list if [input] is null.
+   * Returns null if input size is not multiple of 4.
+  */
+  List<int> decodeUnsafe(String input) {
+    int len = input != null ? input.length : 0;
+    // Basic validity check.
+    if (len % 4 != 0) return null;
+    if (len == 0) return new List<int>.fixedLength(0);
+    // Find pad chars
+    int pad = decodeTable[input.codeUnitAt(len - 1)] == 0 ? 1 : 0;
+    pad += decodeTable[input.codeUnitAt(len - 2)] == 0 ? 1 : 0;
+    int oLen = (len * 6 >> 3) - pad;
+    List<int> out = new List<int>(oLen);
+    for (int i = 0, d = 0; d < oLen;) {
+      int x = decodeTable[input.codeUnitAt(i++)] << 18 |
+              decodeTable[input.codeUnitAt(i++)] << 12 |
+              decodeTable[input.codeUnitAt(i++)] << 6  |
+              decodeTable[input.codeUnitAt(i++)];
+      out[d++] = (x >> 16);
+      if (d < oLen) {
+        out[d++] = (x >> 8) & 0xFF;
+        if (d < oLen)
+          out[d++] = x & 0xFF;
+      }
+    }
+    return out;
+  }  
+  
   List<int> decodeToList(List<int> input) {
     return decode(new String.fromCharCodes(input));
   }
