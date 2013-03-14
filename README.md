@@ -81,10 +81,10 @@ Implementation is provided by mdakin.
  
  	import 'package:poppy/base64.dart';
 	...	
-	String encoded = b.encode("Hello".codeUnits);	
+	String encoded = b.encode("Hello".codeUnits);  
 	print("Encoded= $encoded");
-	String decoded = b.decode(encoded);
-	print("Decoded= $decoded"); 
+	String decoded = new String.fromCharCodes(b.decode(encoded));
+	print("Decoded= $decoded");
 
 	output:
 	Encoded= SGVsbG8=
