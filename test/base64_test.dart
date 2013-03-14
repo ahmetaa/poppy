@@ -106,7 +106,7 @@ void runAll() {
   });  
   
   test('Decode Performance', (){
-    var l = new List<int>(4096);
+    var l = new List<int>(1024);
     var iters = 20000;
     fillRandom(l);
     String enc;
