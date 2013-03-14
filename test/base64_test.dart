@@ -75,7 +75,7 @@ void runAll() {
     testEncodeDecode(expected, line);
   });
 
-  test('Encode Performance', (){
+  test('Encode to String performance', (){
     var l = new List<int>(1024);
     var iters = 20000;
     fillRandom(l);
@@ -90,6 +90,21 @@ void runAll() {
     print("Encode 1024 bytes for $iters times: $ms msec. $perSec b/s");
   });
 
+  test('Encode to array performance', (){
+    var l = new List<int>(1024);
+    var iters = 20000;
+    fillRandom(l);
+    List<int> enc;
+    var b = new Base64();
+    var w = new Stopwatch()..start();
+    for( int i = 0; i < iters; ++i ) {
+      enc = b.encodeToList(l);
+    }
+    int ms = w.elapsedMilliseconds;
+    int perSec = (iters * l.length) * 1000 ~/ ms;
+    print("Encode 1024 bytes for $iters times: $ms msec. $perSec b/s");
+  });  
+  
   test('Decode Performance', (){
     var l = new List<int>(1024);
     var iters = 20000;

@@ -1,14 +1,29 @@
 library poppy;
 
+import 'dart:io';
+
 // A fast RFC 2045 compliant base64 decoder with URL safe option.
-// Performance is ~40MB/s for both encoding and decoding.
-// Code is based on Mig Base64 (BSD licensed) with modifications.
+// Performance is close to Java version. 
+// Encode to String: ~40MB/s
+// Encode to List<int>: ~80MB/s
+// Decode from String: ~80MB/s
+// Code is based on Mig Base64 with modifications and minor improvements.
 // Mig Base64 project: http://migbase64.sourceforge.net/
 class Base64 {
 
 static final List<int> alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".codeUnits;
 static final List<int> alphabetUrlSafe = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_".codeUnits;
-static final List<int> decodeTable = new List<int>.filled(256, -1);
+static const List<int> decodeTable = const [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, 62, -1, 62, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, 0,
+    -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+    23, 24, 25, -1, -1, -1, -1, 63, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 
 final int PAD = 61; // '='
 final int CR = '\r'.codeUnitAt(0);
@@ -18,14 +33,7 @@ bool _addLineSeparator;
 bool _urlSafe;
 
   Base64({bool urlSafe : false, bool addLineSeparator : true})
-      : _urlSafe = urlSafe, _addLineSeparator = addLineSeparator {
-    // Build DECODE table (TODO: Make this a const table)
-    for (int i = 0; i < alphabet.length; i++) {
-      decodeTable[alphabet[i]] = i;
-      decodeTable[alphabetUrlSafe[i]] = i;
-    }
-    decodeTable[PAD] = 0;
-  }
+      : _urlSafe = urlSafe, _addLineSeparator = addLineSeparator;
 
   String encode(List<int> input) {
     return new String.fromCharCodes(encodeToList(input));
@@ -53,7 +61,7 @@ bool _urlSafe;
       out[j++] = lookup[(x >> 12) & 0x3F];
       out[j++] = lookup[(x >> 6)  & 0x3F];
       out[j++] = lookup[x & 0x3f];
-      // Add optional line separator for each 76 char aoutput.
+      // Add optional line separator for each 76 char output.
       if (_addLineSeparator && ++cc == 19 && j < oLen - 2) {
           out[j++] = CR;
           out[j++] = LF;
