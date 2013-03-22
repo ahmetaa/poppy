@@ -88,9 +88,7 @@ class _BloomHash {
   int hash(List<int> key) {
     int h1 = seed;
     for (int i=0, length=key.length; i<length;++i) {
-      h1 += key[i];
-      h1 += (h1 << 10) & 0x7fffffff;
-      h1 ^= (h1 >> 6);
+      h1 = ((h1 ^ key[i]) * 16777619) & 0x7fffffff;
     }
     return h1 % modulo;
   }
@@ -98,9 +96,7 @@ class _BloomHash {
   int hashStr(String key) {
     int h1 = seed;
     for (int i=0, length=key.length; i<length;++i) {
-      h1 += key.codeUnitAt(i);
-      h1 += (h1 << 10) & 0x7fffffff; 
-      h1 ^= (h1 >> 6);
+      h1 = ((h1 ^ key.codeUnitAt(i)) * 16777619) & 0x7fffffff;
     }
     return h1 % modulo;
   }  

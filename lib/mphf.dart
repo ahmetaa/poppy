@@ -9,14 +9,12 @@ import 'src/mphf_generator.dart';
 int hash(List<int> key, int seed) {
   int h1 = seed;
   for (int i=0, length=key.length; i<length;++i) {
-    h1 += key[i];
-    h1 += (h1 << 10) & 0x7fffffff;
-    h1 ^= (h1 >> 6);
+    h1 = ((h1 ^ key[i]) * 16777619) & 0x7fffffff;
   }
-  return h1 & 0x7fffffff;
+  return h1;
 }
 
-int initialHash(List<int> key) => hash(key, 0x9747b28c);
+int initialHash(List<int> key) => hash(key, 0x811C9DC5);
 
 /**
  * A Minimal Perfect Hash function which accepts keys that can be represented as List<int>.
