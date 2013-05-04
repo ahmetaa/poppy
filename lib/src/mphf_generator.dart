@@ -1,7 +1,7 @@
 library poppy;
 
 import "dart:math";
-import 'dart:scalarlist';
+import 'dart:typed_data';
 import "bit_vector.dart";
 import 'package:poppy/mphf.dart';
 
@@ -45,7 +45,7 @@ class BucketCalculator {
   List<_Bucket> generateInitialBuckets(int bucketAmount) {
 
     // Generating buckets
-    var buckets = new List<_Bucket>.fixedLength(bucketAmount);
+    var buckets = new List<_Bucket>(bucketAmount);
     for (int i = 0; i < buckets.length; i++) {
       buckets[i] = new _Bucket(i);
     }
@@ -145,7 +145,7 @@ class BucketCalculator {
     }
 
     // this time we generate item keyAmount of Buckets
-    var nextLevelBuckets = new List<_Bucket>.fixedLength(failedBucketAmount);
+    var nextLevelBuckets = new List<_Bucket>(failedBucketAmount);
     for (int i = 0; i < failedBucketAmount; i++) {
       nextLevelBuckets[i] = new _Bucket(i);
     }
@@ -163,6 +163,7 @@ class BucketCalculator {
 
     int currentLevel = indexes.length;
     var failedHashValues = new List<int>();
+    
     for (int i = 0; i < bitVector.size; i++) {
       if (!bitVector.getBit(i)) {
         failedHashValues.add(currentLevel==0 ? i : indexes[currentLevel - 1].failedIndexes[i]);

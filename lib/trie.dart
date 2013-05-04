@@ -12,27 +12,27 @@ abstract class Trie<T> {
   void operator []=(String key, T value);
 
   /**
-   * Retrieves the value identified by [str], [null] otherwise.
+   * Retrieves the value identified by [key], null otherwise.
    */
   T operator [](String key);
 
   /**
-   * Returns a [Collection] of all items with keys has prefix [pre] in the trie.
+   * Returns a [Iterable] of all items with keys has prefix [pre] in the trie.
    * Collection is lexicographically ordered by keys.
    * For obejcts {"foo":o1, "foobar":o2, "blah":o3} in trie,
    * returns (o1,o2) for [pre] = "foo".
    *
    * If prefix is null or empty string it returns all values.
    */
-  Collection<T> getValuesWithPrefix(String pre);
+  Iterable<T> getValuesWithPrefix(String pre);
 
   /**
-   * Returns a [Collection] of all keys with given prefix [pre] in the trie.
+   * Returns a [Iterable] of all keys with given prefix [pre] in the trie.
    * Collection is lexicographically sorted.
    * For obejcts {"foo":o1, "foobar":o2, "blah":o3} in trie,
    * returns ("foo","foobar") for [pre] = "foo".
    */
-  Collection<String> getKeysWithPrefix(String pre);
+  Iterable<String> getKeysWithPrefix(String pre);
 
   /**
    * Returns a map of key-value pairs with given [prefix]
@@ -138,7 +138,7 @@ class SimpleTrie<T> implements Trie<T>{
       if(node.hasValue()) {
         f(node.key, node.value);
       }
-      Collection<_SimpleTrieNode<T>> children = node.getAllChildren();
+      Iterable<_SimpleTrieNode<T>> children = node.getAllChildren();
       if (children != null) {
         for (_SimpleTrieNode<T> child in children) {
           _walkAndApply(child, f);
@@ -147,7 +147,7 @@ class SimpleTrie<T> implements Trie<T>{
     }
   }
 
-  Collection<T> getValuesWithPrefix(String pre) {
+  Iterable<T> getValuesWithPrefix(String pre) {
     List<T> values = new List<T>();
     _SimpleTrieNode node = _walkToNode(pre);
     _walkAndApply(node, (String key, T value) {
@@ -156,7 +156,7 @@ class SimpleTrie<T> implements Trie<T>{
     return values;
   }
 
-  Collection<String> getKeysWithPrefix(String pre) {
+  Iterable<String> getKeysWithPrefix(String pre) {
     List<String> keys = new List<String>();
     _SimpleTrieNode node = _walkToNode(pre);
     _walkAndApply(node, (String key, T value) {
@@ -181,7 +181,7 @@ class SimpleTrie<T> implements Trie<T>{
   void _calculateStats(_SimpleTrieNode<T> node ) {
     if (node != null) {
       _numberOfNodes++;
-      Collection<_SimpleTrieNode<T>> children = node.getAllChildren();
+      Iterable<_SimpleTrieNode<T>> children = node.getAllChildren();
       if (children != null) {
         _childHistogram[children.length]++;
         for (_SimpleTrieNode<T> child in children) {
@@ -226,7 +226,7 @@ class _SimpleTrieNode<T> {
     return pos >= 0 ? _children[pos] : null;
   }
 
-  Collection<_SimpleTrieNode<T>> getAllChildren() => _children;
+  Iterable<_SimpleTrieNode<T>> getAllChildren() => _children;
 
   // Search based on index values of children array.
   // Returns index of node if it already exists,
@@ -266,7 +266,7 @@ class _SimpleTrieNode<T> {
     int pos = _getChildIndex(c);
     if (pos < 0) {
       _SimpleTrieNode<T> emptyNode = new _SimpleTrieNode<T>(c);
-      _children.insertRange(-(pos + 1), 1, emptyNode);
+      _children.insert(-(pos + 1), emptyNode);
       return emptyNode;
     }
     return _children[pos];

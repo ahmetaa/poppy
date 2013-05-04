@@ -28,7 +28,7 @@ class BloomFilter {
   _initialize(int approximateKeySize, int bucketsPerKey, int hashCount) {
 
     int bucketAmount = bucketsPerKey*approximateKeySize;
-    if(bucketAmount>0x7fffffff) {
+    if(bucketAmount > 0x3fffffff) {
       throw new ArgumentError("Cannot have $approximateKeySize elements.");
     }
 
@@ -88,7 +88,7 @@ class _BloomHash {
   int hash(List<int> key) {
     int h1 = seed;
     for (int i=0, length=key.length; i<length;++i) {
-      h1 = ((h1 ^ key[i]) * 16777619) & 0x7fffffff;
+      h1 = ((h1 ^ key[i]) * 16777619) & 0x3fffffff;
     }
     return h1 % modulo;
   }
@@ -96,7 +96,7 @@ class _BloomHash {
   int hashStr(String key) {
     int h1 = seed;
     for (int i=0, length=key.length; i<length;++i) {
-      h1 = ((h1 ^ key.codeUnitAt(i)) * 16777619) & 0x7fffffff;
+      h1 = ((h1 ^ key.codeUnitAt(i)) * 16777619) & 0x3fffffff;
     }
     return h1 % modulo;
   }  

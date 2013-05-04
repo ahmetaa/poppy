@@ -1,6 +1,6 @@
 library poppy;
 
-import 'dart:scalarlist';
+import 'dart:typed_data';
 import 'dart:math';
 
 class IntSet {

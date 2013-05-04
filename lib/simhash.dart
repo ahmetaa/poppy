@@ -1,7 +1,7 @@
 library poppy;
 
 import 'int_set.dart';
-import 'dart:scalarlist';
+import 'dart:typed_data';
 
 int hash(int input, int seed) {
   int h1 = seed;
@@ -48,7 +48,7 @@ class SimHash {
       shingles.add(shingle);
     }
 
-    var bitCounts = new List<int>()..insertRange(0, HASH_SIZE, 0);
+    var bitCounts = new List<int>.filled(HASH_SIZE, 0);
 
     for(int shingle in shingles.allKeys()) {
       int h = hash(shingle, seed);

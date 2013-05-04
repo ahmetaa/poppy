@@ -27,8 +27,8 @@ class SparseVector extends Iterable<TableEntry> {
       int power = (log(size) / log(2)).toInt();
       size = 1 << (power + 1);
     }
-    keys = new List<int>()..insertRange(0, size, 0);
-    values = new List<num>()..insertRange(0, size, 0);
+    keys = new List<int>.filled(size, 0);
+    values = new List<num>.filled(size, 0);
     threshold =  (size * DEFAULT_LOAD_FACTOR).toInt();
     modulo = size - 1;
   }

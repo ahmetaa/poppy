@@ -110,7 +110,7 @@ main() {
   });
 
   Random r = new Random(5);
-  var keyVals = new List<KeyVal>.fixedLength(10000);
+  var keyVals = new List<KeyVal>(10000);
   final int itCount = 1000;
   for (int i = 0; i < keyVals.length; i++) {
     keyVals[i] = new KeyVal(r.nextInt(20000), r.nextInt(5000) + 1);

@@ -74,22 +74,6 @@ converted from commoncrawl project.
 	orange may exist in bloom filter.
 	guava does not exist in bloom filter.
 
-## Base64 Codec
-A fast RFC 2045 compliant Base64 decoder with URL safe option.
-Performance is ~40MB/s for both encoding and decoding. Code is based on Mig Base64 (BSD licensed) with modifications.
-Implementation is provided by mdakin.
- 
- 	import 'package:poppy/base64.dart';
-	...	
-	String encoded = b.encode("Hello".codeUnits);  
-	print("Encoded= $encoded");
-	String decoded = new String.fromCharCodes(b.decode(encoded));
-	print("Decoded= $decoded");
-
-	output:
-	Encoded= SGVsbG8=
-	Decoded= Hello
-
 ## SimHash
 This is a special hash function that generates similar hash values for similar items. This means
 bit positions of two hash values matches better for similar items (smaller Hamming distance).  For example:  
@@ -140,6 +124,8 @@ A simple implementation of an integer set. This is actually similar to SparseVec
 sligthly faster and memory efficient than Set&lt;int&gt; structure.
 
 ## Change List
+*0.1.11* Dart M4 changes. Use 0x3fffffff for MPHF and BloomFilter bounds. Remove Base64 since there is a full
+Base64 codec available in Dart. Trie returns an Iterable instead of Collection. 
 *0.1.10* Add decodeUnsafe method Base64. Also it is faster now.  
 *0.1.9* Base64 api change  
 *0.1.8* Introduce Base64 codec. Add String methods to BloomFilter.  

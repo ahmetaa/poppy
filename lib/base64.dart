@@ -42,7 +42,7 @@ bool _urlSafe;
   List<int> encodeToList(List<int> input) {
     int len = input != null ? input.length : 0;
     if (len == 0) {
-      return new List<int>.fixedLength(0);
+      return new List<int>(0);
     }
     final List<int> lookup = _urlSafe ? alphabetUrlSafe : alphabet;
     // Size of 24 bit chunks
@@ -87,7 +87,7 @@ bool _urlSafe;
   List<int> decode(String input) {
     int len = input != null ? input.length : 0;
     if (len == 0) {
-      return new List<int>.fixedLength(0);
+      return new List<int>(0);
     }
     int extrasLen = 0;
     for (int i = 0; i < len; i++)
@@ -136,7 +136,7 @@ bool _urlSafe;
     int len = input != null ? input.length : 0;
     // Basic validity check.
     if (len % 4 != 0) return null;
-    if (len == 0) return new List<int>.fixedLength(0);
+    if (len == 0) return new List<int>(0);
     // Find pad chars
     int pad = decodeTable[input.codeUnitAt(len - 1)] == 0 ? 1 : 0;
     pad += decodeTable[input.codeUnitAt(len - 2)] == 0 ? 1 : 0;

@@ -1,11 +1,12 @@
 library poppy;
 
 import 'dart:math';
-import 'dart:scalarlist';
+import 'dart:typed_data';
+import 'dart:collection';
 
 /// A data structure for counting objects. Counts can be negative.
 
-class CountSet<T> extends Iterable<T> {
+class CountSet<T> extends IterableBase<T> {
 
   static final int INITIAL_SIZE = 8;
   static final num DEFAULT_LOAD_FACTOR = 0.6;

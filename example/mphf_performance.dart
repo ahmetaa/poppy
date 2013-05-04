@@ -7,11 +7,11 @@ import 'package:poppy/mphf.dart';
  * - Query all strings to check speed. Use unchecked mode for speed.
  */
 
-final num AMOUNT = 100000;
+final num AMOUNT = 300000;
 final num LENGTH = 7;
 
 void main() {
-
+  
   print("Generating $AMOUNT amount of $LENGTH length unique strings");
   var stopWatch = new Stopwatch()..start();
   var testStrings = _randomStrings();

@@ -1,7 +1,7 @@
 library poppy;
 
 import 'dart:math';
-import 'dart:scalarlist';
+import 'dart:typed_data';
 import 'src/mphf_generator.dart';
 
 
@@ -9,7 +9,7 @@ import 'src/mphf_generator.dart';
 int hash(List<int> key, int seed) {
   int h1 = seed;
   for (int i=0, length=key.length; i<length;++i) {
-    h1 = ((h1 ^ key[i]) * 16777619) & 0x7fffffff;
+    h1 = ((h1 ^ key[i]) * 16777619) & 0x3fffffff;
   }
   return h1;
 }
@@ -27,7 +27,7 @@ int initialHash(List<int> key) => hash(key, 0x811C9DC5);
  */
 class Mphf {
 
-  final int MAX_KEY_AMOUNT = 0x7fffffff;
+  const int MAX_KEY_AMOUNT = 0x3fffffff;
 
   List<HashIndexes> hashLevelData;
 
@@ -40,7 +40,7 @@ class Mphf {
       this.hashLevelData = bc.calculate();
   }
 
-  Mphf.fromStrings(Collection<String> strings) {
+  Mphf.fromStrings(Iterable<String> strings) {
     _checkArguments(strings);
     BucketCalculator bc = new BucketCalculator(new KeyProvider.fromStrings(strings));
     this.hashLevelData = bc.calculate();
@@ -52,7 +52,7 @@ class Mphf {
     this.hashLevelData = bc.calculate();
   }
 
-  _checkArguments(Collection c) {
+  _checkArguments(Iterable c) {
     if(c==null) {
       throw new ArgumentError("Input cannot be null");
     }
@@ -69,9 +69,9 @@ class Mphf {
 
   /**
    * returns the minimal perfect hash value for the given input [key].
-   * hash values is between [0-keycount] keycount excluded.
+   * hash values is between 0-keycount, keycount excluded.
    * sometimes initial hash value for MPHF calculation is
-   * already calculated. So [fingerprint] value is used instead of re-calculation.
+   * already calculated. So [initialHashValue] value is used instead of re-calculation.
    * This provides a small performance enhancement.
    */
   int getValue(List<int> key, [int initialHashValue]) {
@@ -106,7 +106,7 @@ class KeyProvider {
    List<List<int>> list = new List();
    KeyProvider(this.list);
 
-   KeyProvider.fromStrings(Collection<String> vals) {
+   KeyProvider.fromStrings(Iterable<String> vals) {
      for(String s in vals) {
        list.add(s.codeUnits);
      }

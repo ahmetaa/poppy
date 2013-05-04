@@ -1,6 +1,6 @@
 library poppy;
 
-import 'dart:scalarlist';
+import 'dart:typed_data';
 
 /**
  * An int list backed fixed size bit vector.
@@ -31,6 +31,17 @@ class FixedBitVector {
     _words = new Int32List(wordCount);
     _initialize();
   }
+  
+  int zeroCount() {
+    int total = 0;
+    for(int i = 0; i < size; i++) {
+      if((_words[i >> 5] & _setMasks[i & 31])==0)
+        total++;
+    }
+    return total;
+  }
+  
+  int oneCount() => size-zeroCount();
 
   FixedBitVector.fromData(this._words) {
     _size = _words.length*32;
@@ -71,7 +82,7 @@ class Int32BackedBitVector {
 
   _expand({int toBitSize}) {
     int newSize = ?toBitSize ? (toBitSize+31 >> 5 -_words.length )+7 : 7;
-    _words.insertRange(_words.length, 7, 0);
+    _words.fillRange(_words.length, _words.length+7, 0);
     _capacity = _words.length * 32;
   }
 
@@ -93,7 +104,7 @@ class Int32BackedBitVector {
     _size++;
   }
 
-  /// adds k amount of 1 and a zero. Used in Golomb-Rice coding
+  /// adds k amount of 1 and a zero.
   void addUnuary (int k) {
     if(_size+k+1 == _capacity) {
       _expand();

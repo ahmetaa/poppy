@@ -1,9 +1,9 @@
 name: poppy
-version: 0.1.10
+version: 0.1.11
 authors:
 - Ahmet A. Akın <ahmetaa@gmail.com>
 - Mehmet D. Akın <mdakin@gmail.com>
 description: Some algorithms for Dart. Such as Trie, MPHF and Bloom Filter.
 homepage: https://github.com/ahmetaa/poppy
 dependencies:
-  unittest: '>=0.4.0'
+  unittest: '>=0.5.0'
