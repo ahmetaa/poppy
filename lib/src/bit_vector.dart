@@ -1,5 +1,3 @@
-library poppy;
-
 import 'dart:typed_data';
 
 /**
@@ -81,7 +79,7 @@ class Int32BackedBitVector {
   }
 
   _expand({int toBitSize}) {
-    int newSize = ?toBitSize ? (toBitSize+31 >> 5 -_words.length )+7 : 7;
+    int newSize = toBitSize!=null ? (toBitSize+31 >> 5 -_words.length )+7 : 7;
     _words.fillRange(_words.length, _words.length+7, 0);
     _capacity = _words.length * 32;
   }

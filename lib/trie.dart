@@ -1,6 +1,6 @@
 library poppy;
-
 import 'dart:collection';
+
 /*
 * A simple generic Trie interface. Trie uses Strings as keys.
 */

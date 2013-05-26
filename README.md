@@ -27,8 +27,8 @@ Generated hash function does not store key data in the structure therefore they 
 This particular implementation uses around 3.2 bits per key. 
  
 Mphfs may be useful for very large look-up structures such as the ones used in language model compression. 
-Mphf generation is a very slow operation, therefore it is generally suggested storing the hash data once it is generated and using it from the storage afterwards. 
-Dart implementation does not provide this functionality.
+Mphf generation is a slow operation, therefore it is generally suggested storing the hash data once it is generated and using it from the storage afterwards. 
+Dart implementation does not provide this functionality yet.
 
 ### Usage example:
 	import 'package:poppy/mphf.dart';
@@ -124,6 +124,7 @@ A simple implementation of an integer set. This is actually similar to SparseVec
 sligthly faster and memory efficient than Set&lt;int&gt; structure.
 
 ## Change List
+*0.1.12* Eliminate ? symbol. Make mphf work with String keys directly. 
 *0.1.11* Dart M4 changes. Use 0x3fffffff for MPHF and BloomFilter bounds. Remove Base64 since there is a full
 Base64 codec available in Dart. Trie returns an Iterable instead of Collection.  
 *0.1.10* Add decodeUnsafe method Base64. Also it is faster now.  

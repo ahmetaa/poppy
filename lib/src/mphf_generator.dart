@@ -1,9 +1,8 @@
-library poppy;
-
-import "dart:math";
+import 'dart:math';
 import 'dart:typed_data';
-import "bit_vector.dart";
-import 'package:poppy/mphf.dart';
+import 'dart:collection';
+import '../mphf.dart';
+import 'bit_vector.dart';
 
 class HashIndexes {
   int keyAmount;

@@ -7,7 +7,7 @@ import 'package:poppy/mphf.dart';
  * - Query all strings to check speed. Use unchecked mode for speed.
  */
 
-final num AMOUNT = 300000;
+final num AMOUNT = 1000000;
 final num LENGTH = 7;
 
 void main() {
@@ -24,13 +24,10 @@ void main() {
     print("Hash generation time : ${stopWatch.elapsedMilliseconds} ms");
     print("Average bit per key: ${hash.averageBitsPerKey()}");
 
-    var l = new List<List<int>>();
-    for(String s in testStrings) {
-      l.add(s.codeUnits);
-    }
+    List<String> l = new List.from(testStrings);
     stopWatch..reset()..start();
     for(int i = 0, length = l.length; i<length; ++i) {
-      int k = hash.getValue(l[i]);
+      int k = hash.getValueStr(l[i]);
     }
     print("Hash query time : ${stopWatch.elapsedMilliseconds} ms \n");
   }

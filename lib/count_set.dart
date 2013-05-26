@@ -1,7 +1,6 @@
 library poppy;
-
-import 'dart:math';
 import 'dart:typed_data';
+import 'dart:math';
 import 'dart:collection';
 
 /// A data structure for counting objects. Counts can be negative.

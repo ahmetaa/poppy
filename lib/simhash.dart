@@ -1,17 +1,7 @@
 library poppy;
-
-import 'int_set.dart';
 import 'dart:typed_data';
-
-int hash(int input, int seed) {
-  int h1 = seed;
-  for (int i=0; i<8; ++i) {
-    h1 += (input>>(i*8)) & 0xff;
-    h1 += (h1 << 13) & 0x3fffffffffffffff;
-    h1 ^= (h1 >> 6);
-  }
-  return h1 & 0x3fffffffffffffff;
-}
+import 'dart:math';
+import 'int_set.dart';
 
 int hammingDistance(int i, int j) {
   int k = i^j;
@@ -28,6 +18,15 @@ class SimHash {
   static final int HASH_SIZE = 64;
   static final int GRAM_SIZE = 4;
 
+  static int hash(int input, int seed) {
+    int h1 = seed;
+    for (int i=0; i<8; ++i) {
+      h1 += (input>>(i*8)) & 0xff;
+      h1 += (h1 << 13) & 0x3fffffffffffffff;
+      h1 ^= (h1 >> 6);
+    }
+    return h1 & 0x3fffffffffffffff;
+  }  
 
   int getHashFromString(String input) {
     return getHash(input.codeUnits);

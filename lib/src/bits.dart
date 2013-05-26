@@ -1,5 +1,3 @@
-library poppy;
-
 class Bits {
   /**
    * Returns the number of bits set for 32 bit integer [x].

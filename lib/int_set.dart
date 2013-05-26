@@ -1,5 +1,4 @@
 library poppy;
-
 import 'dart:typed_data';
 import 'dart:math';
 

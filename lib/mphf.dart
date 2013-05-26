@@ -2,8 +2,8 @@ library poppy;
 
 import 'dart:math';
 import 'dart:typed_data';
+import 'dart:collection';
 import 'src/mphf_generator.dart';
-
 
 /** modified - shortened Jenkins 32 */
 int hash(List<int> key, int seed) {
@@ -14,7 +14,16 @@ int hash(List<int> key, int seed) {
   return h1;
 }
 
+int hashStr(String key, int seed) {
+  int h1 = seed;
+  for (int i=0, length=key.length; i<length;++i) {
+    h1 = ((h1 ^ key.codeUnitAt(i)) * 16777619) & 0x3fffffff;
+  }
+  return h1;
+}
+
 int initialHash(List<int> key) => hash(key, 0x811C9DC5);
+int initialHashStr(String key) => hashStr(key, 0x811C9DC5);
 
 /**
  * A Minimal Perfect Hash function which accepts keys that can be represented as List<int>.
@@ -89,6 +98,29 @@ class Mphf {
     }
     throw new RuntimeError("Cannot be here.");
   }
+  
+  /**
+   * returns the minimal perfect hash value for the given input String [key].
+   * hash values is between 0-keycount, keycount excluded.
+   * sometimes initial hash value for MPHF calculation is
+   * already calculated. So [initialHashValue] value is used instead of re-calculation.
+   * This provides a small performance enhancement.
+   */
+  int getValueStr(String key, [int initialHashValue]) {
+    int k = initialHashValue==null ? initialHashStr(key) : initialHashValue;
+
+    for (int i = 0; i < hashLevelData.length; i++) {
+      int seed = hashLevelData[i].getSeed(k);
+      if (seed != 0) {
+        if (i == 0) {
+          return hashStr(key, seed) % hashLevelData[0].keyAmount;
+        } else {
+          return hashLevelData[i - 1].failedIndexes[hashStr(key, seed) % hashLevelData[i].keyAmount];
+        }
+      }
+    }
+    throw new RuntimeError("Cannot be here.");
+  }  
 
   num totalBytesUsed() {
     num result = 0;
