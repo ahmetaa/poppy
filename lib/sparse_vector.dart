@@ -1,13 +1,14 @@
 library poppy;
 import 'dart:typed_data';
 import 'dart:math';
+import 'dart:collection';
 
 /// a simple sparse vector that can only hold non zero values in it.
 /// it uses positive integer keys and any num type value. Because vector is sparse, it does not
 /// hold zero valued keys.
 /// implementation uses simple hash table with linear probing.
 /// For marking deleten keys, -1 key value used.
-class SparseVector extends Iterable<TableEntry> {
+class SparseVector extends IterableBase<TableEntry> {
 
   static final int INITIAL_SIZE = 8;
   static final num DEFAULT_LOAD_FACTOR = 0.6;
