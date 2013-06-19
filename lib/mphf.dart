@@ -36,7 +36,7 @@ int initialHashStr(String key) => hashStr(key, 0x811C9DC5);
  */
 class Mphf {
 
-  const int MAX_KEY_AMOUNT = 0x3fffffff;
+  static const int MAX_KEY_AMOUNT = 0x3fffffff;
 
   List<HashIndexes> hashLevelData;
 
@@ -96,7 +96,7 @@ class Mphf {
         }
       }
     }
-    throw new RuntimeError("Cannot be here.");
+    throw new StateError("Cannot be here.");
   }
   
   /**
@@ -119,7 +119,7 @@ class Mphf {
         }
       }
     }
-    throw new RuntimeError("Cannot be here.");
+    throw new StateError("Cannot be here.");
   }  
 
   num totalBytesUsed() {
