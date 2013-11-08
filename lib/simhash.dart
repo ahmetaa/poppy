@@ -1,6 +1,4 @@
 library poppy;
-import 'dart:typed_data';
-import 'dart:math';
 import 'int_set.dart';
 
 int hammingDistance(int i, int j) {

@@ -1,8 +1,5 @@
 library poppy;
 
-import 'dart:math';
-import 'dart:typed_data';
-import 'dart:collection';
 import 'src/mphf_generator.dart';
 
 /** modified - shortened Jenkins 32 */

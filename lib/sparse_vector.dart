@@ -1,5 +1,4 @@
 library poppy;
-import 'dart:typed_data';
 import 'dart:math';
 import 'dart:collection';
 
@@ -24,7 +23,7 @@ class SparseVector extends IterableBase<TableEntry> {
       size = 2;
     }
     if ((size & (size - 1)) != 0) { // check for power of two
-      int power = (log(size) / log(2)).toInt();
+      int power = log(size) ~/ log(2);
       size = 1 << (power + 1);
     }
     keys = new List<int>.filled(size, 0);

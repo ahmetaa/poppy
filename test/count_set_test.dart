@@ -1,7 +1,6 @@
 library count_set_test;
 import 'package:unittest/unittest.dart';
 import 'package:poppy/count_set.dart';
-import 'dart:math';
 import 'bloom_filter_test.dart';
 
 main() {

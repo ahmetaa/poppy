@@ -5,7 +5,7 @@ import 'package:poppy/mphf.dart';
 import 'dart:math';
 
 bool randomStringTest() {
-  var nums = [1,2,3,4,5,7,10,100,1000,1001,10000,50000,100000];
+  var nums = [1, 2, 3, 4, 5, 7, 10, 100, 1000, 1001, 10000, 50000, 100000];
   for(num size in nums) {
     Set<String> strings = randomStrings(size, 7);
     Mphf hash = new Mphf.fromStrings(strings);

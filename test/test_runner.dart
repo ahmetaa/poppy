@@ -1,4 +1,3 @@
-import "package:unittest/unittest.dart";
 import "bloom_filter_test.dart" as bloom;
 import "int_set_test.dart" as intSet;
 import "sparse_vector_test.dart" as sparseVec;

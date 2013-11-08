@@ -15,7 +15,7 @@ Set<String> randomStrings(num amount, num length, [Set<String> notAllowed]) {
       buffer.writeCharCode(randomChar);
     }
     String s = buffer.toString();
-    if(?notAllowed && notAllowed.contains(s)) {
+    if(notAllowed!=null && notAllowed.contains(s)) {
       continue;
     }
     testVals.add(s);

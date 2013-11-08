@@ -1,8 +1,5 @@
 library poppy;
 
-import 'dart:math';
-import 'dart:typed_data';
-import 'dart:collection';
 import 'src/bit_vector.dart';
 
 class BloomFilter {

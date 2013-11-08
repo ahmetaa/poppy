@@ -124,6 +124,7 @@ A simple implementation of an integer set. This is actually similar to SparseVec
 sligthly faster and memory efficient than Set&lt;int&gt; structure.
 
 ## Change List
+*0.1.14* Dart 1.0 clean-up.
 *0.1.13* Dart M5 (Beta) changes.  
 *0.1.12* Eliminate ? symbol. Make mphf work with String keys directly.  
 *0.1.11* Dart M4 changes. Use 0x3fffffff for MPHF and BloomFilter bounds. Remove Base64 since there is a full
